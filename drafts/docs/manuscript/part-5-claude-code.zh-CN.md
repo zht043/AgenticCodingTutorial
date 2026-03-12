@@ -67,6 +67,24 @@ IDE 集成更适合：
 
 如果你把它只是当成聊天面板来用，那你其实浪费了它最有价值的部分。
 
+### Claude Code = 给 Agent 一台计算机
+
+从 xhs notes 的视角看，Claude Code 最值得强调的一点是：它不是在“给模型多几个 API”，而是在“给一个 Code Agent 一台标准化的计算机”：
+
+- 它有一个明确的当前工作目录（当前仓库）；  
+- 它可以列目录、读文件、改文件；  
+- 它可以运行命令、查看 stdout/stderr；  
+- 它可以在这个环境里读写自己的笔记、日志和中间产物。
+
+和很多“纯 API 式 Agent”相比，这种设计有两个显著优势：
+
+1. 行为更可解释：你可以像看一个人类工程师在终端里操作一样，观察它读了哪些文件、跑了什么命令、看到了什么输出。  
+2. 能力更可组合：只要某个能力已经有标准 CLI 或脚本实现，Claude Code 就能通过终端调用它，而不需要额外造一个专用工具协议。
+
+这也是为什么本书在讲 Context Engineering 和长任务时，会反复用“把中间结果写进文件系统”“用脚本作为确定性执行单元”这类例子——因为在 Claude Code 这一类环境里，这些做法都非常自然。
+
+> TODO：后续可以在这里补一张简单示意图，把 Claude Code 看作“Agent + Linux 终端 + 项目文件系统”，帮助读者把注意力从“聊天框”转移到“计算机环境”本身。
+
 ## Chapter 18 Claude Code 配置与会话管理
 
 真正开始高频使用以后，问题就不再是“能不能跑起来”，而是“怎么让它长时间保持高质量输出”。
@@ -245,3 +263,25 @@ Subagent 更适合把复杂任务拆成角色。典型角色包括：
 3. 把真正适合你项目的部分移植到自己的工作流。
 
 生态的价值从来不只是“装更多插件”，而是让你的 Agent 工作流更可复用、更可治理。
+
+## 进一步阅读
+
+如果你决定把 Claude Code 作为日常主力工具，建议按下面的顺序配合本 Part 阅读官方与社区资料：
+
+- 官方文档  
+  - [Claude Code overview](https://docs.anthropic.com/en/docs/claude-code/overview)：对应本 Part 的 Chapter 17，帮助你把“终端里的工程代理”定位和能力边界对上。  
+  - [Common workflows](https://docs.anthropic.com/en/docs/claude-code/common-workflows)：对照 Chapter 19 的高频技巧，看官方建议的“读仓库 / 修改 / 验证”流程。  
+  - [Memory](https://docs.anthropic.com/en/docs/claude-code/memory)：结合 Chapter 18，具体理解 `CLAUDE.md` 与项目记忆的最佳实践。  
+  - [Subagents](https://docs.anthropic.com/en/docs/claude-code/sub-agents) 与 [Hooks](https://docs.anthropic.com/en/docs/claude-code/hooks)：进一步理解本 Part 最后一章里提到的多 Agent 和 Hook 用途。  
+  - [MCP](https://docs.anthropic.com/en/docs/claude-code/mcp)：与 Part 6 结合阅读，思考哪些能力应该做成 MCP。  
+
+- 社区生态  
+  - [SuperClaude Framework](https://github.com/SuperClaude-Org/SuperClaude_Framework)：关注它如何设计命令体系、计划模板、权限护栏；尝试从中挑 1–2 条规则移植到你自己的 `CLAUDE.md`。  
+  - [claude-mem](https://github.com/thedotmack/claude-mem)：用它作为“记忆治理”的灵感来源，思考你自己的项目需要哪些自动或半自动的记忆整理脚本。  
+  - [Claude Code History Viewer](https://github.com/MrLesk/Claude-Code-History-Viewer)：配合本 Part 的复盘建议，观察一次完整任务的行为轨迹。  
+
+建议实操顺序：
+
+1. 选一个真实项目，用本 Part 的提示把“读仓库 → 小改动 → 验证 → 总结”完整跑一遍；  
+2. 把你在过程中发现的 2–3 条稳定规则填进 `CLAUDE.md`；  
+3. 再从上面的官方/社区资料里挑一条你最感兴趣的能力（比如 Subagent 或 Hook），在一个小项目上做一次最小实验，而不是一口气全开。  

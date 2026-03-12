@@ -208,12 +208,41 @@
 
 如果前几章是教读者“如何使用别人的 Agent”，这个案例开始教读者“如何扩展自己的 Agent 系统”。
 
-## 本部分写作建议
+## 每个案例结尾都要有“经验沉淀”小节
 
-后续补强这一部分时，最值得做的不是继续增加案例数量，而是把这 5 个案例各自补成完整三件套：
+前面的 5 个案例，更多是在展示“怎么用 Agent 把事情做成”。要把这部分真正升级成 Agentic Coding 教程的一部分，还需要在每个案例里固定加入一个短小但关键的环节：经验沉淀。
 
-- 初始 prompt 与阶段 prompt
-- 关键执行截图或日志
-- 结果复盘与迁移建议
+建议为每个案例增加类似的收尾小节，名字可以统一叫做：
 
-只要这 5 个案例写扎实，整本教程的实用性就会明显提升。
+- 「经验沉淀与系统演化」
+
+内容可以包括三类问题：
+
+1. 这次任务对 `AGENTS.md` / `CLAUDE.md` / 规则文件有什么补充？  
+2. 有哪些步骤值得被提炼成 Skill 或脚本？  
+3. 有哪些错误经验需要刻意避免写进长期记忆？
+
+这样做的直接收益是：
+
+- 让读者看到“任务结束后该做什么”，而不是停在“完成一次就结束”；  
+- 把“Context Evolution / 上下文演化”的思想嵌入最实际的案例里，而不是只停留在 Part 4 的理论段落；  
+- 为团队级落地留下一条清晰路径：每次任务之后，系统都会比之前稍微好一点。
+
+> TODO：后续在具体扩写每个案例时，可以先以段落形式在最后加上「经验沉淀与系统演化」小节，再视情况演化成对应的 `AGENTS.md` 片段、Skill 示例或脚本片段。
+
+## 进一步阅读与案例取材
+
+在补充和细化本 Part 的每个案例时，可以从这些资料中抽取灵感和素材：
+
+- Anthropic / Claude Code  
+  - [Claude Code common workflows](https://docs.anthropic.com/en/docs/claude-code/common-workflows)：从中挑选与你的案例类似的场景（如“修 bug”“补测试”“文档整理”），对照官方流程设计自己的案例步骤。  
+  - [Introducing agentic coding](https://www.anthropic.com/engineering/claude-code-best-practices)：用作“案例复盘”的理论背景，尤其是对任务闭环和验证的强调。  
+
+- Agentic workflows 与团队实践  
+  - GitHub 文章：[Software development with agentic workflows](https://github.com/resources/articles/ai/software-development-with-agentic-workflows)：从团队视角看“从 issue 到 PR”的链路，为 Case 4“从 PRD/issue 出发实现功能”提供结构参考。  
+
+- 社区实践与教程  
+  - [SuperClaude Framework](https://github.com/SuperClaude-Org/SuperClaude_Framework)：观察它如何记录真实任务过程与命令，借鉴到你自己的“执行日志 + 复盘”写法上。  
+  - 你自己的 [AgentSkills](https://github.com/zht043/AgentSkills)：从中挑选 1–2 个 Skill 场景，改编成“先用 Skill 设计任务，再用 Agent 执行”的案例。  
+
+建议在写每个案例时，都从真实项目/真实任务中截取素材，而不是凭空设计 demo，这样读者在照搬时更容易少踩坑。  

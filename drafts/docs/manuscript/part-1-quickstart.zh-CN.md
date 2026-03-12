@@ -236,3 +236,22 @@
 - 如果不确定，就停下来说明。
 
 这三句看起来朴素，但它们会直接决定你后续 80% 的 Agent 使用质量。
+
+## 进一步阅读与练习建议
+
+如果你希望在“第一次跑通”之后继续加深理解，可以结合本章内容阅读和练习以下资料：
+
+- Anthropic 官方文章：[Introducing agentic coding](https://www.anthropic.com/engineering/claude-code-best-practices)  
+  - 重点关注它如何定义 Agentic Coding，以及对“目标 → 计划 → 执行 → 验证”闭环的拆解。  
+- 文档：[Claude Code overview](https://docs.anthropic.com/en/docs/claude-code/overview) 与 [common workflows](https://docs.anthropic.com/en/docs/claude-code/common-workflows)  
+  - 对照本章的最短任务，把官方给出的“读仓库 / 修改 / 验证”示例看一遍，找到两者的共同模式。  
+- Cursor Docs: [Agent](https://docs.cursor.com/agent) 与 [Rules](https://docs.cursor.com/context/rules)  
+  - 尝试用本章的“第一个任务模板”在 Cursor 里跑一遍，并把规则写进 Cursor Rules，而不是只写在 prompt。  
+- Cline Docs: [Cline 使用文档](https://docs.cline.bot/)  
+  - 重点体会它的人机审批流，在第二个或第三个任务中刻意练习“先计划、再审批、再执行”的节奏。  
+
+练习建议：
+
+1. 选一个你熟悉的小项目，照着本章模板从头到尾跑完一次。  
+2. 再选一个你不太熟悉的项目，重复同样流程，并记录“陌生项目”和“熟悉项目”的 Agent 体验差异。  
+3. 把你认为最有用的两条 prompt/命令写进项目的 `AGENTS.md` 或 `CLAUDE.md`，作为未来每次接手新任务时的起步模板。  
