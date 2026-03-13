@@ -121,13 +121,13 @@
     <td align="center">4</td>
     <td><a href="./docs/ch04-skills/part-4-skills.md"><strong>🔌 部署与开发你的 Skill</strong></a></td>
     <td>Skill 安装与配置 · 从零编写一个 Skill · 调试与发布 · 团队 Skill 沉淀</td>
-    <td><img src="https://img.shields.io/badge/-规划中-lightgrey" /></td>
+    <td><img src="https://img.shields.io/badge/-编写中-yellow" /></td>
   </tr>
   <tr>
     <td align="center">5</td>
     <td><a href="./docs/ch05-basic-cases/part-5-basic-cases.md"><strong>💻 Agent 基础实战案例</strong></a></td>
     <td>代码理解 · Bug 修复 · 测试补全 · 文档生成 · 小型功能开发</td>
-    <td><img src="https://img.shields.io/badge/-规划中-lightgrey" /></td>
+    <td><img src="https://img.shields.io/badge/-编写中-yellow" /></td>
   </tr>
   <tr>
     <td align="center">6</td>
