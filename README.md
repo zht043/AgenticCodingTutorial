@@ -8,8 +8,8 @@
 <p><strong>让 AI 变成你的日常结对程序员，而不是更聪明的搜索框。</strong></p>
 
 <p>
-  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-    <img src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg" alt="License: CC BY-NC-SA 4.0" />
+  <a href="https://creativecommons.org/licenses/by-sa/4.0/">
+    <img src="https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg" alt="License: CC BY-SA 4.0" />
   </a>
   <a href="https://github.com/your-repo/pulls">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" />
@@ -24,7 +24,7 @@
 <p>帮你在 <strong>Agent 工具飞速轮换的时代，掌握一套不会过时的心智模型与实战方法</strong></p>
 
 <p>
-  <a href="#-如何开始阅读">🚀 立即开始阅读</a> ·
+  <a href="./docs/ch01-quickstart/part-1-quickstart.md">🚀 立即部署 Agent</a> ·
   <a href="#-教程-overview">📚 教程目录</a> ·
   <a href="#-什么是-agentic-coding">💡 什么是 Agentic Coding</a>
 </p>
@@ -49,31 +49,37 @@
 
 <table>
   <tr>
-    <td align="center" width="20%">
+    <td align="center" width="16%">
       <img src="./resources/logos/claude-code.png" alt="Claude Code" height="42" /><br />
       <strong><a href="https://claude.com/product/claude-code">Claude Code</a></strong><br />
       <sub>Anthropic 官方终端 Agent。擅长理解大仓库上下文、多文件联动改动，支持多 Agent 协作和 MCP 扩展。</sub><br />
       <sub>🎯 项目总控 · 大规模重构 · 自动化工作流</sub>
     </td>
-    <td align="center" width="20%">
+    <td align="center" width="16%">
       <img src="./resources/logos/codex-color.png" alt="Codex CLI" height="42" /><br />
       <strong><a href="https://github.com/openai/codex">Codex CLI</a></strong><br />
       <sub>OpenAI 开源终端编码 Agent。本地执行 + 云端沙箱双模式，三级审批控制（Suggest / Auto Edit / Full Auto）。</sub><br />
       <sub>🎯 终端工作流 · 隐私优先 · ChatGPT 集成</sub>
     </td>
-    <td align="center" width="20%">
+    <td align="center" width="16%">
+      <img src="./resources/logos/gemini-cli.png" alt="Gemini CLI" height="42" /><br />
+      <strong><a href="https://geminicli.com/">Gemini CLI</a></strong><br />
+      <sub>Google 开源终端 Agent。1M token 上下文窗口，内置搜索和 MCP 支持，个人 Google 账号免费使用。</sub><br />
+      <sub>🎯 超长上下文 · 免费额度 · Google 生态</sub>
+    </td>
+    <td align="center" width="16%">
       <img src="./resources/logos/cursor.png" alt="Cursor" height="42" /><br />
       <strong><a href="https://cursor.com">Cursor</a></strong><br />
       <sub>AI 原生 IDE，深度集成 LLM。全代码库索引、Agent 多文件编辑、Tab 智能补全。</sub><br />
       <sub>🎯 日常开发 · 代码补全 · 重构与 Debug</sub>
     </td>
-    <td align="center" width="20%">
+    <td align="center" width="16%">
       <img src="./resources/logos/trae.png" alt="Trae" height="42" /><br />
       <strong><a href="https://www.trae.ai">Trae</a></strong><br />
       <sub>字节跳动出品的 AI IDE（基于 VS Code 内核）。支持 Claude / GPT / DeepSeek 等多模型，SOLO 模式可用自然语言生成完整项目。</sub><br />
       <sub>🎯 全栈生成 · 低价高性价比 · 多模型切换</sub>
     </td>
-    <td align="center" width="20%">
+    <td align="center" width="16%">
       <img src="./resources/logos/opencode-logo.png" alt="OpenCode" height="42" /><br />
       <strong><a href="https://opencode.ai">OpenCode</a></strong><br />
       <sub>开源终端 AI 编码 Agent（Go 实现）。支持 75+ LLM 提供商，Plan / Build 双模式，隐私第一，无供应商锁定。</sub><br />
@@ -97,19 +103,43 @@
     <td align="center">1</td>
     <td><a href="./docs/ch01-quickstart/part-1-quickstart.md"><strong>🚀 快速上手部署 Agent</strong></a></td>
     <td>环境配置 → 工具安装 → 跑通第一个「让 Agent 改真实代码」的闭环</td>
-    <td><img src="https://img.shields.io/badge/-编写中-yellow" /></td>
+    <td><img src="https://img.shields.io/badge/-已完成-brightgreen" /></td>
   </tr>
   <tr>
     <td align="center">2</td>
     <td><a href="./docs/ch02-concepts/part-2-concepts.md"><strong>🧠 Agent 运作原理与核心概念</strong></a></td>
     <td>执行链路拆解 · Model / Agent / Tools / Memory 四要素 · 为什么 Agent 有时聪明有时蠢</td>
-    <td><img src="https://img.shields.io/badge/-编写中-yellow" /></td>
+    <td><img src="https://img.shields.io/badge/-已完成-brightgreen" /></td>
   </tr>
   <tr>
     <td align="center">3</td>
     <td><a href="./docs/ch03-playbook/part-3-playbook.md"><strong>🧪 Agent 实战技巧 Playbook</strong></a></td>
     <td>通用提示词模板 · Claude Code / Codex / Cursor 专用技巧 · 可直接复制的工作流</td>
     <td><img src="https://img.shields.io/badge/-编写中-yellow" /></td>
+  </tr>
+  <tr>
+    <td align="center">4</td>
+    <td><a href="./docs/ch04-skills/part-4-skills.md"><strong>🔌 部署与开发你的 Skill</strong></a></td>
+    <td>Skill 安装与配置 · 从零编写一个 Skill · 调试与发布 · 团队 Skill 沉淀</td>
+    <td><img src="https://img.shields.io/badge/-规划中-lightgrey" /></td>
+  </tr>
+  <tr>
+    <td align="center">5</td>
+    <td><a href="./docs/ch05-basic-cases/part-5-basic-cases.md"><strong>💻 Agent 基础实战案例</strong></a></td>
+    <td>代码理解 · Bug 修复 · 测试补全 · 文档生成 · 小型功能开发</td>
+    <td><img src="https://img.shields.io/badge/-规划中-lightgrey" /></td>
+  </tr>
+  <tr>
+    <td align="center">6</td>
+    <td><a href="./docs/ch06-advanced-cases/part-6-advanced-cases.md"><strong>🏗️ Agent 进阶实战案例</strong></a></td>
+    <td>大规模重构 · 多 Agent 协作 · CI/CD 集成 · 复杂工程任务端到端</td>
+    <td><img src="https://img.shields.io/badge/-规划中-lightgrey" /></td>
+  </tr>
+  <tr>
+    <td align="center">7</td>
+    <td><a href="./docs/ch07-build-agent/part-7-build-agent.md"><strong>🤖 进阶：设计与开发你的 Agent</strong></a></td>
+    <td>Agent 架构设计 · Agent SDK 实战 · 自定义工具链 · 从 Skill 到 Agent 的跃迁</td>
+    <td><img src="https://img.shields.io/badge/-规划中-lightgrey" /></td>
   </tr>
 </table>
 
@@ -215,21 +245,54 @@ Agent 很强，但每一步都在花钱。这套教程会穿插讲解：
 
 ---
 
-## 📖 如何开始阅读？
+## 🧩 Agent Skills 资源推荐
 
-```mermaid
-graph TD
-  step1["Step 1: 浏览本 README<br/>确认这套教程是不是你需要的"]
-  step2["Step 2: Chapter 1 快速上手<br/>30 分钟跑通第一个闭环"]
-  ch2["Chapter 2 补原理<br/>🧠 理解心智模型"]
-  ch3["Chapter 3 抄 Playbook<br/>🧪 上手更多场景"]
+> Skill 是 Agent 时代的"方法论手册"——把经验沉淀为可复用的工作流模板。Skill 实战章节正在编写中，你可以先浏览以下资源上手体验。
 
-  step1 --> step2
-  step2 --> ch2
-  step2 --> ch3
+### 笔者的 AgentSkills 仓库
+
+👉 **[zht043/AgentSkills](https://github.com/zht043/AgentSkills)** — 笔者个人开发维护的 Agent Skills 集合，包含实际项目中沉淀的工作流和最佳实践。欢迎 Star 和贡献！
+
+### 热门 Skills 框架与集合
+
+| 项目 | 说明 | Stars |
+|------|------|:-----:|
+| **[obra/superpowers](https://github.com/obra/superpowers)** | 最知名的 Agent Skills 框架，2026 年 1 月入选 Anthropic 官方 Marketplace。实现完整的 7 阶段工作流：brainstorm → 设计 → 计划 → 子 Agent 执行 → 审查 → 合并。内置 TDD、系统化调试、代码审查等高质量 Skill | 42K+ |
+| **[obra/superpowers-skills](https://github.com/obra/superpowers-skills)** | Superpowers 的社区编辑 Skill 集合，持续更新中 | — |
+| **[thedotmack/claude-mem](https://github.com/thedotmack/claude-mem)** | Claude Code 记忆增强插件，自动捕获会话上下文、语义压缩、跨会话注入相关记忆。支持向量搜索和 Endless Mode | — |
+| **[anthropics/skills](https://github.com/anthropics/skills)** | Anthropic 官方 Skills 仓库，包含文档处理、示例模板等官方 Skill | — |
+| **[VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills)** | 500+ Agent Skills 集合，兼容 Claude Code / Codex / Gemini CLI / Cursor 等主流工具 | — |
+| **[travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills)** | 精选的 Claude Skills 资源列表，分类清晰、持续维护 | — |
+| **[alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)** | 180+ 生产级 Skills，覆盖工程、产品、营销、合规等领域 | — |
+| **[daymade/claude-code-skills](https://github.com/daymade/claude-code-skills)** | 42 个生产级 Skill，包含 GitHub 操作、文档转换、图表生成等 | — |
+
+### Skills 安装方式（以 Claude Code 为例）
+
+```bash
+# 通过 Plugin Marketplace 安装（推荐）
+/plugin marketplace add obra/superpowers
+/plugin install superpowers
+
+# 或直接 clone 到本地 Skills 目录
+git clone https://github.com/obra/superpowers ~/.claude/skills/superpowers
 ```
 
-> 💬 如果你已经有自己的 Agent 使用习惯，也欢迎直接提 **Issue / PR**，把你的工作流补充进对应章节。一起把这套教程打磨成 Agent 时代的「程序员基础设施」之一。
+> 💡 Skills 生态正在快速发展，2025 年底 Anthropic 发布了 Agent Skills 开放标准，OpenAI 也为 Codex CLI 采用了相同格式。更多 Skill 的使用方法将在第三章 Playbook 中详细展开。
+
+---
+
+## 🛠️ 本教程的制作流程
+
+> 这套教程本身就是一次 Agentic Coding 的实践。以下是它的制作过程，供感兴趣的读者参考。
+
+1. **碎片经验积累** — 笔者在日常使用各类 Coding Agent 过程中，积累了大量碎片化的个人使用经验和心得
+2. **人工筛选高质量素材** — 在 Google、小红书、知乎、Medium 等平台人工筛选了一批高质量文章（很多是图文并茂的），确保信息源的质量和多样性
+3. **多模态素材转换** — 利用 GPT-5.4 的多模态能力，将筛选到的图文素材转换为 Markdown + Mermaid 图格式，实现内容的结构化
+4. **联网信息搜索与提炼** — 使用 Grok 4.2 和 Gemini 3.1 Pro 联网搜索最新信息（模型能力、产品动态、价格数据等），提炼总结为 Markdown 格式的素材
+5. **端到端内容生成与校验** — 使用 Claude Opus 4.6 读取以上所有素材，结合其自身联网能力校验和补充细节，在人工引导下逐步迭代生成 README 和各章节内容
+6. **图片生成** — 部分非 Mermaid 图表和插图，使用 Nano Banana Pro 多模态模型生成
+
+> 整个流程体现了本教程的核心理念：**人负责判断、筛选和引导方向，Agent 负责搜集、整理、生成和迭代**。每一步都是人机协同的产物。
 
 ---
 
