@@ -1,5 +1,5 @@
 <div align="center">
-![image-20260312231419463](resources/figures/image-20260312231419463.png)
+![image-20260312231419463](./resources/figures/image-20260312231419463.png)
 
 <h1>🤖 Agentic Coding Tutorial</h1>
 
@@ -11,7 +11,7 @@
   <a href="https://creativecommons.org/licenses/by-sa/4.0/">
     <img src="https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg" alt="License: CC BY-SA 4.0" />
   </a>
-  <a href="https://github.com/your-repo/pulls">
+  <a href="https://github.com/zht043/AgenticCodingTutorial/pulls">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" />
   </a>
   <img src="https://img.shields.io/badge/Last%20Updated-2026.03-blue" alt="Last Updated 2026.03" />
@@ -58,7 +58,7 @@
     <td align="center" width="16%">
       <img src="./resources/logos/codex-color.png" alt="Codex CLI" height="42" /><br />
       <strong><a href="https://github.com/openai/codex">Codex CLI</a></strong><br />
-      <sub>OpenAI 开源终端编码 Agent。本地执行 + 云端沙箱双模式，三级审批控制（Suggest / Auto Edit / Full Auto）。</sub><br />
+      <sub>OpenAI 开源终端编码 Agent。支持 `read-only` / `workspace-write` / `danger-full-access` 沙箱，以及 `untrusted` / `on-request` / `never` 审批策略。</sub><br />
       <sub>🎯 终端工作流 · 隐私优先 · ChatGPT 集成</sub>
     </td>
     <td align="center" width="16%">
@@ -82,7 +82,7 @@
     <td align="center" width="16%">
       <img src="./resources/logos/opencode-logo.png" alt="OpenCode" height="42" /><br />
       <strong><a href="https://opencode.ai">OpenCode</a></strong><br />
-      <sub>开源终端 AI 编码 Agent（Go 实现）。支持 75+ LLM 提供商，Plan / Build 双模式，隐私第一，无供应商锁定。</sub><br />
+      <sub>开源 AI 编码 Agent。官方提供 terminal、desktop app 和 IDE extension，强调多模型接入与本地优先工作流。</sub><br />
       <sub>🎯 开源自主 · 多模型接入 · 深度定制</sub>
     </td>
   </tr>
@@ -270,29 +270,24 @@
 
 ### 热门 Skills 框架与集合
 
-| 项目 | 说明 | Stars |
-|------|------|:-----:|
-| **[obra/superpowers](https://github.com/obra/superpowers)** | 最知名的 Agent Skills 框架，2026 年 1 月入选 Anthropic 官方 Marketplace。实现完整的 7 阶段工作流：brainstorm → 设计 → 计划 → 子 Agent 执行 → 审查 → 合并。内置 TDD、系统化调试、代码审查等高质量 Skill | 42K+ |
-| **[obra/superpowers-skills](https://github.com/obra/superpowers-skills)** | Superpowers 的社区编辑 Skill 集合，持续更新中 | — |
-| **[thedotmack/claude-mem](https://github.com/thedotmack/claude-mem)** | Claude Code 记忆增强插件，自动捕获会话上下文、语义压缩、跨会话注入相关记忆。支持向量搜索和 Endless Mode | — |
-| **[anthropics/skills](https://github.com/anthropics/skills)** | Anthropic 官方 Skills 仓库，包含文档处理、示例模板等官方 Skill | — |
-| **[VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills)** | 500+ Agent Skills 集合，兼容 Claude Code / Codex / Gemini CLI / Cursor 等主流工具 | — |
-| **[travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills)** | 精选的 Claude Skills 资源列表，分类清晰、持续维护 | — |
-| **[alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)** | 180+ 生产级 Skills，覆盖工程、产品、营销、合规等领域 | — |
-| **[daymade/claude-code-skills](https://github.com/daymade/claude-code-skills)** | 42 个生产级 Skill，包含 GitHub 操作、文档转换、图表生成等 | — |
+| 项目 | 说明 |
+|------|------|
+| **[obra/superpowers](https://github.com/obra/superpowers)** | 社区里知名度很高的 Skills 工作流框架，强调从 brainstorm、设计、计划到执行、审查的完整闭环 |
+| **[obra/superpowers-skills](https://github.com/obra/superpowers-skills)** | Superpowers 的社区编辑 Skill 集合，持续更新中 |
+| **[thedotmack/claude-mem](https://github.com/thedotmack/claude-mem)** | 面向 Claude Code 的记忆增强工具，聚焦上下文捕获、压缩与跨会话回注 |
+| **[anthropics/skills](https://github.com/anthropics/skills)** | Anthropic 官方 Skills 仓库，包含示例模板和参考实现 |
+| **[VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills)** | 持续维护的 Agent Skills 资源列表，适合用来做生态摸底和选型 |
+| **[travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills)** | 精选的 Claude Skills 资源列表，分类清晰、持续维护 |
+| **[alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills)** | 面向生产场景的 Skills 集合，覆盖工程、产品、营销、合规等领域 |
+| **[daymade/claude-code-skills](https://github.com/daymade/claude-code-skills)** | 一组可直接参考的 Claude Code Skills，偏工程自动化与文档生成 |
 
 ### Skills 安装方式（以 Claude Code 为例）
 
 ```bash
-# 通过 Plugin Marketplace 安装（推荐）
-/plugin marketplace add obra/superpowers
-/plugin install superpowers
-
-# 或直接 clone 到本地 Skills 目录
+# 直接 clone 到本地 Skills 目录
 git clone https://github.com/obra/superpowers ~/.claude/skills/superpowers
 ```
 
-> 💡 Skills 生态正在快速发展，2025 年底 Anthropic 发布了 Agent Skills 开放标准，OpenAI 也为 Codex CLI 采用了相同格式。更多 Skill 的使用方法将在第三章 Playbook 中详细展开。
 
 ---
 

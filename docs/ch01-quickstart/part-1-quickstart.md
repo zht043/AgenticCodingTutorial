@@ -4,14 +4,34 @@
 
 ## 目录
 
-- [1. Agent 与大模型的关系](#1-agent-与大模型的关系一张图看懂架构)
-- [2. TLDR：小编推荐的 Agent + Model 组合](#2-tldr小编推荐的-agent--model-组合)
-- [3. 前置知识：Node.js](#3-前置知识nodejs)
-- [4. 安装指南](#4-安装指南)
-- [5. 配置第三方 API 供应商](#5-配置第三方-api-供应商)
-- [6. 中国大陆用户：API 中转服务](#6-中国大陆用户api-中转服务)
-- [7. 验证你的第一次对话](#7-验证你的第一次对话)
-- [8. 新手 QuickStart：你的第一个 Agent 任务](#8-新手-quickstart你的第一个-agent-任务)
+- [Chapter 1 · 快速上手部署 Agent](#chapter-1--快速上手部署-agent)
+  - [目录](#目录)
+  - [1. Agent 与大模型的关系：一张图看懂架构](#1-agent-与大模型的关系一张图看懂架构)
+  - [2. TLDR：小编推荐的 Agent + Model 组合](#2-tldr小编推荐的-agent--model-组合)
+    - [首推：Claude Code + Claude 模型家族](#首推claude-code--claude-模型家族)
+    - [次选方案](#次选方案)
+    - [预算有限 / 中国区用户](#预算有限--中国区用户)
+  - [3. 前置知识：Node.js](#3-前置知识nodejs)
+    - [Node.js 是什么？](#nodejs-是什么)
+    - [安装](#安装)
+  - [4. 安装指南](#4-安装指南)
+    - [各工具安装命令](#各工具安装命令)
+    - [CLI、VS Code 插件、桌面应用——什么关系？](#clivs-code-插件桌面应用什么关系)
+    - [理解"CLI 是本体"](#理解cli-是本体)
+  - [5. 配置第三方 API 供应商](#5-配置第三方-api-供应商)
+    - [Claude Code 配置（推荐方式：settings.json）](#claude-code-配置推荐方式settingsjson)
+  - [6. 中国大陆用户：API 中转服务](#6-中国大陆用户api-中转服务)
+    - [什么是 API 中转？](#什么是-api-中转)
+    - [如果必须使用中转，先确认这几件事](#如果必须使用中转先确认这几件事)
+    - [选择中转商注意事项](#选择中转商注意事项)
+  - [7. 验证你的第一次对话](#7-验证你的第一次对话)
+  - [8. 新手 QuickStart：你的第一个 Agent 任务](#8-新手-quickstart你的第一个-agent-任务)
+    - [推荐起步路线](#推荐起步路线)
+    - [第一个任务：理解一个真实仓库](#第一个任务理解一个真实仓库)
+    - [第二个任务：完成一个最小修改](#第二个任务完成一个最小修改)
+    - [新手第一周三个目标](#新手第一周三个目标)
+    - [所有任务都应默认带的三句话](#所有任务都应默认带的三句话)
+  - [下一步](#下一步)
 
 ---
 
@@ -51,7 +71,7 @@ graph LR
 
 ## 2. TLDR：小编推荐的 Agent + Model 组合
 
-> ⚠️ **时效性声明**：以下推荐基于 2026 年 3 月的实际体验。AI 工具和模型更新极快（几周一个新版本），请以各厂商最新动态为准。想了解详细的工具对比、模型基准测试和价格，见 👉 [附录：Agent 工具与模型详细对比](./reference-tools-comparison.md)
+> ⚠️ **时效性声明**：以下推荐于 2026 年 3 月 17 日校对。AI 工具和模型更新极快，请优先以各厂商当下的官方模型页、安装页和价格页为准。想了解详细的工具对比、模型基准测试和价格，见 👉 [附录：Agent 工具与模型详细对比](./reference-tools-comparison.md)
 
 工具和模型太多，选择困难？以下是笔者的实战推荐，**挑一个组合跑起来就行**：
 
@@ -59,19 +79,19 @@ graph LR
 
 | 任务类型 | 推荐模型 | 说明 |
 |---------|---------|------|
-| 复杂重构 / 大上下文 / 刁钻问题 | **Opus 4.6** | 最强 Agent 工程能力，SWE-Bench 80.8% |
-| 日常开发（90% 场景） | **Sonnet 4.6** | 性能/成本最佳平衡，社区公认甜点 |
-| 机械简单任务 | **Haiku 4.5** | 轻量快速，省钱 |
+| 复杂重构 / 大上下文 / 刁钻问题 | **Claude Opus 4.6** | 更适合高难度规划、长链路推理和棘手工程问题 |
+| 日常开发（90% 场景） | **Claude Sonnet 4.6** | 通常是性能、速度和成本之间最稳妥的平衡点 |
+| 机械简单任务 | **Claude Haiku 4.5** | 轻量、响应快，适合低风险的简单修改和批处理任务 |
 
-为什么首推？Claude Code 是目前端到端闭环能力最强的 Agent——从理解需求到改代码到跑测试到修 bug，全流程最稳定。它有 CLI（终端）和 VS Code 插件两种使用方式，新手都适合。
+为什么首推？Claude Code 是目前端到端闭环能力最强的 Agent——从理解需求到改代码到跑测试到修 bug，全流程最稳定，Claude系模型的工程能力口碑极佳，无论是benchmark打榜还是全球的用户评价目前都稳居Top。它有 CLI（终端）和 VS Code 插件两种使用方式，新手都适合。
 
 ### 次选方案
 
 | 场景 | 推荐组合 | 适合人群 |
 |------|---------|---------|
-| 分析定位问题 + Plan 设计 + 明确步骤的代工 | **Codex CLI + GPT-5.3-Codex / GPT-5.4** | 偏好 OpenAI 生态、想试并行 Agent |
+| 分析定位问题 + Plan 设计 + 明确步骤的代工 | **Codex CLI + GPT-5.3-Codex / GPT-5.4** | 偏好 OpenAI 生态、高性价比Agent、更强基础模型能力、保守可控的人机协同 |
 | 想先体验 Vibe Coding，同时可切换 Claude/GPT | **Cursor Pro Plan** | 喜欢 IDE 可视化、不想折腾终端 |
-| 想体验多 Agent 并行调度，免费 | **Antigravity** | 好奇 Agent-first IDE 范式 |
+
 
 ### 预算有限 / 中国区用户
 
@@ -80,7 +100,6 @@ graph LR
 | 网络/合规限制 | **Claude Code + GLM-5** | 智谱模型，MIT 开源，华为昇腾训练 |
 | 国产最强性价比 | **Kimi Code + Kimi K2.5** | 月之暗面官方 Agent，开源权重 |
 | 极致低成本 | **OpenCode + DeepSeek V3.2** | 开源 Agent + 最便宜模型 |
-
 > 💡 核心原则：**先跑通一个组合，再横向对比**。不要同时装太多工具，每个都只会一点点。
 
 ---
@@ -128,7 +147,7 @@ npm --version
 | **Gemini CLI** | [geminicli.com](https://geminicli.com/) / [GitHub](https://github.com/google-gemini/gemini-cli) | `npm install -g @google/gemini-cli` |
 | **Cursor** | [cursor.com](https://cursor.com/) | 下载桌面应用 |
 | **Antigravity** | [antigravity.google](https://antigravity.google/) | 下载桌面应用 |
-| **OpenCode** | [opencode.ai](https://opencode.ai/) / [GitHub](https://github.com/opencode-ai/opencode) | `go install github.com/opencode-ai/opencode@latest` |
+| **OpenCode** | [opencode.ai](https://opencode.ai/docs) / [GitHub](https://github.com/opencode-ai/opencode) | 参考官方安装页（支持安装脚本 / npm / Homebrew 等方式） |
 | **Trae** | [trae.ai](https://www.trae.ai/) | 下载桌面应用 |
 
 ### CLI、VS Code 插件、桌面应用——什么关系？
@@ -140,7 +159,7 @@ npm --version
 | Gemini CLI | ✅ 本体 | ✅ Code Assist | ❌ | ✅ Cloud Shell |
 | Cursor | ❌ | — | ✅ 自身即 IDE | ❌ |
 | Antigravity | ❌ | — | ✅ 自身即 IDE | ❌ |
-| OpenCode | ✅ 本体 | ❌ | ❌ | ❌ |
+| OpenCode | ✅ 本体 | ✅ IDE extension | ✅ | ❌ |
 
 ### 理解"CLI 是本体"
 
@@ -152,13 +171,11 @@ npm --version
 3. **CLI 更灵活**：自动化脚本、CI/CD、headless 环境
 4. **插件/App 更直观**：可视化 diff、文件树、交互审批
 
-以 Claude Code 为例，配置文件层级：
+以 Claude Code 为例，当前官方文档重点介绍的配置层级是：
 ```
-~/.claude/
-├── settings.json             # 全局设置
-├── credentials.json          # API 认证
-└── projects/<project-hash>/
-    └── settings.json         # 项目级设置
+~/.claude/settings.json          # 用户级全局设置
+<repo>/.claude/settings.json     # 项目共享设置
+<repo>/.claude/settings.local.json  # 本地私有设置（通常不提交）
 ```
 
 ---
@@ -200,25 +217,31 @@ claude
 
 ## 6. 中国大陆用户：API 中转服务
 
-由于网络限制，国内直接访问 Anthropic / OpenAI / Google API 可能不稳定。使用**第三方 API 中转服务**是常见解决方案。
+由于网络限制，国内直接访问 Anthropic / OpenAI / Google API 可能不稳定。**第三方 API 中转只能算备选方案，不应作为默认路径。**
 
 ### 什么是 API 中转？
 
 中转商在海外部署代理节点，转发你的 API 请求。你只需将 Base URL 指向中转商地址，使用中转商提供的 Token。
 
-### 推荐：云雾 API（yunwu.ai）
+### 如果必须使用中转，先确认这几件事
 
-笔者长期使用的中转服务：[yunwu.ai](https://yunwu.ai/register?aff=GTlx)，支持 Claude / GPT / Gemini 等主流模型。
+- **工具调用兼容性**：不是所有代理都完整支持 tool use、流式输出、长连接和多轮上下文
+- **隐私与留存**：先确认代码、日志、提示词和响应会不会被记录、保留多久、能否关闭
+- **模型映射是否透明**：模型 ID、上下文长度、价格和限流策略要写清楚
+- **账单归属与 SLA**：出问题时到底按谁的服务条款、谁来背可用性和退款责任
 
-**Claude Code 配置示例：**
+如果确认要接入第三方代理，Claude Code 的配置方式通常类似下面这样：
+
 ```json
 {
   "env": {
-    "ANTHROPIC_BASE_URL": "https://yunwu.ai",
-    "ANTHROPIC_API_KEY": "你的云雾 Token"
+    "ANTHROPIC_BASE_URL": "https://your-provider.com/v1",
+    "ANTHROPIC_API_KEY": "your-provider-token"
   }
 }
 ```
+
+> 更稳妥的顺序通常是：**先尝试官方直连 → 再尝试企业网络方案 / 合规出口 → 最后才考虑第三方代理。**
 
 ### 选择中转商注意事项
 
