@@ -1,10 +1,32 @@
 # Chapter 2 · Agent 运作原理与核心概念
 
-> 目标：帮你建立一套完整的 Agent 心智模型——不只是"能用"，而是"知道它在干什么、为什么有时聪明有时蠢、怎么让它更好用"。
+> 目标：建立一套完整的 Agent 心智模型——不只是"能用"，而是"知道它在干什么、为什么有时聪明有时蠢、怎么让它更好用"。
 
-在 Part 1 中，你已经跑通了一个 Agent，看到它能读代码、改文件、跑命令。但你可能心里还有很多问号：它背后到底在做什么？为什么有时候一次搞定，有时候反复犯错？那些 MCP、Skill、ReAct 又是什么？
+## 目录
 
-本章会用「每个概念 + 立刻告诉你这对你意味着什么」的方式，帮你从"会用"走向"懂用"。
+- [0. 先问自己三个问题](#0-先问自己三个问题)
+- [1. Agent 的本质](#1-agent-的本质一张图搞懂)
+- [2. Agent-LLM 交互解剖：一次调用里到底发生了什么](#2-agent-llm-交互解剖一次调用里到底发生了什么)
+- [3. Memory：上下文是 Agent 的命脉](#3-memory上下文是-agent-的命脉)
+- [4. Tools、MCP 与 Skills：Agent 的手脚](#4-toolsmcp-与-skillsagent-的手脚)
+- [5. Planning 与多 Agent 协作](#5-planning-与多-agent-协作)
+- [6. 人机协同：从"能用"到"好用"](#6-人机协同从能用到好用)
+
+---
+
+## 0. 先问自己三个问题
+
+在深入原理之前，先检视一下你对 Agent 的直觉——以下哪些你觉得是对的？
+
+| # | 常见直觉 | 实际情况 |
+|---|---------|---------|
+| 1 | "Agent 就是更聪明的 ChatGPT" | **错。** Agent = LLM + 工具 + 记忆 + 规划循环。ChatGPT 一问一答，Agent 会自己动手改代码、跑测试、修 bug |
+| 2 | "模型越强，Agent 就越好用" | **半对。** Agent 表现 = 模型能力 × 上下文质量 × 任务结构清晰度。后两者完全在你手中 |
+| 3 | "我给 Agent 的信息越全面越好" | **错。** 信息过多会淹没关键指令，导致 Agent 行为退化。精准 > 全面 |
+| 4 | "Agent 每次回答都是一次性生成的" | **错。** Agent 在内部跑了一个 Think→Act→Observe 的循环，可能迭代十几轮才给你最终结果 |
+| 5 | "工具和插件越多越好" | **错。** 工具太多会让 Agent 决策混乱、上下文膨胀。Less is More |
+
+带着这些认知，我们开始拆解 Agent 的运作原理。
 
 ---
 
@@ -12,12 +34,8 @@
 
 ### Agent ≠ 更聪明的模型
 
-很多人把 Agent 等同于"更强的 ChatGPT"，这是最常见的误解。实际上：
-
 - **LLM**（大语言模型）是"大脑"——负责理解、推理、生成
 - **Agent** 是围绕这个大脑构建的"任务执行系统"——负责规划、记忆、调用工具、持续迭代
-
-用一个公式表达：
 
 > **Agent = LLM + Memory + Tools + Planning**
 
@@ -50,25 +68,7 @@ flowchart TB
     style PLAN fill:#9B59B6,stroke:#333,color:#fff
 ```
 
-### LLM vs Agent：本质区别
-
-```mermaid
-flowchart LR
-    subgraph LLM_Mode["LLM 模式"]
-        direction LR
-        U1[用户提问] --> L1[模型思考] --> O1[返回回答]
-    end
-
-    subgraph Agent_Mode["Agent 模式"]
-        direction LR
-        U2[用户目标] --> P[规划] --> L2[LLM 推理]
-        L2 --> T[调用工具]
-        T --> M[更新记忆]
-        M --> R{完成了？}
-        R -->|否| L2
-        R -->|是| O2[交付结果]
-    end
-```
+### LLM vs Agent：核心区别
 
 | 维度 | LLM | Agent |
 |------|-----|-------|
@@ -78,9 +78,9 @@ flowchart LR
 | 是否规划 | 有限 | 主动拆解任务、分步执行 |
 | 失败处理 | 一次性回答 | 观察结果 → 反思 → 重试 |
 
-### Agent 的核心闭环：Think → Act → Observe
+### 核心闭环：Think → Act → Observe
 
-无论用的是 Claude Code、Codex 还是 Cursor，所有 Agent 的工作本质都是同一个循环：
+所有 Agent 的工作本质都是同一个循环：
 
 ```mermaid
 flowchart TD
@@ -96,11 +96,11 @@ flowchart TD
     style OB fill:#e8f5e9
 ```
 
-**你的第一个认知升级**：当你对 Agent 说"帮我重构这段代码并补上测试"，它不是一次性生成答案，而是在内部跑了这个循环很多次——先读代码理解结构，再规划修改方案，然后逐步执行修改、运行测试、根据测试结果修复问题，直到通过。
+当你对 Agent 说"帮我重构这段代码并补上测试"，它不是一次性生成答案，而是在内部跑了这个循环很多次——先读代码理解结构，再规划修改方案，然后逐步执行修改、运行测试、根据测试结果修复问题，直到通过。
 
-### 自主性光谱：Agent 不是非黑即白
+### 自主性光谱
 
-Agent 并不是"要么全自动、要么全手动"，而是存在一个自主性光谱：
+Agent 不是"全自动或全手动"，而是存在一个自主性光谱。目前主流 Coding Agent（Claude Code、Codex、Cursor）大多工作在**半自主**区间：Agent 自己规划和执行，但在关键操作（写入文件、执行危险命令、推送代码）时请求你确认。
 
 ```mermaid
 flowchart LR
@@ -110,133 +110,163 @@ flowchart LR
     style C fill:#ffebee
 ```
 
-目前主流的 Coding Agent（Claude Code、Codex、Cursor）大多工作在**半自主**区间：Agent 自己规划和执行，但在关键操作（如写入文件、执行危险命令、推送代码）时请求你确认。
+### 产品实例：Claude Code 与 Opus 4.6
 
-### 产品实例：Claude Code 与 Opus 4.6 的关系
-
-以你在 Part 1 中使用的 Claude Code 为例：
-
-```mermaid
-flowchart TB
-    subgraph Product["Claude Code（Agent 容器）"]
-        WF["工作流 / Agent 循环"]
-        FS["文件系统 / 仓库上下文"]
-        TO["终端 / Git / 搜索"]
-        MT["多 Agent / 子任务编排"]
-    end
-
-    subgraph Model["Opus 4.6（大脑）"]
-        RE["推理与理解"]
-        PL["规划与决策"]
-        CG["代码生成"]
-        RV["审查与调试"]
-    end
-
-    WF --> RE
-    WF --> PL
-    TO --> RE
-    FS --> CG
-    MT --> PL
-    RE --> WF
-    CG --> TO
-    RV --> WF
-
-    style Product fill:#f3e5f5,stroke:#9c27b0
-    style Model fill:#e3f2fd,stroke:#1976d2
-```
-
-一句话总结：**Claude Code 是 Agent 容器（壳 + 工具 + 工作流），Opus 4.6 是其中的大脑（推理 + 编码 + 规划）。** 同理，Codex CLI 之于 GPT-5.x、Gemini CLI 之于 Gemini 3 Pro，都是这个关系。
+**Claude Code 是 Agent 容器（壳 + 工具 + 工作流），Opus 4.6 是其中的大脑（推理 + 编码 + 规划）。** 同理，Codex CLI 之于 GPT-5.x、Gemini CLI 之于 Gemini 3 Pro，都是这个关系。
 
 ---
 
-## 2. LLM：Agent 的大脑——能力与局限
+## 2. Agent-LLM 交互解剖：一次调用里到底发生了什么
 
-LLM 是 Agent 的核心驱动力，但它不是万能的。理解它的能力边界，是用好 Agent 的前提。
+> 这一节揭开"幕后"，让你理解 Agent 不是魔法——它是一个精心设计的软件系统，围绕着一个无状态的 LLM API 构建循环。
 
-### LLM 在 Agent 中做什么
+### 幕后真相：Agent 只是一个 while 循环
 
-| 职责 | 具体表现 |
-|------|----------|
-| **理解意图** | 从你的自然语言中提取真正的目标 |
-| **推理规划** | 把复杂任务拆解成可执行的步骤 |
-| **生成代码** | 写代码、改代码、补测试 |
-| **工具决策** | 判断何时调用什么工具、传什么参数 |
-| **结果评估** | 分析工具返回的结果，决定下一步 |
+当你在终端输入一条指令，Agent **不是**简单地把你的文字发给云端 LLM。它精心构造了一个庞大的 JSON 请求体（payload），为 LLM 构建了一个"完整的现实"来工作。
 
-### 推理方法：Agent 是怎么"想"的
+### API 调用的五层结构
 
-现代 Agent 使用的推理方法，主要源自几篇关键论文。值得注意的是，2025-2026 年的旗舰模型（Claude Opus 4.6、GPT-5.4、Gemini 3 Pro 等）已经把推理能力内置到模型本身（Extended Thinking / 思考 token），不再需要显式地用框架实现这些方法——但理解它们的原理仍然很重要。
-
-#### Chain-of-Thought（CoT）—— 逐步推理（2023, Wei et al.）
-
-让模型"一步步想"，而不是直接跳到答案。这就像让一个工程师先在白板上画思路，再动手写代码。
-
-```mermaid
-flowchart LR
-    Q[复杂问题] --> S1["步骤 1：分析需求"]
-    S1 --> S2["步骤 2：定位相关代码"]
-    S2 --> S3["步骤 3：设计修改方案"]
-    S3 --> S4["步骤 4：考虑边界情况"]
-    S4 --> A[最终答案]
-```
-
-#### ReAct（Reasoning + Acting）—— 边想边做
-
-ReAct 是目前大多数 Coding Agent 的底层范式。它的核心是：**不要想完再做，而是想一步、做一步、看一步。**
+每次 Agent 向 LLM 发送请求时，payload 包含五层内容：
 
 ```mermaid
 flowchart TB
-    Q[用户任务] --> T1["💭 Thought<br/>分析：需要先找到相关文件"]
-    T1 --> A1["🔧 Action<br/>执行：grep 搜索关键函数"]
-    A1 --> O1["👁️ Observation<br/>发现：函数在 src/auth.ts 第 42 行"]
-    O1 --> T2["💭 Thought<br/>分析：需要修改这个函数的逻辑"]
-    T2 --> A2["🔧 Action<br/>执行：编辑 src/auth.ts"]
-    A2 --> O2["👁️ Observation<br/>修改完成，运行测试看看"]
-    O2 --> T3["💭 Thought + Action<br/>运行测试 → 全部通过"]
-    T3 --> Final[任务完成]
+    subgraph Payload["发送给 LLM 的 API Payload"]
+        direction TB
+        P1["① 前缀：System Prompt<br/>人设 · 操作系统 · 项目规则（CLAUDE.md）· 安全约束"]
+        P2["② 工具模式：Tool Schemas<br/>严格 JSON 定义 Agent 可用工具<br/>Read_File · Edit_File · Run_Bash · Search"]
+        P3["③ 上下文：对话历史 + 记忆<br/>之前的对话轮次 · 工具调用结果<br/>（过长时触发压缩/摘要）"]
+        P4["④ 用户输入<br/>你的实际请求"]
+        P5["⑤ 后缀：输出格式约束<br/>强制 LLM 按特定格式输出<br/>（如先 thinking 再 tool_call）"]
+    end
 
-    style T1 fill:#e3f2fd
-    style T2 fill:#e3f2fd
-    style T3 fill:#e3f2fd
-    style A1 fill:#fff3e0
-    style A2 fill:#fff3e0
-    style O1 fill:#e8f5e9
-    style O2 fill:#e8f5e9
+    P1 --> P2 --> P3 --> P4 --> P5
+
+    style P1 fill:#e3f2fd
+    style P2 fill:#fff3e0
+    style P3 fill:#e8f5e9
+    style P4 fill:#fce4ec
+    style P5 fill:#f3e5f5
 ```
 
-#### Reflexion —— 反思学习
+| 层 | 作用 | 你能影响的部分 |
+|----|------|--------------|
+| **① System Prompt** | 设定人设、环境、规则 | CLAUDE.md / AGENTS.md 中的项目规则 |
+| **② Tool Schemas** | 定义 LLM 能调用什么工具 | MCP 配置、Skill 注册 |
+| **③ 上下文** | 对话历史和工具返回结果 | 控制输出长度、分阶段任务 |
+| **④ 用户输入** | 你的请求 | 任务描述的清晰度和结构 |
+| **⑤ 输出约束** | 强制格式化输出 | 通常由 Agent 框架控制 |
 
-当 Agent 犯错时，不只是重试，而是先反思"为什么错了"，再调整策略。
+### Agentic Loop：不是一问一答，是持续循环
 
-```mermaid
-flowchart LR
-    G["生成方案"] --> E["执行"]
-    E --> EV["评估结果"]
-    EV -->|失败| RF["反思：为什么失败？"]
-    RF --> G
-    EV -->|成功| Done["完成"]
+Agent 与 LLM 的交互不是单次请求-响应，而是一个 **while 循环**：
+
+```
+while True:
+    response = LLM.call(system_prompt + tools + context + user_input)
+
+    if response.is_final_text:   # LLM 认为任务完成
+        return response.text
+
+    if response.is_tool_call:    # LLM 要求调用工具
+        result = execute_tool(response.tool_call)  # 在你的本地执行！
+        context.append(result)                      # 把结果追加到上下文
+        continue                                    # 再次调用 LLM
 ```
 
-### 为什么 Agent 有时很聪明，有时很蠢？
+用伪代码展开完整流程：
 
-这是每个 Agent 用户都会遇到的困惑。答案通常不是"模型变笨了"，而是以下因素在影响：
+```python
+def run_autonomous_agent(user_task):
+    # 1. 上下文工程：构建 payload
+    messages = [
+        {"role": "system", "content": build_system_prompt()},  # ① 前缀
+        {"role": "user", "content": user_task}                  # ④ 用户输入
+    ]
 
-| 影响因素 | 表现 | 你能做什么 |
-|----------|------|-----------|
-| **上下文质量** | 给的信息太杂/太少/自相矛盾 | 只给完成当前任务最相关的信息 |
-| **任务描述** | 目标模糊、边界不清 | 用"先分析再执行"的结构化指令 |
-| **代码组织** | 项目结构混乱、命名不规范 | 维护好项目的 README 和目录结构 |
-| **上下文过长** | 对话太长导致早期信息被"遗忘" | 分阶段任务，必要时重开会话 |
-| **工具返回噪音** | 命令输出太长淹没关键信息 | 控制输出长度，只保留关键结果 |
-| **指令冲突** | 规则文件与当前指令矛盾 | 确保 CLAUDE.md 等配置文件内容一致 |
+    while True:  # Agentic Loop
+        # 2. 调用云端 LLM（② 工具模式 + ③ 上下文一并发送）
+        response = cloud_llm_api.invoke(
+            model="claude-opus-4-6",
+            messages=messages,
+            tools=TOOL_SCHEMAS  # Bash, FileEdit, Search...
+        )
 
-> **核心认知**：Agent 的表现 = 模型能力 × 上下文质量 × 任务结构清晰度。模型能力你无法控制，但后两者完全在你手中。
+        # 3. LLM 不再请求工具 → 任务完成
+        if not response.tool_calls:
+            return response.final_text
+
+        messages.append({"role": "assistant", "content": response.tool_calls})
+
+        # 4. 在本地执行工具，将结果反馈给 LLM
+        for tool_call in response.tool_calls:
+            try:
+                result = execute_in_local_terminal(tool_call.name, tool_call.args)
+            except Exception as error:
+                # 自动纠错：将错误信息反馈给 LLM，让它修正
+                result = f"Command failed: {error}. Please fix."
+
+            messages.append({
+                "role": "tool_result",
+                "tool_id": tool_call.id,
+                "content": result
+            })
+```
+
+### 驯服概率：Agent 如何让 LLM 可靠
+
+LLM 本质是概率预测引擎——预测下一个 token。如果不加约束，它可能编造命令参数或生成非法语法。Agent 用多层机制确保可靠性：
+
+| 机制 | 原理 | 效果 |
+|------|------|------|
+| **原生工具调用微调** | 模型在数百万工具调用样本上训练，输出严格匹配 Tool Schema 的 JSON | 格式正确率 >99% |
+| **自动纠错循环** | LLM 生成的命令出错 → Agent 捕获 stderr → 反馈给 LLM → LLM 修正重试 | 大多数语法错误自动修复 |
+| **语法验证守门** | 编辑文件后立即运行 linter/编译器，失败则自动回滚 | 防止引入语法破坏 |
+| **辅助模型校验** | 用便宜快速的小模型（如 Haiku）预审高风险命令 | 拦截危险操作 |
+| **输出截断** | 命令输出过长时只保留首尾关键行，中间截断 | 防止上下文膨胀 |
+
+### 安全编辑：Agent 如何改你的代码不翻车
+
+允许 AI 自主编辑代码库是危险的。Agent 通过高度约束的防御性编程来保障安全：
+
+**为什么不让 LLM 输出整个文件？** 因为太慢、浪费 token，且 LLM 容易在长文件中途"遗忘"代码段导致回归。
+
+**实际做法——块级搜索替换**：LLM 只需输出要修改的代码块（Search）和替换内容（Replace），Agent 负责执行：
+
+```python
+def safe_edit_file(filepath, search_block, replace_block):
+    backup_path = filepath + ".bak"
+    shutil.copy(filepath, backup_path)        # 1. 先备份
+
+    content = read_file(filepath)
+    if search_block not in content:
+        return "Error: 找不到该代码块，请检查缩进"
+
+    new_content = content.replace(search_block, replace_block)
+    write_file(filepath, new_content)
+
+    syntax_ok = run_linter(filepath)           # 2. 语法检查
+    if not syntax_ok.success:
+        shutil.copy(backup_path, filepath)     # 3. 失败则回滚
+        return f"Edit reverted. 语法错误: {syntax_ok.error}"
+
+    return "编辑成功，语法检查通过"
+```
+
+### 上下文压缩：当对话太长怎么办
+
+即使有百万 token 的上下文窗口，无限追加也会导致成本激增和"中间遗忘"。Agent 的压缩策略：
+
+| 策略 | 做法 |
+|------|------|
+| **输出截断** | 命令输出保留首 50 行 + 尾 100 行，中间替换为 `[N lines truncated]` |
+| **摘要压缩** | 用轻量模型（如 Haiku）对旧对话做摘要，替换原始内容 |
+| **状态提取** | 将关键发现写入 scratchpad 文件（如 `.agent_memory.md`），清空对话后可回读 |
 
 ---
 
 ## 3. Memory：上下文是 Agent 的命脉
 
-Memory（记忆）决定了 Agent 能"记住"多少——它直接影响 Agent 能处理多复杂的任务、能保持多长时间的连贯性。
+Memory 决定了 Agent 能"记住"多少——直接影响它能处理多复杂的任务、能保持多长时间的连贯性。
 
 ### 三种记忆类型
 
@@ -265,68 +295,28 @@ flowchart TB
     style LTM fill:#e8f5e9,stroke:#388e3c
 ```
 
-### 认知记忆架构
-
-从认知科学的角度，Agent 的记忆可以对应人类大脑的四种记忆：
-
-```mermaid
-flowchart TB
-    Agent["Agent 智能体"]
-    SM["📚 语义记忆<br/>世界知识 · 编程语言规范<br/>（来自 LLM 训练数据）"]
-    EM["📝 情景记忆<br/>之前做过的任务 · 犯过的错<br/>（来自对话历史和日志）"]
-    WM["⚡ 工作记忆<br/>当前正在处理的代码和目标<br/>（来自上下文窗口）"]
-    PM["🔧 程序记忆<br/>怎么调用工具 · 怎么跑测试<br/>（来自 Skills 和指令）"]
-
-    SM --> Agent
-    EM --> Agent
-    WM --> Agent
-    PM --> Agent
-```
-
 ### 上下文 ≠ 越多越好
 
-新手最容易犯的错是"一股脑把所有信息塞给 Agent"，觉得信息越全越安全。现实往往相反：
+新手最容易犯的错是"一股脑把所有信息塞给 Agent"。现实往往相反：
 
 | 问题 | 症状 | 解法 |
 |------|------|------|
-| **重要信息被淹没** | Agent 忽略了你明确给的指令 | 精简上下文，突出关键信息 |
-| **矛盾指令变多** | Agent 的行为前后不一致 | 检查规则文件是否自相矛盾 |
+| **重要信息被淹没** | Agent 忽略了你的明确指令 | 精简上下文，突出关键信息 |
+| **矛盾指令** | Agent 行为前后不一致 | 检查规则文件是否自相矛盾 |
 | **过拟合噪音** | Agent 对无关细节投入过多注意力 | 只给完成当前目标最相关的信息 |
 
 > **黄金原则：不是"尽可能多给"，而是"只给完成当前目标最相关的高密度信息"。**
 
-### 上下文污染与漂移：Agent 变蠢的常见原因
+### Agent 变蠢的三大原因
 
-#### 上下文污染
+**上下文污染**：Agent 抓着旧结论不放，或被无关日志带偏。
+→ 重开会话，只保留当前任务必要背景。
 
-Agent 一直抓着旧结论不放，或被无关日志带偏。
+**Memory 污染**：Agent 学到了错误偏好并不断重复。
+→ 定期审查 CLAUDE.md / Memory 文件，区分永久规则和临时偏好。
 
-**常见原因**：贴了太多过时信息、指令冲突、规则文件太长且自相矛盾
-
-**解法**：
-- 重开一个干净会话
-- 只保留当前任务的必要背景
-- 把长期规则和临时任务背景分离
-
-#### Memory 污染
-
-Agent 学到了错误偏好，并在后续任务里不断重复。
-
-**常见原因**：随手让 Agent "记住"只适用于单次任务的策略、自动记忆缺乏清理
-
-**解法**：
-- 定期审查 CLAUDE.md / Memory 文件
-- 区分"永久规则"和"本次任务偏好"
-- 发现错误记忆立即清理
-
-#### 长任务漂移
-
-任务一长，Agent 忘记原目标，开始优化细枝末节或跑题。
-
-**解法**：
-- 不要用一句话描述一个两小时的任务
-- 分阶段执行：先出计划 → 每阶段结束做总结 → 明确下一阶段完成条件
-- 必要时重开会话，带上前阶段摘要
+**长任务漂移**：任务一长，Agent 忘记原目标，纠结细枝末节。
+→ 分阶段执行：先出计划 → 每阶段结束做总结 → 必要时重开会话带上摘要。
 
 > 📖 Memory 的深度技术细节（认知架构演进、向量数据库 RAG、Memory 强化学习）见 👉 [附录：Memory 与上下文工程详解](./reference-memory-and-context.md)
 
@@ -334,11 +324,9 @@ Agent 学到了错误偏好，并在后续任务里不断重复。
 
 ## 4. Tools、MCP 与 Skills：Agent 的手脚
 
-Agent 光有"大脑"不够，还需要"手脚"来与真实世界交互。工具系统决定了 Agent 能做什么、做得多好。
+Agent 光有"大脑"不够，还需要"手脚"来与真实世界交互。
 
 ### 三层行动空间
-
-Agent 的行动能力可以分为三层，从近到远：
 
 ```mermaid
 flowchart TB
@@ -357,7 +345,6 @@ flowchart TB
     subgraph L3["第三层：多 Agent / 外部服务"]
         F7["子 Agent 并行处理"]
         F8["云端 Agent 隔离执行"]
-        F9["Agent Team 协作"]
     end
 
     L1 --> L2 --> L3
@@ -367,53 +354,11 @@ flowchart TB
     style L3 fill:#fce4ec,stroke:#c62828
 ```
 
-**实用原则**：先把第一层打磨好，再考虑第二层和第三层。如果 Agent 连"读懂和修改当前项目"都不稳定，再复杂的 MCP 也帮不了你。
-
-### 工具调用：Agent 如何"动手"
-
-当 Agent 决定需要使用工具时，内部流程是这样的：
-
-```mermaid
-sequenceDiagram
-    participant U as 用户
-    participant LLM as LLM 大脑
-    participant T as 工具（终端/文件/API）
-
-    U->>LLM: 帮我修复这个 bug
-    LLM->>LLM: 推理：需要先找到相关代码
-    LLM->>T: 调用工具：grep "error" src/
-    T-->>LLM: 返回搜索结果
-    LLM->>LLM: 推理：定位到 src/api.ts 第 87 行
-    LLM->>T: 调用工具：读取 src/api.ts
-    T-->>LLM: 返回文件内容
-    LLM->>LLM: 推理：发现空指针问题，生成修复方案
-    LLM->>T: 调用工具：编辑 src/api.ts
-    T-->>LLM: 编辑完成
-    LLM->>T: 调用工具：运行测试
-    T-->>LLM: 测试全部通过 ✅
-    LLM->>U: Bug 已修复，测试通过
-```
-
-关键在于步骤 2——**LLM 需要在有限上下文中准确判断：该不该调用工具？调用哪个？传什么参数？** 这也是 Agent 出错的高发区。
+**实用原则**：先把第一层打磨好，再考虑第二层和第三层。
 
 ### MCP：Agent 的"USB-C 接口"
 
-**MCP（Model Context Protocol）** 最初由 Anthropic 提出，2025 年底捐赠给 Linux Foundation，现已成为行业中立的标准化工具集成协议（OpenAI、Google、Microsoft 等均已支持）。它不是模型，不是 Agent，而是 **Agent 与外部能力之间的连接标准**。
-
-```mermaid
-flowchart LR
-    Host["MCP Host<br/>Agent 应用<br/>（Claude Code / Cursor）"] <--> Client["MCP Client<br/>连接管理"]
-    Client <--> S1["MCP Server<br/>GitHub"]
-    Client <--> S2["MCP Server<br/>浏览器"]
-    Client <--> S3["MCP Server<br/>数据库"]
-
-    style Host fill:#4A90D9,stroke:#333,color:#fff
-    style Client fill:#F5A623,stroke:#333,color:#fff
-```
-
-**为什么需要 MCP？** 如果没有标准协议，每接一个外部能力都要做一套私有集成——不同工具不同接口、不同权限模型、不同返回格式。MCP 的价值就是把"接能力"这件事标准化，就像 USB-C 统一了充电和数据传输接口。
-
-#### MCP 工作流程
+**MCP（Model Context Protocol）** 是标准化的工具集成协议，最初由 Anthropic 提出，2025 年底捐赠给 Linux Foundation，现为行业中立标准（OpenAI、Google、Microsoft 等均已支持）。
 
 ```mermaid
 sequenceDiagram
@@ -426,50 +371,50 @@ sequenceDiagram
     H->>S: ④ 发送调用请求
     S->>S: ⑤ 执行操作（如创建 PR）
     S-->>H: ⑥ 返回结果
-    H->>H: ⑦ LLM 处理结果，继续或回复用户
 ```
-
-#### 本地 MCP vs 远程 MCP
-
-| 类型 | 适用场景 | 示例 |
-|------|----------|------|
-| **本地 MCP** | 对数据出域敏感、低延迟 | 本地文件系统、本地数据库、本地浏览器 |
-| **远程 MCP** | 团队共享、需要集中鉴权 | GitHub、Jira、知识库、设计平台 |
 
 ### Skills：Agent 的"方法论手册"
 
-如果 MCP 是给 Agent **能力**（"能访问什么"），那 Skills 就是教 Agent **方法**（"怎么做"）。
+MCP 给 Agent **能力**（"能访问什么"），Skills 教 Agent **方法**（"怎么做"）。Skill 的本质是把经验沉淀为可复用的工作流模板。
 
-**Skill 的本质是把经验沉淀为可复用的工作流模板**，让 Agent 遵循经过验证的最佳实践，而不是每次都从零开始"自由发挥"。
+### Skills vs MCP：互补而非替代
 
-#### Skill 的三层加载机制
+2025-2026 年社区出现了一个趋势：**越来越多团队优先使用 Skills 而非 MCP 来扩展 Agent 能力**。但这不是"抛弃 MCP"——两者解决的是完全不同层面的问题：
 
 ```mermaid
-flowchart TB
-    M["📋 元数据层 Metadata<br/>名称 · 描述 · 触发条件<br/>~100 tokens · 始终加载"]
-    I["📝 指令层 Instructions<br/>执行步骤 · 规则 · 输出格式<br/>~1000 tokens · 按需加载"]
-    R["📦 资源层 Resources<br/>脚本 · 模板 · 参考资料<br/>5000+ tokens · 引用时加载"]
+flowchart LR
+    subgraph Skills["Skills = 大脑"]
+        S1["自然语言定义<br/>Markdown 即可"]
+        S2["零基础设施<br/>无需部署/运维"]
+        S3["~200 tokens<br/>元数据极轻量"]
+        S4["教 Agent '怎么做'<br/>方法论 · 流程 · 最佳实践"]
+    end
 
-    M -->|触发时| I
-    I -->|需要时| R
+    subgraph MCP["MCP = 双手"]
+        M1["JSON Schema 定义<br/>需要编码"]
+        M2["需要 Server 部署<br/>进程管理 · 错误处理"]
+        M3["工具描述消耗<br/>较多 tokens"]
+        M4["给 Agent '新能力'<br/>外部 API · 数据库 · 服务"]
+    end
 
-    style M fill:#e3f2fd,stroke:#1976d2
-    style I fill:#fff3e0,stroke:#f57c00
-    style R fill:#e8f5e9,stroke:#388e3c
+    Skills ---|互补协作| MCP
 ```
 
-**为什么这很重要？** 传统做法是把所有指令写进一个巨大的 Prompt（可能 40,000 tokens），每次对话都全量加载。Skill 通过渐进式加载（progressive disclosure），只在需要时才加载相关内容，大幅节省 token 消耗。
+| 维度 | Skills | MCP |
+|------|--------|-----|
+| **本质** | 知识注入（"怎么做"） | 能力扩展（"能做什么"） |
+| **载体** | Markdown 文本 | JSON-RPC Server |
+| **部署** | 放个文件即可 | 需要启动/管理进程 |
+| **维护成本** | 极低 | 中-高 |
+| **Token 消耗** | 极低（渐进加载） | 中等（工具描述预注入） |
+| **人类可编辑** | 自然语言，任何人都能写 | 需要开发能力 |
+| **适合场景** | 工作流、SOP、代码审查清单、调试方法 | GitHub/Jira/数据库/浏览器集成 |
 
-### Skill / MCP / 插件 / 脚本：到底用哪个？
+**为什么 Skills 趋势上升？** 因为 Skills 用自然语言定义工作流，天然适合人-Agent 协作：人写方法论、Agent 执行。这比为每个工作流都开发一个 MCP Server 高效得多。
 
-| 形态 | 核心价值 | 类比 | 适合场景 |
-|------|----------|------|----------|
-| **Skill** | 复用经验和流程 | 方法论手册 | 重复性工作流、标准化流程、团队 SOP |
-| **MCP** | 暴露外部能力和数据源 | USB-C 接口 | 浏览器、数据库、GitHub、知识库 |
-| **插件** | 产品层集成和体验封装 | 应用扩展 | IDE 集成、客户端功能增强 |
-| **脚本** | 确定性自动化动作 | 命令工具 | 格式化、测试、构建、批处理 |
+**最佳实践：Skills + MCP 组合使用**。例如"代码审查"工作流：Skill 定义审查清单和流程（方法论），MCP 连接 GitHub 读取 PR diff 和提交评论（能力）。
 
-#### 快速决策树
+### 快速决策树
 
 ```mermaid
 flowchart TB
@@ -487,19 +432,15 @@ flowchart TB
 
 ### Less is More：工具不是越多越好
 
-这是一个反直觉但极其重要的原则：**给 Agent 配置的工具/Skill 越多，效果不一定越好，甚至可能变差。**
+给 Agent 配置的工具越多，效果不一定越好。原因：
 
-原因：
-- **上下文膨胀**：每个工具的描述都要占 token，工具太多会挤压真正有用的上下文空间
-- **决策混乱**：面对 50 个工具，模型更难选对那个正确的
+- **上下文膨胀**：每个工具描述都占 token，挤压有用的上下文空间
+- **决策混乱**：面对 50 个工具，模型更难选对正确的那个
 - **延迟增加**：工具发现和选择的开销随数量增长
 
-**实用建议**：
-- 只配置当前任务真正需要的工具
-- 优先用 CLI/脚本解决能解决的问题
-- MCP 留给真正需要标准化集成的外部服务
+**实用建议**：只配置当前任务需要的工具；优先用 CLI/脚本解决能解决的问题；MCP 留给真正需要标准化集成的外部服务。
 
-> 📖 MCP 协议细节、Skill 开发入门、插件生态对比见 👉 [附录：MCP 与 Skills 详解](./reference-mcp-and-skills.md)
+> 📖 MCP 协议细节、Skill 开发入门、工具生态对比见 👉 [附录：MCP 与 Skills 详解](./reference-mcp-and-skills.md)
 >
 > 🧩 热门 Skills 框架与资源推荐见 👉 [README · Agent Skills 资源推荐](../../README.md#-agent-skills-资源推荐)
 
@@ -507,9 +448,14 @@ flowchart TB
 
 ## 5. Planning 与多 Agent 协作
 
-Agent 不只是"接到任务就乱做"，优秀的 Agent 会先规划、再执行、遇到问题会反思调整。
-
 ### 规划循环
+
+优秀的 Agent 面对复杂任务时会：
+
+1. **拆解子任务**：分析需求 → 设计数据模型 → 实现逻辑 → 写测试
+2. **标记依赖**：哪些可以并行、哪些必须串行
+3. **定义完成条件**：每个子任务怎样算"做完了"
+4. **执行中反思**：测试失败？分析原因，调整方案，不在同一个错误上打转
 
 ```mermaid
 flowchart LR
@@ -521,12 +467,27 @@ flowchart LR
     Eval -->|完成| Done["✅ 输出结果"]
 ```
 
-实际工作中，这意味着一个好的 Agent 在面对"给这个项目加上用户认证功能"时，会：
+#### 评估与终止：Agent 怎么知道自己做完了
 
-1. **拆解子任务**：分析需求 → 设计数据模型 → 实现认证逻辑 → 添加路由 → 写测试
-2. **标记依赖**：哪些子任务可以并行、哪些必须串行
-3. **定义完成条件**：每个子任务怎样算"做完了"
-4. **执行中反思**：测试失败了？分析原因，调整方案，不在同一个错误上打转
+Agent 没有"工作软件"的内在概念。它依赖确定性系统来锚定自己的概率输出：
+
+- **测试套件**：跑 `npm test` / `pytest`，通过 = 完成，失败 = 继续修
+- **反思机制**：测试失败后强制 LLM 先分析原因再修改，避免盲目重试
+- **熔断器**：超过最大迭代次数（如 5-7 次）仍未通过，自动停止并汇报
+
+```python
+def verify_and_terminate(max_iterations=5):
+    for i in range(max_iterations):
+        result = run_command("npm test")
+        if result.exit_code == 0:
+            return {"status": "success", "iterations": i + 1}
+
+        # 强制反思后再修改
+        llm_response = llm.call(f"测试失败: {result.stderr}\n先分析原因，再修复。")
+        apply_fixes(llm_response.tool_calls)
+
+    return {"status": "failed", "message": f"尝试 {max_iterations} 次后仍未通过"}
+```
 
 ### 多 Agent 协作
 
@@ -544,189 +505,90 @@ flowchart TB
     Orch --> Final["最终交付"]
 ```
 
-**Agent Team 互审模式**：多个 Agent 像"对手团队"（team of rivals）一样互相检查——Planner 负责规划、Coder 负责执行、Reviewer 负责审查。错误在早期就被发现，而不是积累到最后爆发。
+**Planner-Worker 架构**：强推理模型（如 Opus）负责规划，快速模型（如 Haiku）负责执行单个子任务。Planner 不写代码，Worker 不做全局规划——各司其职，减少出错。
 
-### 黑盒 vs 人工监督 PlanAct
-
-| 模式 | 特点 | 风险 |
-|------|------|------|
-| **黑盒自治** | Agent 完全自主，隐藏推理过程 | 调试难、合规难、长流程易失控 |
-| **人工监督 PlanAct** | 先规划 → 人工审核 → 再执行 | 更安全、可解释、可中断 |
-
-**推荐做法**：复杂任务先让 Agent 出计划（Plan），你审批后再执行（Act）。这不是"不信任 Agent"，而是工程级别的安全实践。
-
-### 什么时候需要多 Agent？
+### 什么时候用多 Agent？
 
 | 场景 | 推荐 |
 |------|------|
-| 单个小 bug 修复 | 单 Agent 就够 |
+| 单个小 bug 修复 | 单 Agent |
 | 中等功能开发 | 单 Agent + 分阶段执行 |
 | 大型重构 / 多模块修改 | 多 Agent 并行 + Orchestrator |
 | 高风险操作（生产环境） | 多 Agent 互审 + 人工把关 |
 
----
+### 黑盒 vs 人工监督
 
-## 6. 技术演进：从 ChatGPT 到 Agent OS
-
-理解 Agent 不是突然出现的——它是技术逐步演进的产物。了解这条脉络，能帮你判断当前技术的成熟度和局限性。
-
-### 六个阶段一览
-
-```mermaid
-flowchart LR
-    S0["阶段 0<br/>🗣️ 会说话<br/>2020-2022"] --> S1["阶段 1<br/>🔍 会查资料<br/>2022-2023"]
-    S1 --> S2["阶段 2<br/>🔧 会用工具<br/>2023"]
-    S2 --> S3["阶段 3<br/>📋 会规划<br/>2023-2024"]
-    S3 --> S4["阶段 4<br/>🖥️ 会操作电脑<br/>2024-2025"]
-    S4 --> S5["阶段 5<br/>🤖 会持续执行<br/>2025-2026"]
-
-    style S0 fill:#e8eaf6
-    style S1 fill:#e3f2fd
-    style S2 fill:#e0f7fa
-    style S3 fill:#e8f5e9
-    style S4 fill:#fff3e0
-    style S5 fill:#fce4ec
-```
-
-| 阶段 | 核心能力 | 代表技术/产品 | 解决了什么 | 还差什么 |
-|------|----------|--------------|-----------|---------|
-| **0. 会说话** | 自然语言问答 | GPT-3, ChatGPT | 能和人对话 | 不联网、不能行动 |
-| **1. 会查资料** | 检索增强（RAG） | 向量数据库、联网搜索 | 接入外部知识 | 只能回答，不能做事 |
-| **2. 会用工具** | Function Calling | ChatGPT Plugins, API 调用 | 首次有了"行动能力" | 单步调用，多步易失败 |
-| **3. 会规划** | ReAct、Planning | AutoGPT, Agent 框架 | 能拆任务、做闭环 | 依赖 API，遇 GUI 就卡 |
-| **4. 会操作电脑** | Computer Use | Claude Computer Use, Operator | 可直接操作界面 | 稳定性不足、成本高 |
-| **5. 会持续执行** | Agent OS | Coding Agent, Agent Team | 长期运行、本地部署 | 仍需人工监督和护栏 |
-
-### 每个阶段为什么会进入下一个？
-
-```mermaid
-flowchart TB
-    P0["纯 LLM<br/>不联网、幻觉"] -->|需要外部知识| P1["RAG<br/>会查不会做"]
-    P1 -->|需要行动能力| P2["工具调用<br/>单步、用户强引导"]
-    P2 -->|需要多步闭环| P3["Agent 工作流<br/>依赖 API"]
-    P3 -->|现实世界没那么多 API| P4["Computer Use<br/>稳定性不足"]
-    P4 -->|需要成熟执行环境| P5["Agent OS<br/>当前阶段"]
-```
-
-### 当前阶段的关键认知
-
-我们正处于**阶段 5 的早期**。这意味着：
-
-- Agent 已经具备从理解到执行的完整能力链
-- 但**稳定性、安全性、成本控制**仍是核心挑战
-- 竞争重心从**模型能力**转向**系统工程能力**（上下文管理、工具编排、状态持久化）
-- **Harness 工程**（围绕模型的系统层设计）比模型选择更决定最终效果
-
-> 📖 每个阶段的详细解析、里程碑时间线和代表性论文/产品见 👉 [附录：技术演进六阶段详解](./reference-agent-evolution.md)
+**推荐做法**：复杂任务先让 Agent 出计划（Plan），你审批后再执行（Act）。这不是"不信任 Agent"，而是工程级别的安全实践。
 
 ---
 
-## 7. 人机协同：从"能用"到"好用"
-
-掌握了 Agent 的原理后，最终目标是**让 Agent 真正帮你提效**。这一节讲的是实战中最重要的优化策略。
+## 6. 人机协同：从"能用"到"好用"
 
 ### Harness 工程：真正的杠杆不在模型
 
-2025-2026 年兴起了一个新概念：**Harness 工程**——不是优化模型本身，而是设计围绕模型的"马具"（系统层），包括提示设计、工具编排、验证循环、状态追踪。
+**Harness 工程**是 2025-2026 年兴起的概念——不是优化模型本身，而是设计围绕模型的系统层：提示设计、工具编排、验证循环、状态追踪。
 
-一个真实案例：LangChain 团队仅通过改进 Harness（自验证、上下文注入、故障检测），**没有换模型**，就把编码 Agent 从排行榜 Top 30 提升到 Top 5。
+实证：LangChain 团队仅通过改进 Harness（自验证、上下文注入、故障检测），**没有换模型**，就把编码 Agent 从排行榜 Top 30 提升到 Top 5。
 
-```mermaid
-flowchart TB
-    subgraph Harness["Harness 工程（你能控制的）"]
-        INS["📜 Instructions<br/>清晰的指令和规则"]
-        CTX["📂 Context Assembly<br/>精准的上下文组装"]
-        VER["✅ Verification<br/>自动化验证和恢复"]
-        TRK["📊 Tracking<br/>追踪和可观测性"]
-    end
+> **Agent 效果 = 模型能力 × Harness 质量。** 模型能力是基线，Harness 是放大器。
 
-    subgraph Model["模型层（你不能控制的）"]
-        M["LLM 推理能力"]
-    end
+### 为什么 Agent 有时很聪明，有时很蠢？
 
-    Harness --> Model
-    Model --> Output["Agent 输出质量"]
-    Harness --> Output
+答案通常不是"模型变笨了"，而是：
 
-    style Harness fill:#e8f5e9,stroke:#388e3c
-    style Model fill:#f5f5f5,stroke:#999
-```
+| 影响因素 | 表现 | 你能做什么 |
+|----------|------|-----------|
+| **上下文质量** | 信息太杂/太少/自相矛盾 | 只给最相关的信息 |
+| **任务描述** | 目标模糊、边界不清 | 用结构化指令 |
+| **上下文过长** | 早期信息被"遗忘" | 分阶段任务，必要时重开会话 |
+| **工具返回噪音** | 命令输出太长淹没关键信息 | 控制输出长度 |
+| **指令冲突** | 规则文件与当前指令矛盾 | 确保配置文件内容一致 |
 
-> **关键洞察：Agent 效果 = 模型能力 × Harness 质量。** 模型能力是基线（选对模型很重要），但 Harness 是真正的放大器。2026 年，成功的 Agent 项目 90% 取决于 Harness 与协同设计，而非单纯模型能力。
+### Agent 七大失败模式速查
 
-### Agent 的七大失败模式
+| # | 失败模式 | 解法 |
+|---|---------|------|
+| 1 | **上下文污染**：抓着旧结论不放 | 重开会话，精简上下文 |
+| 2 | **Memory 污染**：错误偏好不断重复 | 审查并清理 Memory 文件 |
+| 3 | **长任务漂移**：忘记原目标 | 分阶段执行，定期总结 |
+| 4 | **并行干扰**：多 Agent 改同一片代码 | 划清文件边界 |
+| 5 | **stdout 吞 token**：成本暴涨 | 只保留关键输出 |
+| 6 | **环境假设错误**：假设错误的工具链版本 | 在指令中声明环境信息 |
+| 7 | **权限失控**：执行超预期危险操作 | 根据任务风险调节权限 |
 
-学 Agentic Coding，真正的分水岭不是第一次成功，而是**第一次失败后你能不能看懂它为什么失败**。
+### Token 节约技巧
 
-| # | 失败模式 | 症状 | 根因 | 解法 |
-|---|---------|------|------|------|
-| 1 | **上下文污染** | Agent 抓着旧结论不放 | 信息过时、指令冲突 | 重开会话，精简上下文 |
-| 2 | **Memory 污染** | 错误偏好不断重复 | 错误规则被持久化 | 审查并清理 Memory 文件 |
-| 3 | **长任务漂移** | 忘记原目标，纠结细节 | 任务太大、缺乏阶段性检查 | 分阶段执行，定期总结 |
-| 4 | **并行干扰** | 多 Agent 修改同一片代码 | 职责边界不清 | 划清并行任务的文件边界 |
-| 5 | **stdout 吞 token** | 成本暴涨，质量下降 | 命令输出全量塞入上下文 | 只保留错误摘要和关键结果 |
-| 6 | **环境假设错误** | Agent 假设错误的工具链版本 | 本地环境未在上下文中说明 | 在指令中声明环境信息 |
-| 7 | **权限失控** | 执行超预期的危险操作 | 权限粒度太粗 | 根据任务风险动态调节权限 |
-
-### Token 节约实战技巧
-
-Token = 成本 + 上下文质量。省 token 不只是省钱，更是提升 Agent 表现。
-
-| 技巧 | 说明 | 预期节省 |
-|------|------|---------|
-| **控制命令输出** | 给 Agent 的命令加 `\| head -50` 或 `\| tail -20` | 30-70% |
-| **分阶段任务** | 大任务拆成多个小会话，每次只带必要上下文 | 40-60% |
-| **Skill 渐进加载** | 用 Skill 替代巨型 Prompt，按需加载 | 50-80% |
-| **摘要替代全文** | 让 Agent 总结阶段成果，丢弃中间细节 | 30-50% |
-| **选对模型** | 简单任务用 Haiku/Sonnet，复杂任务用 Opus | 60-80% |
-| **利用缓存** | 利用 Prompt Cache（重复前缀自动折扣） | 50-90% |
-
-### 大型项目中如何高效使用 Agent
-
-当项目有成百上千个文件时，Agent 不可能把所有文件都读进上下文。关键是帮 Agent **快速定位**：
-
-1. **维护好入口文件**：README.md、CLAUDE.md 应该包含项目结构、核心模块和启动命令
-2. **渐进式上下文**：先让 Agent 读目录结构和入口文件，再按需深入具体模块
-3. **规则分层**：全局规则放 `~/.claude/settings.json`，项目规则放项目根目录的 `CLAUDE.md`
-4. **任务聚焦**：每次任务只涉及一个明确的模块或功能，不要一次改太多
-
-### 人机协同的核心方法论
-
-Agent 不是"自动驾驶"，而是"高效协作者"。最佳的人机协同模式是：
-
-```mermaid
-flowchart LR
-    H["👤 人类负责"] --> D["判断 · 决策 · 创意 · 验收"]
-    A["🤖 Agent 负责"] --> E["速度 · 规模 · 执行 · 迭代"]
-    D --- Collab["协同区间"]
-    E --- Collab
-    Collab --> Result["高质量交付"]
-```
-
-**人工引导 Agent 的核心技巧**：
-
-| 技巧 | 具体做法 |
+| 技巧 | 预期节省 |
 |------|---------|
-| **先分析再执行** | 要求 Agent 先给出方案/计划，你审批后再执行 |
-| **拆解复杂需求** | 把"做一个完整功能"拆成"先做数据层→再做逻辑层→最后做UI" |
-| **设置完成条件** | 明确告诉 Agent "做完后运行 `npm test`，全部通过才算完成" |
-| **分阶段回报** | 每完成一个子任务就检查结果，不要放任跑到底 |
-| **控制变更范围** | 告诉 Agent "只修改 src/auth/ 目录下的文件" |
-| **错了及时止损** | 发现方向错误立即叫停，重开会话从正确方向开始 |
+| 控制命令输出 `\| head -50`  | 30-70% |
+| 分阶段任务，每次只带必要上下文 | 40-60% |
+| 用 Skill 替代巨型 Prompt | 50-80% |
+| 简单任务用 Haiku/Sonnet，复杂用 Opus | 60-80% |
+| 利用 Prompt Cache | 50-90% |
+
+### 人工引导 Agent 的核心技巧
+
+| 技巧 | 做法 |
+|------|------|
+| **先分析再执行** | 要求 Agent 先给方案，你审批后再执行 |
+| **拆解复杂需求** | "先做数据层→再做逻辑层→最后做 UI" |
+| **设置完成条件** | "运行 `npm test`，全部通过才算完成" |
+| **分阶段回报** | 每完成一个子任务就检查结果 |
+| **控制变更范围** | "只修改 src/auth/ 目录下的文件" |
 
 ### Agentic Coding vs Vibe Coding
 
-社区中有一个术语叫 **Vibe Coding**（氛围编码）：开发者不真正理解代码意图，把大量生成的代码当作黑箱堆砌，"看起来能跑就接受"。
-
 | 维度 | Agentic Coding | Vibe Coding |
 |------|---------------|-------------|
-| **理解** | 开发者理解问题和代码变更的影响 | "先让它写出来再说" |
-| **验证** | 每次变更都通过测试/build 确认 | "跑一下没报错就行" |
-| **责任** | 开发者对结果负责，Agent 是协作者 | 责任模糊，出错怪 AI |
+| **理解** | 开发者理解代码变更的影响 | "先让它写出来再说" |
+| **验证** | 每次变更都通过测试确认 | "跑一下没报错就行" |
+| **责任** | 开发者对结果负责 | 责任模糊，出错怪 AI |
 
-**Agentic Coding 的核心态度是**：Agent 帮你执行，但你对结果负责。理解这一点，才能真正把 Agent 用好，而不是变成"AI 出错了我也不知道为什么"的被动角色。
+**Agentic Coding 的核心态度**：Agent 帮你执行，但你对结果负责。
 
-> 📖 人机协同的更多方法论和实战案例见 👉 [附录：人机协同与 Agent 优化指南](./reference-human-agent-collaboration.md)
+> 📖 技术演进（从 ChatGPT 到 Agent OS 的六个阶段）见 👉 [附录：技术演进六阶段详解](./reference-agent-evolution.md)
+>
+> 📖 人机协同的更多方法论见 👉 [附录：人机协同与 Agent 优化指南](./reference-human-agent-collaboration.md)
 
 ---
 
@@ -735,14 +597,14 @@ flowchart LR
 | 核心概念 | 一句话总结 |
 |----------|-----------|
 | **Agent** | 不是更聪明的模型，是围绕 LLM 构建的任务执行系统 |
-| **LLM** | Agent 的大脑，负责理解、推理、生成、工具决策 |
-| **Memory** | Agent 的命脉，越精准越好，不是越多越好 |
-| **Tools/MCP** | Agent 的手脚和标准接口，Less is More |
-| **Skills** | 把经验沉淀为可复用的方法论模板 |
-| **Planning** | 先规划再执行，反思后迭代 |
+| **Agent-LLM 交互** | 本质是 while 循环 + 精心构造的 API payload |
+| **Memory** | 越精准越好，不是越多越好 |
+| **Tools/MCP** | Agent 的双手和标准接口，Less is More |
+| **Skills** | 把经验沉淀为可复用的方法论模板（大脑），与 MCP（双手）互补 |
+| **Planning** | 先规划再执行，反思后迭代，测试驱动终止 |
 | **Harness** | 围绕模型的系统层设计，是效果的真正放大器 |
 
-### 你现在应该记住的三条原则
+### 三条核心原则
 
 1. **Agent 的表现 = 模型能力 × 上下文质量 × 任务结构清晰度** —— 后两者在你手中
 2. **Less is More** —— 精简的工具、精准的上下文、清晰的任务描述，比堆砌更有效
