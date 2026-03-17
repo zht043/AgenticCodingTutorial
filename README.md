@@ -1,5 +1,5 @@
 <div align="center">
-![image-20260312231419463](./resources/figures/image-20260312231419463.png)
+<img src="./resources/figures/image-20260312231419463.png" alt="Agentic Coding Tutorial cover" width="720" />
 
 <h1>🤖 Agentic Coding Tutorial</h1>
 
@@ -45,7 +45,6 @@
 
 ## 🧰 主流 Agent 编码工具一览
 
-> 本教程会重点覆盖、对比和串联的主流工具。点击名称了解更多。
 
 <table>
   <tr>
