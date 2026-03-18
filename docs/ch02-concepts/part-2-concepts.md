@@ -20,7 +20,7 @@
 
 | # | 常见直觉 | 实际情况 |
 |---|---------|---------|
-| 1 | "Agent 就是更聪明的 ChatGPT" | **错。** Agent = LLM + 工具 + 记忆 + 规划循环。ChatGPT 一问一答，Agent 会自己动手改代码、跑测试、修 bug |
+| 1 | “Agent 就是更聪明的 ChatGPT” | **不准确。** Agent = LLM + 工具 + 记忆 + 规划循环。ChatGPT 默认交互形态更像对话，而 Agent 会自己动手改代码、跑测试、修 bug（ChatGPT 本身也已具备搜索、文件分析、跨会话记忆等能力） |
 | 2 | "模型越强，Agent 就越好用" | **半对。** Agent 表现 = 模型能力 × 上下文质量 × 任务结构清晰度。后两者完全在你手中 |
 | 3 | "我给 Agent 的信息越全面越好" | **错。** 信息过多会淹没关键指令，导致 Agent 行为退化。精准 > 全面 |
 | 4 | "Agent 每次回答都是一次性生成的" | **错。** Agent 在内部跑了一个 Think→Act→Observe 的循环，可能迭代十几轮才给你最终结果 |
@@ -37,7 +37,7 @@
 - **LLM**（大语言模型）是"大脑"——负责理解、推理、生成
 - **Agent** 是围绕这个大脑构建的"任务执行系统"——负责规划、记忆、调用工具、持续迭代
 
-> **Agent = LLM + Memory + Tools + Planning**
+> **Agent = LLM + Memory + Tools + Planning**（这是常见的教学框架，不是所有实现的唯一定义）
 
 ```mermaid
 flowchart TB
@@ -72,7 +72,7 @@ flowchart TB
 
 | 维度 | LLM | Agent |
 |------|-----|-------|
-| 核心模式 | 输入 → 输出（一问一答） | 目标 → 循环 → 完成 |
+| 核心模式 | 输入 → 输出（默认对话形态） | 目标 → 循环 → 完成 |
 | 是否行动 | 通常不会 | 会调用工具、执行命令 |
 | 是否记忆 | 仅当前对话窗口 | 短期 + 长期记忆 |
 | 是否规划 | 有限 | 主动拆解任务、分步执行 |
@@ -120,9 +120,9 @@ flowchart LR
 
 > 这一节揭开"幕后"，让你理解 Agent 不是魔法——它是一个精心设计的软件系统，围绕着一个无状态的 LLM API 构建循环。
 
-### 幕后真相：Agent 只是一个 while 循环
+### 幕后真相：Agent 可以理解为一个 while 循环
 
-当你在终端输入一条指令，Agent **不是**简单地把你的文字发给云端 LLM。它精心构造了一个庞大的 JSON 请求体（payload），为 LLM 构建了一个"完整的现实"来工作。
+当你在终端输入一条指令，Agent **不是**简单地把你的文字发给云端 LLM。它精心构造了一个庞大的 JSON 请求体（payload），为 LLM 构建了一个“完整的现实”来工作。（注：“while 循环”是帮助理解的最小化抽象，不覆盖事件驱动、多 Agent 编排、批处理工作流等形态。）
 
 ### API 调用的五层结构
 
@@ -150,15 +150,15 @@ flowchart TB
 
 | 层 | 作用 | 你能影响的部分 |
 |----|------|--------------|
-| **① System Prompt** | 设定人设、环境、规则 | CLAUDE.md / AGENTS.md 中的项目规则 |
+| **① System Prompt** | 设定人设、环境、规则 | CLAUDE.md / AGENTS.md 中的项目规则（属于持久化上下文文件，不等同于产品级 memory） |
 | **② Tool Schemas** | 定义 LLM 能调用什么工具 | MCP 配置、Skill 注册 |
 | **③ 上下文** | 对话历史和工具返回结果 | 控制输出长度、分阶段任务 |
 | **④ 用户输入** | 你的请求 | 任务描述的清晰度和结构 |
 | **⑤ 输出约束** | 强制格式化输出 | 通常由 Agent 框架控制 |
 
-### Agentic Loop：不是一问一答，是持续循环
+### Agentic Loop：不是一问一答，而是持续循环
 
-Agent 与 LLM 的交互不是单次请求-响应，而是一个 **while 循环**：
+Agent 与 LLM 的交互不是单次请求-响应，而是一个持续循环（常见实现形式之一是 while 循环）：
 
 ```
 while True:
@@ -282,8 +282,8 @@ flowchart TB
         SUM["对长对话自动压缩<br/>保留关键信息 · 丢弃细节<br/>🔄 上下文接近极限时触发"]
     end
 
-    subgraph LTM["长期记忆（Persistent）"]
-        LM["CLAUDE.md / AGENTS.md<br/>项目规则 · 用户偏好<br/>📁 跨会话持久化"]
+    subgraph LTM["持久化规则/上下文（Persistent Context）"]
+        LM["CLAUDE.md / AGENTS.md<br/>项目规则 · 用户偏好<br/>📁 跨会话持久化的指令/上下文文件，不等同于产品级 memory"]
     end
 
     Agent --> STM
@@ -313,7 +313,7 @@ flowchart TB
 → 重开会话，只保留当前任务必要背景。
 
 **Memory 污染**：Agent 学到了错误偏好并不断重复。
-→ 定期审查 CLAUDE.md / Memory 文件，区分永久规则和临时偏好。
+→ 定期审查 CLAUDE.md / AGENTS.md 等规则文件，区分永久规则和临时偏好（这些文件是持久化上下文，不等同于产品级 memory）。
 
 **长任务漂移**：任务一长，Agent 忘记原目标，纠结细枝末节。
 → 分阶段执行：先出计划 → 每阶段结束做总结 → 必要时重开会话带上摘要。
@@ -358,7 +358,7 @@ flowchart TB
 
 ### MCP：Agent 的"USB-C 接口"
 
-**MCP（Model Context Protocol）** 是标准化的工具集成协议，最初由 Anthropic 提出，随后迁入 Linux Foundation 治理。到 2026 年 3 月，OpenAI、Google、Microsoft 等公司都已公开宣布支持或接入 MCP 生态。
+**MCP（Model Context Protocol）** 是标准化的工具集成协议，最初由 Anthropic 提出，已捐赠给 **Agentic AI Foundation（AAIF）**——这是 Linux Foundation 旗下由 Anthropic、Block、OpenAI 联合创建的定向基金。到 2026 年 3 月，OpenAI、Google、Microsoft 等公司都已公开宣布支持或接入 MCP 生态。
 
 ```mermaid
 sequenceDiagram
