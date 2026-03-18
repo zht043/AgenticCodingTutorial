@@ -37,7 +37,7 @@
 
 ## 1. Agent 与大模型的关系：一张图看懂架构
 
-在开始安装之前，你需要先建立一个核心认知：**你本地运行的 Agent 软件，本身并不具备"智能"——它是一个客户端，通过网络连接到远程的 LLM 大模型服务端，才能完成代码生成、理解和推理。**
+在开始安装之前，你需要先建立一个核心认知：**你本地运行的 Agent 软件，本身并不具备“智能”——它是一个客户端，默认通过网络连接到远程的 LLM 大模型服务端，才能完成代码生成、理解和推理。（多数主流产品默认使用云端模型，但部分工具如 OpenCode 也支持本地模型和自托管路线。）**
 
 ```mermaid
 graph LR
@@ -47,7 +47,7 @@ graph LR
         A <-->|读写文件<br/>执行命令| B
     end
 
-    subgraph 远程服务端 Cloud
+    subgraph 远程服务端 Cloud（默认路线）
         C[LLM 大模型 API<br/>Anthropic / OpenAI / Google ...]
     end
 
@@ -97,7 +97,7 @@ graph LR
 
 | 场景 | 推荐组合 | 说明 |
 |------|---------|------|
-| 网络/合规限制 | **Claude Code + GLM-5** | 智谱模型，MIT 开源，华为昇腾训练 |
+| 网络/合规限制 | **Claude Code + GLM-5** | 智谱模型，MIT 开源，已支持/适配华为昇腾生态 |
 | 国产最强性价比 | **Kimi Code + Kimi K2.5** | 月之暗面官方 Agent，开源权重 |
 | 极致低成本 | **OpenCode + DeepSeek V3.2** | 开源 Agent + 最便宜模型 |
 > 💡 核心原则：**先跑通一个组合，再横向对比**。不要同时装太多工具，每个都只会一点点。
@@ -145,7 +145,7 @@ npm --version
 | **Claude Code** | [code.claude.com/docs](https://code.claude.com/docs/en/setup) / [GitHub](https://github.com/anthropics/claude-code) | `curl -fsSL https://claude.ai/install.sh \| bash` |
 | **Codex CLI** | [GitHub](https://github.com/openai/codex) | `npm install -g @openai/codex` |
 | **Gemini CLI** | [geminicli.com](https://geminicli.com/) / [GitHub](https://github.com/google-gemini/gemini-cli) | `npm install -g @google/gemini-cli` |
-| **Cursor** | [cursor.com](https://cursor.com/) | 下载桌面应用 |
+| **Cursor** | [cursor.com](https://cursor.com/) / [CLI 文档](https://cursor.com/docs/cli/overview) | 下载桌面应用（CLI 可通过 `curl https://cursor.com/install -fsSL \| bash` 安装，beta） |
 | **Antigravity** | [antigravity.google](https://antigravity.google/) | 下载桌面应用 |
 | **OpenCode** | [opencode.ai](https://opencode.ai/docs) / [GitHub](https://github.com/opencode-ai/opencode) | 参考官方安装页（支持安装脚本 / npm / Homebrew 等方式） |
 | **Trae** | [trae.ai](https://www.trae.ai/) | 下载桌面应用 |
@@ -156,14 +156,14 @@ npm --version
 |------|-----|-------------|---------|--------|
 | Claude Code | ✅ 本体 | ✅ 插件 | ✅ | ✅ |
 | Codex CLI | ✅ 本体 | ✅ 插件 | ✅ Codex App | ✅ |
-| Gemini CLI | ✅ 本体 | ✅ Code Assist | ❌ | ✅ Cloud Shell |
-| Cursor | ❌ | — | ✅ 自身即 IDE | ❌ |
+| Gemini CLI | ✅ 本体 | ✅ Code Assist | ❌ | ✅（可在 Cloud Shell 等云终端运行） |
+| Cursor | ✅ CLI（beta） | — | ✅ 自身即 IDE | ❌ |
 | Antigravity | ❌ | — | ✅ 自身即 IDE | ❌ |
 | OpenCode | ✅ 本体 | ✅ IDE extension | ✅ | ❌ |
 
 ### 理解"CLI 是本体"
 
-> **对于 Claude Code、Codex、Gemini CLI：CLI 是本体，VS Code 插件和桌面应用只是它的延伸界面。**
+> **对于 Claude Code、Codex、Gemini CLI：CLI 是本体，VS Code 插件和桌面应用只是它的延伸界面。Cursor 以 IDE 为主，于 2025 年 8 月另行发布了 CLI（beta），支持在终端和 headless 环境中使用 Agent。**
 
 这意味着：
 1. **配置共享**：CLI 中配好的 API Key，在插件和 App 中同样生效
