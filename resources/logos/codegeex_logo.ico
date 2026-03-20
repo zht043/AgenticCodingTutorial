@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <meta
+      name="keywords"
+      content="CodeGeeX,AI编程助手,AI编程辅助工具,AI写代码,AI代码生成,代码生成模型,编程工具,copilot,智谱华章,智谱AI,智谱大模型, AI Programming Tool, Code Generation, Code Completion, AI Coding Assistant"
+    />
+    <meta
+      name="description"
+      content="CodeGeeX is an AI-based coding assistant, which can suggest code in the current or following lines. It is powered by a large-scale multilingual code generation model with 13 billion parameters, pretrained on a large code corpus of more than 20 programming languages. CodeGeeX是一个基于AI大模型的编程辅助工具，可以实现自动代码生成、代码翻译、自动编写注释等功能，支持20多种编程语言。"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="/assets/images/only_logo_dark.png"
+    />
+    <link rel="stylesheet" href="/umi.673630aa.css" />
+    <script>
+      window.routerBase = "/";
+    </script>
+    <script>
+      //! umi version: 3.5.43
+    </script>
+    <script
+      src="https://www.googletagmanager.com/gtag/js?id=UA-1156684-2"
+      async="async"
+    ></script>
+    <script>
+      // Global site tag (gtag.js) - Google Analytics
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-1156684-2");
+    </script>
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?dd11ee868db3b822f75757f34415185b";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+    <script src="/assets/js/sensors/sensorsdata.min.js"></script>
+    <script src="/assets/js/sat_props_patch/sat_props_patch.js"></script>
+    <script src="/assets/js/smcp/smcp.min.js"></script>
+    <script>
+      var sensors = window["sensorsDataAnalytic201505"];
+      sensors.init({
+        server_url:
+          "https://zhipuaishengchan.datasink.sensorsdata.cn/sa?token=12da2141032f57b4&project=production2",
+        is_track_single_page: true,
+        use_client_time: true,
+        // send_type:'beacon',
+        show_log: false,
+        preset_properties: {
+          latest_wx_ad_click_id: true,
+        },
+        heatmap: {
+          // 是否开启点击图，default 表示开启，自动采集 $WebClick 事件，可以设置 'not_collect' 表示关闭。
+          clickmap: "default",
+          // 是否开启触达图，not_collect 表示关闭，不会自动采集 $WebStay 事件，可以设置 'default' 表示开启。
+          scroll_notice_map: "default",
+        },
+      });
+      sensors.registerPage({
+        current_url: location.href,
+        platform_name: "CodeGeeX",
+        referrer: document.referrer,
+      });
+      sensors.use("SensorsChannel");
+      sensors.use("SatPropsPatch");
+      sensors.quick("autoTrack");
+    </script>
+    <script src="/assets/js/home_canvas/home.js"></script>
+    <script src="/assets/js/wowjs/wow.min.js"></script>
+    <script>
+      !(function () {
+        var e =
+            navigator.cookieEnabled && void 0 !== window.localStorage
+              ? localStorage.getItem("dumi:prefers-color")
+              : "auto",
+          o = window.matchMedia("(prefers-color-scheme: dark)").matches,
+          t = ["light", "dark", "auto"];
+        document.documentElement.setAttribute(
+          "data-prefers-color",
+          e === t[2] ? (o ? t[1] : t[0]) : t.indexOf(e) > -1 ? e : t[0]
+        );
+      })();
+    </script>
+    <script>
+      var _hmt = _hmt || [];
+    </script>
+    <script>
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?dd11ee868db3b822f75757f34415185b";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="/umi.8bb808e9.js"></script>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-# Chapter 4 · 部署与开发你的 Skill
+# Chapter 7 · Skill 系统
 
 > 目标：从安装使用现成 Skill，到从零编写、调试和发布属于你自己的 Skill。掌握 Claude Code / Cursor / Codex 三大工具的 Skill 与规则系统。
 

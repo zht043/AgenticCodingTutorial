@@ -83,7 +83,7 @@ graph TB
 | 1 | Gemini 3 Pro Preview（Google） | 🇺🇸 | 91.7% / Elo 2439 | 创纪录 |
 | 2 | Gemini 3 Flash Preview（Google） | 🇺🇸 | 90.8% | |
 | 3 | DeepSeek V3.2 Speciale | 🇨🇳 | 89.6% | |
-| 4 | Qwen 3.5（阿里） | 🇨🇳 | 87.8% | |
+| 4 | Qwen3-Max（阿里） | 🇨🇳 | 87.8% | |
 | 5 | Kimi K2.5（月之暗面） | 🇨🇳 | 87.1% | |
 | 6 | MiMo-V2-Flash（小米） | 🇨🇳 | 84.9% | 309B 参数 |
 | 7 | DeepSeek V3.2（DeepSeek） | 🇨🇳 | 85.0% | |

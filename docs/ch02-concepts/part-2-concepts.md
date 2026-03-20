@@ -1,16 +1,14 @@
-# Chapter 2 · Agent 运作原理与核心概念
+# Chapter 2 · Agent 核心概念
 
-> 目标：建立一套完整的 Agent 心智模型——不只是"能用"，而是"知道它在干什么、为什么有时聪明有时蠢、怎么让它更好用"。
+> 目标：建立一套清晰的 Agent 心智模型——知道它是什么、怎么工作、为什么有时聪明有时蠢。
 
 ## 目录
 
 - [0. 先问自己三个问题](#0-先问自己三个问题)
-- [1. Agent 的本质](#1-agent-的本质一张图搞懂)
-- [2. Agent-LLM 交互解剖：一次调用里到底发生了什么](#2-agent-llm-交互解剖一次调用里到底发生了什么)
-- [3. Memory：上下文是 Agent 的命脉](#3-memory上下文是-agent-的命脉)
-- [4. Tools、MCP 与 Skills：Agent 的手脚](#4-toolsmcp-与-skillsagent-的手脚)
-- [5. Planning 与多 Agent 协作](#5-planning-与多-agent-协作)
-- [6. 人机协同：从"能用"到"好用"](#6-人机协同从能用到好用)
+- [1. Agent 的本质：一张图搞懂](#1-agent-的本质一张图搞懂)
+- [2. Memory：上下文是 Agent 的命脉](#2-memory上下文是-agent-的命脉)
+- [3. Tools、MCP 与 Skills：Agent 的手脚](#3-toolsmcp-与-skillsagent-的手脚)
+- [4. Planning：Agent 如何规划任务](#4-planning-agent-如何规划任务)
 
 ---
 
@@ -40,14 +38,24 @@
 > **Agent = LLM + Memory + Tools + Planning**（这是常见的教学框架，不是所有实现的唯一定义）
 
 ```mermaid
+---
+config:
+  theme: dark
+---
 flowchart TB
-    U[用户目标] --> AG[Agent 智能体]
+    classDef startEnd fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef llm fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef memory fill:#c678dd,stroke:#2d2d2d,stroke-width:2px,color:#fff
+    classDef tools fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef plan fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    subgraph Agent["Agent 四大模块"]
-        LLM["🧠 LLM<br/>理解 · 推理 · 生成"]
-        MEM["💾 Memory<br/>上下文 · 状态 · 偏好"]
-        TOOLS["🔧 Tools<br/>文件 · 终端 · API · 搜索"]
-        PLAN["📋 Planning<br/>规划 · 执行 · 反思"]
+    U(["🎯 用户目标"]):::startEnd --> AG(["🤖 Agent"]):::startEnd
+
+    subgraph Agent["📦 四大模块"]
+        LLM(["🧠 LLM<br/>理解·推理·生成"]):::llm
+        MEM(["💾 Memory<br/>上下文·状态"]):::memory
+        TOOLS(["🔧 Tools<br/>文件·终端·API"]):::tools
+        PLAN(["📋 Planning<br/>规划·执行·反思"]):::plan
     end
 
     AG --> LLM
@@ -60,12 +68,7 @@ flowchart TB
     TOOLS --> MEM
     MEM --> PLAN
 
-    PLAN --> RES[任务结果]
-
-    style LLM fill:#4A90D9,stroke:#333,color:#fff
-    style MEM fill:#7BC67E,stroke:#333,color:#fff
-    style TOOLS fill:#F5A623,stroke:#333,color:#fff
-    style PLAN fill:#9B59B6,stroke:#333,color:#fff
+    PLAN --> RES(["✅ 任务结果"]):::startEnd
 ```
 
 ### LLM vs Agent：核心区别
@@ -83,17 +86,23 @@ flowchart TB
 所有 Agent 的工作本质都是同一个循环：
 
 ```mermaid
-flowchart TD
-    G[目标] --> TH["🧠 Think<br/>理解任务 · 制定计划"]
-    TH --> AC["🔧 Act<br/>调用工具 · 执行动作"]
-    AC --> OB["👁️ Observe<br/>读取结果 · 环境反馈"]
-    OB --> DE{完成了？}
-    DE -- 否 --> TH
-    DE -- 是 --> RS[交付结果]
+---
+config:
+  theme: dark
+---
+flowchart LR
+    classDef startEnd fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef think fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef act fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef observe fill:#c678dd,stroke:#2d2d2d,stroke-width:2px,color:#fff
+    classDef decision fill:#e06c75,stroke:#2d2d2d,stroke-width:2px,color:#fff
 
-    style TH fill:#e3f2fd
-    style AC fill:#fff3e0
-    style OB fill:#e8f5e9
+    G(["🎯 目标"]):::startEnd --> TH(["🧠 Think<br/>理解·规划"]):::think
+    TH --> AC(["🔧 Act<br/>调用工具"]):::act
+    AC --> OB(["👁️ Observe<br/>读取结果"]):::observe
+    OB --> DE{完成了?}:::decision
+    DE -->|"否"| TH
+    DE -->|"是"| RS(["📦 结果"]):::startEnd
 ```
 
 当你对 Agent 说"帮我重构这段代码并补上测试"，它不是一次性生成答案，而是在内部跑了这个循环很多次——先读代码理解结构，再规划修改方案，然后逐步执行修改、运行测试、根据测试结果修复问题，直到通过。
@@ -103,11 +112,16 @@ flowchart TD
 Agent 不是"全自动或全手动"，而是存在一个自主性光谱。目前主流 Coding Agent（Claude Code、Codex、Cursor）大多工作在**半自主**区间：Agent 自己规划和执行，但在关键操作（写入文件、执行危险命令、推送代码）时请求你确认。
 
 ```mermaid
+---
+config:
+  theme: dark
+---
 flowchart LR
-    A["完全引导<br/>你告诉每一步做什么"] ---|→| B["半自主（主流）<br/>Agent 规划执行<br/>关键节点人工审批"] ---|→| C["完全自主<br/>Agent 从头到尾<br/>独立完成"]
-    style A fill:#e8f5e9
-    style B fill:#fff9c4
-    style C fill:#ffebee
+    classDef manual fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef semi fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef auto fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    A(["👤 完全引导<br/>你告诉每一步"]):::manual --- B(["⚖️ 半自主<br/>主流模式<br/>关键节点审批"]):::semi --- C(["🤖 完全自主<br/>从头到尾<br/>独立完成"]):::auto
 ```
 
 ### 产品实例：Claude Code 与 Opus 4.6
@@ -116,183 +130,44 @@ flowchart LR
 
 ---
 
-## 2. Agent-LLM 交互解剖：一次调用里到底发生了什么
-
-> 这一节揭开"幕后"，让你理解 Agent 不是魔法——它是一个精心设计的软件系统，围绕着一个无状态的 LLM API 构建循环。
-
-### 幕后真相：Agent 可以理解为一个 while 循环
-
-当你在终端输入一条指令，Agent **不是**简单地把你的文字发给云端 LLM。它精心构造了一个庞大的 JSON 请求体（payload），为 LLM 构建了一个“完整的现实”来工作。（注：“while 循环”是帮助理解的最小化抽象，不覆盖事件驱动、多 Agent 编排、批处理工作流等形态。）
-
-### API 调用的五层结构
-
-每次 Agent 向 LLM 发送请求时，payload 包含五层内容：
-
-```mermaid
-flowchart TB
-    subgraph Payload["发送给 LLM 的 API Payload"]
-        direction TB
-        P1["① 前缀：System Prompt<br/>人设 · 操作系统 · 项目规则（CLAUDE.md）· 安全约束"]
-        P2["② 工具模式：Tool Schemas<br/>严格 JSON 定义 Agent 可用工具<br/>Read_File · Edit_File · Run_Bash · Search"]
-        P3["③ 上下文：对话历史 + 记忆<br/>之前的对话轮次 · 工具调用结果<br/>（过长时触发压缩/摘要）"]
-        P4["④ 用户输入<br/>你的实际请求"]
-        P5["⑤ 后缀：输出格式约束<br/>强制 LLM 按特定格式输出<br/>（如先 thinking 再 tool_call）"]
-    end
-
-    P1 --> P2 --> P3 --> P4 --> P5
-
-    style P1 fill:#e3f2fd
-    style P2 fill:#fff3e0
-    style P3 fill:#e8f5e9
-    style P4 fill:#fce4ec
-    style P5 fill:#f3e5f5
-```
-
-| 层 | 作用 | 你能影响的部分 |
-|----|------|--------------|
-| **① System Prompt** | 设定人设、环境、规则 | CLAUDE.md / AGENTS.md 中的项目规则（属于持久化上下文文件，不等同于产品级 memory） |
-| **② Tool Schemas** | 定义 LLM 能调用什么工具 | MCP 配置、Skill 注册 |
-| **③ 上下文** | 对话历史和工具返回结果 | 控制输出长度、分阶段任务 |
-| **④ 用户输入** | 你的请求 | 任务描述的清晰度和结构 |
-| **⑤ 输出约束** | 强制格式化输出 | 通常由 Agent 框架控制 |
-
-### Agentic Loop：不是一问一答，而是持续循环
-
-Agent 与 LLM 的交互不是单次请求-响应，而是一个持续循环（常见实现形式之一是 while 循环）：
-
-```
-while True:
-    response = LLM.call(system_prompt + tools + context + user_input)
-
-    if response.is_final_text:   # LLM 认为任务完成
-        return response.text
-
-    if response.is_tool_call:    # LLM 要求调用工具
-        result = execute_tool(response.tool_call)  # 在你的本地执行！
-        context.append(result)                      # 把结果追加到上下文
-        continue                                    # 再次调用 LLM
-```
-
-用伪代码展开完整流程：
-
-```python
-def run_autonomous_agent(user_task):
-    # 1. 上下文工程：构建 payload
-    messages = [
-        {"role": "system", "content": build_system_prompt()},  # ① 前缀
-        {"role": "user", "content": user_task}                  # ④ 用户输入
-    ]
-
-    while True:  # Agentic Loop
-        # 2. 调用云端 LLM（② 工具模式 + ③ 上下文一并发送）
-        response = cloud_llm_api.invoke(
-            model="claude-opus-4-6",
-            messages=messages,
-            tools=TOOL_SCHEMAS  # Bash, FileEdit, Search...
-        )
-
-        # 3. LLM 不再请求工具 → 任务完成
-        if not response.tool_calls:
-            return response.final_text
-
-        messages.append({"role": "assistant", "content": response.tool_calls})
-
-        # 4. 在本地执行工具，将结果反馈给 LLM
-        for tool_call in response.tool_calls:
-            try:
-                result = execute_in_local_terminal(tool_call.name, tool_call.args)
-            except Exception as error:
-                # 自动纠错：将错误信息反馈给 LLM，让它修正
-                result = f"Command failed: {error}. Please fix."
-
-            messages.append({
-                "role": "tool_result",
-                "tool_id": tool_call.id,
-                "content": result
-            })
-```
-
-### 驯服概率：Agent 如何让 LLM 可靠
-
-LLM 本质是概率预测引擎——预测下一个 token。如果不加约束，它可能编造命令参数或生成非法语法。Agent 用多层机制确保可靠性：
-
-| 机制 | 原理 | 效果 |
-|------|------|------|
-| **原生工具调用微调** | 模型经过专门的工具调用训练，更容易输出符合 Tool Schema 的结构化结果 | 显著提高工具调用的稳定性和可解析性 |
-| **自动纠错循环** | LLM 生成的命令出错 → Agent 捕获 stderr → 反馈给 LLM → LLM 修正重试 | 大多数语法错误自动修复 |
-| **语法验证守门** | 编辑文件后立即运行 linter/编译器，失败则自动回滚 | 防止引入语法破坏 |
-| **辅助模型校验** | 用便宜快速的小模型（如 Haiku）预审高风险命令 | 拦截危险操作 |
-| **输出截断** | 命令输出过长时只保留首尾关键行，中间截断 | 防止上下文膨胀 |
-
-### 安全编辑：Agent 如何改你的代码不翻车
-
-允许 AI 自主编辑代码库是危险的。Agent 通过高度约束的防御性编程来保障安全：
-
-**为什么不让 LLM 输出整个文件？** 因为太慢、浪费 token，且 LLM 容易在长文件中途"遗忘"代码段导致回归。
-
-**实际做法——块级搜索替换**：LLM 只需输出要修改的代码块（Search）和替换内容（Replace），Agent 负责执行：
-
-```python
-def safe_edit_file(filepath, search_block, replace_block):
-    backup_path = filepath + ".bak"
-    shutil.copy(filepath, backup_path)        # 1. 先备份
-
-    content = read_file(filepath)
-    if search_block not in content:
-        return "Error: 找不到该代码块，请检查缩进"
-
-    new_content = content.replace(search_block, replace_block)
-    write_file(filepath, new_content)
-
-    syntax_ok = run_linter(filepath)           # 2. 语法检查
-    if not syntax_ok.success:
-        shutil.copy(backup_path, filepath)     # 3. 失败则回滚
-        return f"Edit reverted. 语法错误: {syntax_ok.error}"
-
-    return "编辑成功，语法检查通过"
-```
-
-### 上下文压缩：当对话太长怎么办
-
-即使有百万 token 的上下文窗口，无限追加也会导致成本激增和"中间遗忘"。Agent 的压缩策略：
-
-| 策略 | 做法 |
-|------|------|
-| **输出截断** | 命令输出保留首 50 行 + 尾 100 行，中间替换为 `[N lines truncated]` |
-| **摘要压缩** | 用轻量模型（如 Haiku）对旧对话做摘要，替换原始内容 |
-| **状态提取** | 将关键发现写入 scratchpad 文件（如 `.agent_memory.md`），清空对话后可回读 |
+> 想深入了解 Agent 与 LLM 的交互细节（API 五层结构、Agentic Loop 伪代码、可靠性机制、安全编辑原理）？见 → [附录：Agent-LLM 交互解剖](./reference-agent-llm-internals.md)
 
 ---
 
-## 3. Memory：上下文是 Agent 的命脉
+## 2. Memory：上下文是 Agent 的命脉
 
 Memory 决定了 Agent 能"记住"多少——直接影响它能处理多复杂的任务、能保持多长时间的连贯性。
 
 ### 三种记忆类型
 
 ```mermaid
+---
+config:
+  theme: dark
+---
 flowchart TB
-    Agent["Agent 记忆系统"]
+    classDef agent fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef stm fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef mtm fill:#c678dd,stroke:#2d2d2d,stroke-width:2px,color:#fff
+    classDef ltm fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    subgraph STM["短期记忆（Context Window）"]
-        CW["当前对话内容<br/>代码上下文 · 工具返回结果<br/>⏰ 会话结束即消失"]
+    Agent(["🧠 Agent记忆系统"]):::agent
+
+    subgraph STM["⏱️ 短期记忆"]
+        CW(["💬 当前对话<br/>代码上下文<br/>会话结束消失"]):::stm
     end
 
-    subgraph MTM["对话摘要（Summarization）"]
-        SUM["对长对话自动压缩<br/>保留关键信息 · 丢弃细节<br/>🔄 上下文接近极限时触发"]
+    subgraph MTM["📝 对话摘要"]
+        SUM(["🔄 长对话压缩<br/>保留关键信息<br/>上下文满时触发"]):::mtm
     end
 
-    subgraph LTM["持久化规则/上下文（Persistent Context）"]
-        LM["CLAUDE.md / AGENTS.md<br/>项目规则 · 用户偏好<br/>📁 跨会话持久化的指令/上下文文件，不等同于产品级 memory"]
+    subgraph LTM["📁 持久化上下文"]
+        LM(["📄 CLAUDE.md等<br/>项目规则·偏好<br/>跨会话持久化"]):::ltm
     end
 
     Agent --> STM
     Agent --> MTM
     Agent --> LTM
-
-    style STM fill:#e3f2fd,stroke:#1976d2
-    style MTM fill:#fff3e0,stroke:#f57c00
-    style LTM fill:#e8f5e9,stroke:#388e3c
 ```
 
 ### 上下文 ≠ 越多越好
@@ -322,36 +197,40 @@ flowchart TB
 
 ---
 
-## 4. Tools、MCP 与 Skills：Agent 的手脚
+## 3. Tools、MCP 与 Skills：Agent 的手脚
 
 Agent 光有"大脑"不够，还需要"手脚"来与真实世界交互。
 
 ### 三层行动空间
 
 ```mermaid
+---
+config:
+  theme: dark
+---
 flowchart TB
-    subgraph L1["第一层：本地文件系统与 CLI（主战场）"]
-        F1["读写代码文件"]
-        F2["运行测试 / 构建 / 脚本"]
-        F3["Git 操作"]
+    classDef l1 fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef l2 fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef l3 fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    subgraph Layer1["📁 第一层：本地文件与CLI"]
+        F1(["✏️ 读写代码文件"]):::l1
+        F2(["🧪 运行测试·构建"]):::l1
+        F3(["🔀 Git操作"]):::l1
     end
 
-    subgraph L2["第二层：协议型工具（MCP / API）"]
-        F4["浏览器自动化"]
-        F5["数据库查询"]
-        F6["GitHub / Jira / Notion"]
+    subgraph Layer2["🔌 第二层：协议型工具"]
+        F4(["🌐 浏览器自动化"]):::l2
+        F5(["🗄️ 数据库查询"]):::l2
+        F6(["🔗 GitHub等"]):::l2
     end
 
-    subgraph L3["第三层：多 Agent / 外部服务"]
-        F7["子 Agent 并行处理"]
-        F8["云端 Agent 隔离执行"]
+    subgraph Layer3["☁️ 第三层：多Agent/外部"]
+        F7(["👥 子Agent并行"]):::l3
+        F8(["🔒 云端隔离执行"]):::l3
     end
 
-    L1 --> L2 --> L3
-
-    style L1 fill:#e8f5e9,stroke:#388e3c
-    style L2 fill:#fff3e0,stroke:#f57c00
-    style L3 fill:#fce4ec,stroke:#c62828
+    Layer1 --> Layer2 --> Layer3
 ```
 
 **实用原则**：先把第一层打磨好，再考虑第二层和第三层。
@@ -388,16 +267,26 @@ MCP 给 Agent **能力**（"能访问什么"），Skills 教 Agent **方法**（
 所以趋势更像是：**从“万物皆 MCP”转向“能用 CLI/API 就先用 CLI/API + Skills，MCP 留给真正需要协议层治理的场景”。** 这不是抛弃 MCP，而是把它放回更合适的位置。
 
 ```mermaid
+---
+config:
+  theme: dark
+---
 flowchart TB
+    classDef method fill:#c678dd,stroke:#2d2d2d,stroke-width:2px,color:#fff
+    classDef skill fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef cli fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef api fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef mcp fill:#e06c75,stroke:#2d2d2d,stroke-width:2px,color:#fff
+
     subgraph Method["方法层"]
-        S1["自然语言定义<br/>Markdown 即可"]
-        S2["Skills<br/>教 Agent '怎么做'<br/>方法论 · 流程 · 最佳实践"]
+        S1["自然语言定义"]:::method
+        S2["Skills<br/>教Agent怎么做<br/>方法论·流程"]:::skill
     end
 
     subgraph Runtime["执行层"]
-        C1["CLI / 脚本<br/>轻量 · 确定性 · 易组合"]
-        C2["直接 API<br/>适合已有 SDK / HTTP 接口"]
-        C3["MCP<br/>标准化暴露工具与资源<br/>统一鉴权与远程连接"]
+        C1["CLI/脚本<br/>轻量·易组合"]:::cli
+        C2["直接API<br/>适合SDK/HTTP"]:::api
+        C3["MCP<br/>标准化暴露<br/>统一鉴权"]:::mcp
     end
 
     S2 --- C1
@@ -422,23 +311,34 @@ flowchart TB
 ### 快速决策树
 
 ```mermaid
+---
+config:
+  theme: dark
+---
 flowchart TB
-    Start(["我需要 AI 完成一个任务"]) --> Q1{"需要访问外部数据/服务？"}
+    classDef start fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef decision fill:#e06c75,stroke:#2d2d2d,stroke-width:2px,color:#fff
+    classDef cli fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef mcp fill:#c678dd,stroke:#2d2d2d,stroke-width:2px,color:#fff
+    classDef skill fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef script fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    Q1 -- 否 --> Q2{"会重复执行？"}
-    Q1 -- 是 --> Q1A{"已有 CLI / 脚本 / SDK 可直接用？"}
+    Start(["开始任务"]):::start --> Q1{"需要外部数据?"}:::decision
 
-    Q1A -- 是 --> CLI["✅ 先用 CLI / 脚本 / 直接 API<br/>轻量、确定性、上下文开销更低"]
-    Q1A -- 否 --> Q1B{"需要统一鉴权 / 标准化暴露 / 远程复用？"}
+    Q1 -- 否 --> Q2{"会重复执行?"}:::decision
+    Q1 -- 是 --> Q1A{"有CLI/脚本可用?"}:::decision
 
-    Q1B -- 是 --> MCP["✅ 使用 MCP<br/>连接数据库 / API / 外部平台"]
-    Q1B -- 否 --> API["✅ 直接接 API 或补一个小脚本<br/>不一定要先上 MCP"]
+    Q1A -- 是 --> CLI["✅ CLI/脚本"]:::cli
+    Q1A -- 否 --> Q1B{"需要统一鉴权?"}:::decision
 
-    Q2 -- 是 --> Skill["✅ 使用 Skill<br/>固化为可复用工作流"]
-    Q2 -- 否 --> Q3{"需要确定性执行？"}
+    Q1B -- 是 --> MCP["✅ 使用MCP"]:::mcp
+    Q1B -- 否 --> API["✅ 直接API"]:::cli
 
-    Q3 -- 是 --> Script["✅ 使用脚本<br/>确保每次结果一致"]
-    Q3 -- 否 --> Prompt["✅ 使用 Prompt<br/>一次性指令即可"]
+    Q2 -- 是 --> Skill["✅ 使用Skill"]:::skill
+    Q2 -- 否 --> Q3{"需要确定性?"}:::decision
+
+    Q3 -- 是 --> Script["✅ 使用脚本"]:::script
+    Q3 -- 否 --> Prompt["✅ 使用Prompt"]:::cli
 ```
 
 ### Less is More：工具不是越多越好
@@ -458,7 +358,7 @@ flowchart TB
 
 ---
 
-## 5. Planning 与多 Agent 协作
+## 4. Planning：Agent 如何规划任务
 
 ### 规划循环
 
@@ -470,13 +370,24 @@ flowchart TB
 4. **执行中反思**：测试失败？分析原因，调整方案，不在同一个错误上打转
 
 ```mermaid
+---
+config:
+  theme: dark
+---
 flowchart LR
-    Task[任务] --> Plan["📋 制定计划"]
-    Plan --> Exec["⚡ 执行步骤"]
-    Exec --> Eval["🔍 评估结果"]
-    Eval --> Reflect["💭 反思"]
+    classDef task fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef plan fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef exec fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef eval fill:#c678dd,stroke:#2d2d2d,stroke-width:2px,color:#fff
+    classDef reflect fill:#e06c75,stroke:#2d2d2d,stroke-width:2px,color:#fff
+    classDef done fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    Task([任务]):::task --> Plan["📋 制定计划"]:::plan
+    Plan --> Exec["⚡ 执行步骤"]:::exec
+    Exec --> Eval["🔍 评估结果"]:::eval
+    Eval --> Reflect["💭 反思"]:::reflect
     Reflect -->|更新计划| Plan
-    Eval -->|完成| Done["✅ 输出结果"]
+    Eval -->|完成| Done([✅ 输出结果]):::done
 ```
 
 #### 评估与终止：Agent 怎么知道自己做完了
@@ -501,106 +412,18 @@ def verify_and_terminate(max_iterations=5):
     return {"status": "failed", "message": f"尝试 {max_iterations} 次后仍未通过"}
 ```
 
-### 多 Agent 协作
+### 多 Agent 协作（预览）
 
-复杂任务靠单个 Agent 容易失控，多 Agent 通过角色分工提升可靠性：
-
-```mermaid
-flowchart TB
-    User["用户任务"] --> Orch["🎯 Orchestrator<br/>编排调度"]
-    Orch --> PL["📋 Planner<br/>规划拆解"]
-    Orch --> CD["💻 Coder<br/>编码实现"]
-    Orch --> RV["🔍 Reviewer<br/>审查纠错"]
-    PL -->|计划| Orch
-    CD -->|代码| Orch
-    RV -->|反馈| Orch
-    Orch --> Final["最终交付"]
-```
-
-**Planner-Worker 架构**：强推理模型（如 Opus）负责规划，快速模型（如 Haiku）负责执行单个子任务。Planner 不写代码，Worker 不做全局规划——各司其职，减少出错。
-
-### 什么时候用多 Agent？
+复杂任务靠单个 Agent 容易失控，多 Agent 通过角色分工提升可靠性。常见架构包括 **Planner-Worker**（强模型规划 + 快速模型执行）和 **Writer-Reviewer**（互审纠错）。
 
 | 场景 | 推荐 |
 |------|------|
 | 单个小 bug 修复 | 单 Agent |
 | 中等功能开发 | 单 Agent + 分阶段执行 |
-| 大型重构 / 多模块修改 | 多 Agent 并行 + Orchestrator |
-| 高风险操作（生产环境） | 多 Agent 互审 + 人工把关 |
+| 大型重构 / 多模块修改 | 多 Agent 并行 |
+| 高风险操作 | 多 Agent 互审 + 人工把关 |
 
-### 黑盒 vs 人工监督
-
-**推荐做法**：复杂任务先让 Agent 出计划（Plan），你审批后再执行（Act）。这不是"不信任 Agent"，而是工程级别的安全实践。
-
----
-
-## 6. 人机协同：从"能用"到"好用"
-
-### Harness 工程：真正的杠杆不在模型
-
-**Harness 工程**是 2025-2026 年兴起的概念——不是优化模型本身，而是设计围绕模型的系统层：提示设计、工具编排、验证循环、状态追踪。
-
-实证：LangChain 团队仅通过改进 Harness（自验证、上下文注入、故障检测），**没有换模型**，就把编码 Agent 从排行榜 Top 30 提升到 Top 5。
-
-> **Agent 效果 = 模型能力 × Harness 质量。** 模型能力是基线，Harness 是放大器。
-
-### 为什么 Agent 有时很聪明，有时很蠢？
-
-答案通常不是"模型变笨了"，而是：
-
-| 影响因素 | 表现 | 你能做什么 |
-|----------|------|-----------|
-| **上下文质量** | 信息太杂/太少/自相矛盾 | 只给最相关的信息 |
-| **任务描述** | 目标模糊、边界不清 | 用结构化指令 |
-| **上下文过长** | 早期信息被"遗忘" | 分阶段任务，必要时重开会话 |
-| **工具返回噪音** | 命令输出太长淹没关键信息 | 控制输出长度 |
-| **指令冲突** | 规则文件与当前指令矛盾 | 确保配置文件内容一致 |
-
-### Agent 七大失败模式速查
-
-| # | 失败模式 | 解法 |
-|---|---------|------|
-| 1 | **上下文污染**：抓着旧结论不放 | 重开会话，精简上下文 |
-| 2 | **Memory 污染**：错误偏好不断重复 | 审查并清理 Memory 文件 |
-| 3 | **长任务漂移**：忘记原目标 | 分阶段执行，定期总结 |
-| 4 | **并行干扰**：多 Agent 改同一片代码 | 划清文件边界 |
-| 5 | **stdout 吞 token**：成本暴涨 | 只保留关键输出 |
-| 6 | **环境假设错误**：假设错误的工具链版本 | 在指令中声明环境信息 |
-| 7 | **权限失控**：执行超预期危险操作 | 根据任务风险调节权限 |
-
-### Token 节约技巧
-
-| 技巧 | 常见收益 |
-|------|---------|
-| 控制命令输出 `\| head -50`  | 明显减少无效日志进入上下文 |
-| 分阶段任务，每次只带必要上下文 | 降低单次请求体积，减少长会话漂移 |
-| 用 Skill 替代巨型 Prompt | 压缩重复说明，把规则沉淀到可复用文件里 |
-| 简单任务用 Haiku/Sonnet，复杂用 Opus | 把高成本模型留给真正需要高推理强度的步骤 |
-| 利用 Prompt Cache | 减少重复发送的固定前缀和公共上下文成本 |
-
-### 人工引导 Agent 的核心技巧
-
-| 技巧 | 做法 |
-|------|------|
-| **先分析再执行** | 要求 Agent 先给方案，你审批后再执行 |
-| **拆解复杂需求** | "先做数据层→再做逻辑层→最后做 UI" |
-| **设置完成条件** | "运行 `npm test`，全部通过才算完成" |
-| **分阶段回报** | 每完成一个子任务就检查结果 |
-| **控制变更范围** | "只修改 src/auth/ 目录下的文件" |
-
-### Agentic Coding vs Vibe Coding
-
-| 维度 | Agentic Coding | Vibe Coding |
-|------|---------------|-------------|
-| **理解** | 开发者理解代码变更的影响 | "先让它写出来再说" |
-| **验证** | 每次变更都通过测试确认 | "跑一下没报错就行" |
-| **责任** | 开发者对结果负责 | 责任模糊，出错怪 AI |
-
-**Agentic Coding 的核心态度**：Agent 帮你执行，但你对结果负责。
-
-> 📖 技术演进（从 ChatGPT 到 Agent OS 的六个阶段）见 👉 [附录：技术演进六阶段详解](./reference-agent-evolution.md)
->
-> 📖 人机协同的更多方法论见 👉 [附录：人机协同与 Agent 优化指南](./reference-human-agent-collaboration.md)
+> 多 Agent 协作的完整架构和实战指南见 → [Ch11 · 多 Agent 协作](../ch11-multi-agent/part-11-multi-agent.md)
 
 ---
 
@@ -609,12 +432,9 @@ flowchart TB
 | 核心概念 | 一句话总结 |
 |----------|-----------|
 | **Agent** | 不是更聪明的模型，是围绕 LLM 构建的任务执行系统 |
-| **Agent-LLM 交互** | 本质是 while 循环 + 精心构造的 API payload |
 | **Memory** | 越精准越好，不是越多越好 |
-| **Tools/MCP** | Agent 的双手和标准接口，Less is More |
-| **Skills** | 把经验沉淀为可复用的方法论模板（大脑），与 MCP（双手）互补 |
+| **Tools/MCP/Skills** | Agent 的双手（MCP/CLI）和大脑（Skills），Less is More |
 | **Planning** | 先规划再执行，反思后迭代，测试驱动终止 |
-| **Harness** | 围绕模型的系统层设计，是效果的真正放大器 |
 
 ### 三条核心原则
 
@@ -622,6 +442,12 @@ flowchart TB
 2. **Less is More** —— 精简的工具、精准的上下文、清晰的任务描述，比堆砌更有效
 3. **人在环里** —— Agent 是高效协作者，不是自动驾驶；你负责判断和验收
 
+> 📖 更多深度内容：
+> - [附录：Agent-LLM 交互解剖](./reference-agent-llm-internals.md)（API 五层结构、Agentic Loop、可靠性机制）
+> - [附录：Memory 与上下文工程详解](./reference-memory-and-context.md)
+> - [附录：MCP 与 Skills 详解](./reference-mcp-and-skills.md)
+> - [附录：技术演进六阶段详解](./reference-agent-evolution.md)
+
 ---
 
-下一章：[Chapter 3 · Agent 实战技巧 Playbook](../ch03-playbook/part-3-playbook.md)
+下一章：[Chapter 3 · Agent 技术发展简史](../ch03-history/part-3-history.md)

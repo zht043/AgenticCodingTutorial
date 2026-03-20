@@ -1,1 +1,6 @@
-.codex-temp/vision_ocr.swift
+.codex-temp/**
+.claude/**
+drafts/**
+MEMORY.md
+mermaid_styles/**
+

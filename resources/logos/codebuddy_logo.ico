@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="//acc-1258344699.cos.accelerate.myqcloud.com/web/website/ab07c76d08f89bb35c9e68214c712b898c03d4ee/assets/logo.svg" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,shrink-to-fit=no"
+    />
+    <title>腾讯云代码助手 CodeBuddy - AI 时代的智能编程伙伴</title>
+    <meta name="baidu-site-verification" content="codeva-9u4CEfRSzv" />
+    <meta name="google-site-verification" content="FLzxWYFG80Hk_XLvVz6GpBdsY-f7fdNfnucHDWWCr7k" />
+    <meta
+      name="keywords"
+      content="代码助手,代码补全,代码诊断,代码优化,AI代码助手，腾讯云代码助手,CodeBuddy,codebudy,codebody,cobebuddy,cobebudy,cobebody"
+    />
+    <meta
+      name="description"
+      content="腾讯云代码助手CodeBuddy，是一款辅助编码工具，基于混元代码大模型，提供技术对话、代码补全、代码诊断和优化等能力。为你生成优质代码，帮你解决技术难题，提升编码效率。"
+    />
+    <!-- 根路径做登录状态检测和跳转 -->
+    <script>
+      (function checkLoginAndRedirect() {
+        // 功能开关：设为 true 启用登录检测跳转，false 则直接跳转 /home
+        var ENABLE_LOGIN_REDIRECT = false;
+
+        if (!ENABLE_LOGIN_REDIRECT) {
+          window.location.replace('/home/');
+          return;
+        }
+
+        // 使用 fetch 调用 accounts 接口检测登录状态
+        fetch('/console/accounts', {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(result) {
+            // 如果 accounts 数组存在且有数据，说明已登录
+            if (result && result.data && result.data.accounts && result.data.accounts.length > 0) {
+              window.location.replace('/agents/');
+            } else {
+              window.location.replace('/home/');
+            }
+          })
+          .catch(function(error) {
+            console.warn('[LoginCheck] Failed to check login status:', error);
+            window.location.replace('/home/');
+          });
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- 根路径直接跳转到 /home -->
+  </body>
+</html>

@@ -1,0 +1,228 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <title>淘宝网 - 淘！我喜欢</title>
+  <meta name="spm-id" content="1" />
+  <meta name="def-grey" content="grey=false,version=16528934" />
+  <meta name="description"
+    content="淘宝网 - 亚洲较大的网上交易平台，提供各类服饰、美容、家居、数码、话费/点卡充值… 数亿优质商品，同时提供担保交易(先收货后付款)等安全交易保障服务，并由商家提供退货承诺、破损补寄等消费者保障服务，让你安心享受网上购物乐趣！" />
+  <meta name="keyword"
+    content="淘宝,掏宝,网上购物,C2C,在线交易,交易市场,网上交易,交易市场,网上买,网上卖,购物网站,团购,网上贸易,安全购物,电子商务,放心买,供应,买卖信息,网店,一口价,拍卖,网上开店,网络购物,打折,免费开店,网购,频道,店铺" />
+  <meta name="data-spm" content="a21t4m" />
+  <script>
+    var g_config = window.g_config || {};
+    g_config.webww = false;
+    g_config.jstracker2 = g_config.jstracker2 || {};
+    g_config.jstracker2.sampling = 1;
+    g_config.jstracker2.p_sampling = 1;
+    g_config.jstracker2.collection_url = 'https://error.taobao.com/app/tbhome/common/error.html';
+    g_config.jstracker2.webww = false;
+    g_config.jstracker2.whiteScreen = {};
+    g_config.jstracker2.whiteScreen.uploadInnerHtml = true;
+    g_config.jstracker2.whiteScreen.checkWhenUnload = true;
+  </script>
+  <link rel="stylesheet" type="text/css" href="//g.alicdn.com/tb/err/0.7.0/err/40x/index-min.css" />
+  <script src="//g.alicdn.com/jstracker/sdk-assests/5.8.3/index.js"></script>
+  <script src="//o.alicdn.com/tbhome/tbnav/index.js"></script>
+  <style>
+    #h5-body{display:none;position:relative;background-color:#f4f4f4;width:100vw;height:100vh;overflow:hidden}#h5-content{position:absolute;top:20%;left:calc(50% - 40vw);width:80vw;height:80vh}#h5-img{display:block;margin:0 auto;width:440px;height:440px}#h5-text{display:flex;flex-direction:column;align-items:center;justify-content:center;margin:3.47vw 0 1.6vw;font-size:4.27vw;width:80vw;height:6.13vw;color:#666;font-style:normal}#h5-cart-text{display:flex;flex-direction:column;align-items:center;justify-content:center;height:4.8vw;line-height:4.8vw;color:#999;font-size:3.46vw;font-style:normal}#h5-cart-link{display:flex;flex-direction:row;align-items:center;justify-content:center}#h5-cart-button{display:flex;flex-direction:row;align-items:center;justify-content:center;margin-top:3.2vw;width:37.33vw;height:10.67vw;line-height:10.67vw;border:none;border-radius:5.33vw;background-image:linear-gradient(90deg,#FF9000 0%,#FA6400 100%);font-size:4.27vw;font-weight:500;color:#fff;font-style:normal}#h5-button{display:block;margin:0 auto;font-size:30px;width:220px;height:80px;border:none;border-radius:40px;background-color:#FF5500;color:#fff}#h5-feedback{display:block;width:70px;margin:20vh auto 0;color:dodgerblue;font-weight:bold;font-size:35px;font-style:normal}#pop-box{display:none}#pop-content{position:fixed;left:50%;top:50%;margin:-42.8vw 0 0 -39.3vw;width:78.67vw;height:53vw;background:#fff;border-radius:2.28rem;box-shadow:0 1.6vw 2.67vw rgba(0,0,0,.3);background-image:url(//gw.alicdn.com/imgextra/i2/O1CN01k48Vsu1rjzf2WBpCS_!!6000000005668-2-tps-590-425.png);background-size:cover;display:flex;flex-direction:column;align-items:center;z-index:1e6;font-family:PingFang SC,Helvetica Neue}#pop-logo{width:21.4vw;height:21.4vw;position:absolute;left:50%;top:-8vw;margin-left:-10.7vw;background-image:url(//gw.alicdn.com/imgextra/i3/O1CN01AK0jb81mwIDnv3wyq_!!6000000005018-2-tps-201-202.png);background-size:cover}#pop-title{font-size:4.8vw;font-weight:bold;line-height:5.35vw;height:5.35vw;color:#111;margin-top:15vw;text-align:center;font-style:normal}#pop-info{font-size:3.74vw;margin-top:3.74vw;height:4.28vw;line-height:4.28vw;color:#666;text-align:center;font-style:normal}#pop-button-wrap{width:68vw;height:17.12vw;margin-top:4.28vw;display:flex;justify-content:center;flex-direction:column;align-items:center}#pop-button-bright{width:64.2vw;height:9.1vw;border-radius:5.35vw;color:#fff;background:linear-gradient(to right,#FF7001,#FF8805);display:flex;align-items:center;justify-content:center;font-size:3.74vw;font-weight:bold;line-height:9.1vw;font-style:normal}#pop-button-dark{color:#bbb;display:flex;align-items:center;justify-content:center;font-size:3.74vw;line-height:3.74vw;margin-top:3.2vw;padding-bottom:.53vw;box-sizing:border-box;font-style:normal}
+  </style>
+</head>
+<body data-spm="27981689"><script>
+with(document)with(body)with(insertBefore(createElement("script"),firstChild))setAttribute("exparams","category=&userid=&aplus&udpid=&&yunid=&&trid=3d83830b17739912841328973e&asid=AQAAAAB09bxpIP00QAAAAACJNXimNtyR1g==",id="tb-beacon-aplus",src=(location>"https"?"//g":"//g")+".alicdn.com/alilog/mlog/aplus_v2.js")
+</script>
+  <div id="content">
+    <div id="J_Header" class="header clearfix">
+      <h1 id="logo" class="logo">
+        <a href="//www.taobao.com/" title="淘宝网 Taobao.com - 阿里巴巴旗下网站" target="_top">淘宝网<span></span></a>
+      </h1>
+    </div>
+    <div id="main">
+      <div id="banner" data-spm="1997480849">
+        <a id="J_Banner" href="//www.taobao.com"><img
+            src="//gtms04.alicdn.com/tps/i4/T1Sa1dFuJaXXaESgf7-520-500.png" /></a>
+      </div>
+      <div id="err" data-spm="1997480901">
+        <div class="tips">
+          <p>抱歉！页面无法访问……</p>
+        </div>
+        <div class="reason">
+          <p>可能因为：</p>
+          <ul class="reason-list">
+            <li>网址有错误<span><i class="gt">&gt;</i>请检查地址是否完整或存在多余字符</span></li>
+            <li>网址已失效<span><i class="gt">&gt;</i>可能页面已删除，活动已下线等</span></li>
+          </ul>
+        </div>
+        <div class="links">
+          <p>或者逛逛：<a href="//www.taobao.com/">淘宝首页</a><span>|</span><a
+              href="//i.taobao.com/my_itaobao">我的淘宝</a><span>|</span><a href="//s.taobao.com/search">搜宝贝/店铺&nbsp;<i
+                class="iconfont icon-search"></a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div id="footer"></div>
+  </div>
+  <div id="h5-body">
+    <div id="h5-content">
+      <img id="h5-img" src="//img.alicdn.com/tfs/TB1eZPBmMoQMeJjy1XaXXcSsFXa-220-220.png_110x110.jpg" alt="404">
+      <div id="h5-text">哎呀，页面走丢啦！</div>
+      <div id="h5-cart-text">去购物车看看加购的宝贝吧～</div>
+      <div id="h5-cart-link">
+        <span id="h5-cart-button">去购物车<span id="h5-cart-number">（3s）</span></span>
+      </div>
+      <a id="h5-feedback" href="//market.m.taobao.com/app/dinamic/h5-tb-feedback/index.html">反馈</a>
+    </div>
+  </div>
+  <div id="pop-box">
+    <div id="pop-content">
+      <div id="pop-logo"></div>
+      <div id="pop-title">打开淘宝App</div>
+      <div id="pop-info">大牌试用，每日爆款更多福利等你来</div>
+      <div id="pop-button-wrap">
+        <div id="pop-button-bright">现在打开</div>
+        <div id="pop-button-dark">下次再说</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function reportCustom(params) {
+      if (!window.JSTracker2 || !JSTracker2) {
+        return;
+      }
+      window.JSTracker2.reportCustom(params)
+    }
+    try {
+      var tracker2_search = window.location.href.substring(window.location.href.indexOf("?") + 1);
+      var from_url = tracker2_search.replace("from=", "");
+
+      if (from_url) {
+        var tracker2_new_url = new URL(from_url);
+
+        reportCustom({
+          code: 'form_url',
+          sampling: 1,
+          message: '进入错误页',
+          d1: tracker2_new_url.origin,
+          d2: tracker2_new_url.origin + tracker2_new_url.pathname,
+          c1: tracker2_new_url.href,
+          c2: document.referrer,
+        });
+      }
+    } catch (error) {
+      reportCustom({
+        code: 'from_url_parse_error',
+        sampling: 1,
+        message: error,
+        d1: from_url,
+      });
+    }
+  </script>
+  <script>
+    try {
+      if (window.screen.width < 990 || /mobi|android|iPhone/i.test(navigator.userAgent)) {
+        setTimeout(function () {
+          document.getElementById("content").style.display = 'none';
+          document.getElementById("J_SiteNav").style.display = 'none';
+          document.getElementById("J_SiteFooter").style.display = 'none';
+          document.getElementById("h5-body").style.display = 'block';
+        }, 10)
+      }
+    } catch (error) { }
+  </script>
+  <script>
+    function getAppInfo() {
+      var AliApp = navigator.userAgent.match(/AliApp\(([^\/]+)\/([\d\.\_]+)\)/i);
+      if (AliApp && AliApp[1] && AliApp[2]) {
+        return  {
+          appName: AliApp[1].toUpperCase(),
+          appVersion: AliApp[2]
+        };
+      } else {
+        return null;
+      }
+    }
+    function openCartUrl() {
+      var cartUrl = '//main.m.taobao.com/cart/index.html?hasback=true&spm=a21t4m.27981689.0.0';
+      var appInfo = getAppInfo();
+      if ((appInfo && appInfo.appName === 'TB') || !window.$slk) {
+        window.location.replace(cartUrl);
+      } else {
+        var config = {
+          targetUrl: cartUrl
+        };
+        if (appInfo && appInfo.appName === 'AP') {
+          config.enableUlk = false;
+        }
+        window.$slk.callApp(config);
+      }
+    }
+    function popManage(state) {
+      var elemBox = document.getElementById('pop-box');
+      if (state === true) {
+        elemBox.style.display = 'block'
+      } else {
+        elemBox.style.display = 'none'
+      }
+    }
+    function initCartButton() {
+      var count = 3;
+      var elemNumber = document.getElementById('h5-cart-number');
+      var elemBtn = document.getElementById('h5-cart-button');
+      var elemBoxBright = document.getElementById('pop-button-bright');
+      var elemBoxDark = document.getElementById('pop-button-dark');
+      var appInfo = getAppInfo();
+      var countDown = setInterval(function() { 
+        count--;
+        if (count === 0) {
+          elemNumber.innerHTML = '';
+          clearInterval(countDown);
+          if (appInfo && (appInfo.appName === 'AP' || appInfo.appName === 'TB')) {
+            openCartUrl();
+          } else {
+            popManage(true);
+          }
+        } else {
+          elemNumber.innerHTML = '（' + count + 's）';
+        }
+      }, 500);
+      
+      elemBtn.addEventListener('click', function() {
+        clearInterval(countDown);
+        elemNumber.innerHTML = '';
+        openCartUrl();
+      });
+      elemBoxBright.addEventListener('click', function() {
+        popManage(false);
+        openCartUrl();
+      });
+      elemBoxDark.addEventListener('click', function() {
+        popManage(false);
+      });
+    }
+
+    function loadCallAppScript(src) {
+      var script = document.createElement('script');
+      script.setAttribute('crossorigin', 'anonymous');
+      script.src = src;
+      document.body.appendChild(script);
+      script.onload = function() {
+        window.$slk && window.$slk.init();
+      };
+    }
+    try {
+      if (window.screen.width < 990 || /android|iPhone/i.test(navigator.userAgent)) {
+        initCartButton();
+        setTimeout(function () {
+          loadCallAppScript('//ugcdn.taobao.com/app/starlink/core/index.js?id=4594')
+        }, 10);
+      }
+    } catch (error) {}
+  </script>
+</body>
+</html>
