@@ -203,12 +203,12 @@
       <sub>OpenAI · 任务执行引擎</sub>
     </td>
     <td align="center" width="16%">
-      <img src="./resources/logos/perplexity_logo.jpg" alt="Perplexity" height="32" /><br />
+      <img src="./resources/logos/perplexity_logo.png" alt="Perplexity" height="32" /><br />
       <strong><a href="https://www.perplexity.ai/">Perplexity</a></strong><br />
       <sub>深度研究与信息整合</sub>
     </td>
     <td align="center" width="16%">
-      <img src="./resources/logos/kimi_logo.jpg" alt="Kimi Agent" height="32" /><br />
+      <img src="./resources/logos/kimi_logo.png" alt="Kimi Agent" height="32" /><br />
       <strong><a href="https://kimi.moonshot.cn/">Kimi Agent</a></strong><br />
       <sub>月之暗面 · 办公三件套</sub>
     </td>
@@ -238,11 +238,11 @@
 
 | 模型 | 出品方 | 上下文 | 特色 |
 |------|--------|--------|------|
-| **DeepSeek-V3.2** | 深度求索 | 128K | 💰 reasoning-first for agents，支持 Thinking in Tool-Use，开源性价比标杆 |
 | **Kimi K2.5** | 月之暗面 | 256K | 🔥 当前最智能/最全能 Kimi 模型，原生多模态、thinking、多步工具使用 |
-| **Qwen3-Max** | 阿里云 | 256K | 🌐 千问旗舰线，适合复杂多步骤任务，支持思考模式 + 内置工具 |
-| **MiniMax-M2.7** | MiniMax | 200K | 📏 当前最新 M 系旗舰，强调 real-world engineering / tool calling / search |
 | **GLM-5** | 智谱 AI | 200K | 🏛️ 智谱新一代旗舰基座，面向 Agentic Engineering、复杂系统工程、长程 Agent |
+| **MiniMax-M2.7** | MiniMax | 200K | 📏 当前最新 M 系旗舰，强调 real-world engineering / tool calling / search |
+| **DeepSeek-V3.2** | 深度求索 | 128K | 💰 reasoning-first for agents，支持 Thinking in Tool-Use，开源性价比标杆 |
+| **Qwen3-Max** | 阿里云 | 256K | 🌐 千问旗舰线，适合复杂多步骤任务，支持思考模式 + 内置工具 |
 
 > 📊 详细 benchmark 与价格对比见 → [附录：模型与 Agent 评测体系详解](./docs/ch01-quickstart/reference-benchmarks.md)
 
