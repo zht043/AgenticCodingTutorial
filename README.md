@@ -27,7 +27,7 @@
 
 💡 <strong>作者寄语</strong>
 
-🧪 **踩坑无数** — 已花费至少 3k 人民币，试过各种技巧、Skill 和 Agent 组合  
+🧪 **踩坑无数** — 2个月已花费至少 3k 人民币重度使用AI编程，试过各种技巧、Skill 和 Agent 组合  
 🔧 **深度实战** — 深度使用过 5 种以上的 Agent 和 10 种以上的模型  
 🏗️ **项目验证** — 完成过大型项目的分析和复杂特性的重构  
 ⚡ **快速验证** — 常用 Agent 快速实现 Idea 的 Prototype  
@@ -229,10 +229,13 @@
 **🇺🇸 国际模型**
 
 | 模型 | 出品方 | 上下文 | 特色 |
-|------|--------|--------|------|
-| **GPT-5.4 Pro** | OpenAI | 1M | ⚡ 当前官方主旗舰，面向 agentic、编码、专业工作流，支持 computer use / tool search |
-| **Claude Opus 4.6** | Anthropic | 1M | 🏆 Anthropic 当前最强复杂任务模型，coding / reasoning / agents 强项 |
-| **Gemini 3.1 Pro (Preview)** | Google | 1M | 🌊 Google 当前 Gemini 3 系 Pro 线，支持 thinking、agentic workflows、复杂多模态推理 |
+|:---:|---|:---:|:---|
+| **GPT-5.4 Pro** | OpenAI | 1M | ⚡ 官方主旗舰，面向 agentic、编码、专业工作流 |
+| **Claude Opus 4.6** | Anthropic | 1M | 🏆 Anthropic 最强复杂任务，coding / agents 强项 |
+| **Gemini 3.1 Pro** | Google | 1M | 🌊 Google Gemini 3 系 Pro 线，支持 thinking、agentic workflows |
+| **Llama 4 Maverick** | Meta | 10M | 🦙 Meta 最新主力，原生多模态、MoE、超长上下文 |
+| **nemotron-3-super** | NVIDIA | 1M | ⚙️ NVIDIA 新一代主力，agentic / coding / tool calling 强 |
+| **grok-code-fast** | xAI（X） | 256K | 🛠️ xAI 官方 Code model，偏 agentic coding / pair programming |
 
 **🇨🇳 国产模型**
 
