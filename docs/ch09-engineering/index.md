@@ -1,4 +1,4 @@
-# Chapter 4 · ⚙️ Agent 驱动的软件工程工作流
+# Chapter 9 · 🏗️ 工程化工作流
 
 > 🎯 **目标**：系统了解 Agent 在软件开发全生命周期中能介入哪些环节、擅长什么、不擅长什么，以及如何设计高效的人机协作工作流。即使你没有编程经验，读完本章也能理解软件开发的基本流程和 Agent 的角色。
 
@@ -78,6 +78,11 @@ flowchart LR
 ### 总览矩阵
 
 ```mermaid
+---
+config:
+  look: neo
+  theme: dark
+---
 quadrantChart
     title "Agent 任务能力分布：价值 vs 风险"
     x-axis 低风险 --> 高风险
@@ -657,6 +662,8 @@ flowchart LR
 
 ---
 
-⬅️ 上一章：[Chapter 3 · Agent 技术发展简史](../ch03-history/part-3-history.md)
+<div align="center">
 
-➡️ 下一章：[Chapter 5 · 人机协同方法论](../ch05-collaboration/part-5-collaboration.md)
+[📚 返回目录](../../README.md) | [⬅️ 上一章：Ch08 扩展生态与会话管理](../ch08-config-session/index.md) | [➡️ 下一章：Ch10 人机协同方法论](../ch10-collaboration/index.md)
+
+</div>
