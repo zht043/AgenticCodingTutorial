@@ -1,4 +1,4 @@
-# Chapter 2 · Agent 核心概念
+# Chapter 2 · 🧩 Agent 核心原理
 
 > 目标：建立一套清晰的 Agent 心智模型——知道它是什么、怎么工作、为什么有时聪明有时蠢。
 
@@ -450,4 +450,8 @@ def verify_and_terminate(max_iterations=5):
 
 ---
 
-下一章：[Chapter 3 · Agent 技术发展简史](../ch03-history/part-3-history.md)
+<div align="center">
+
+[📚 返回目录](../../README.md) | [⬅️ 上一章：Ch01 快速上手](../ch01-quickstart/index.md) | [➡️ 下一章：Ch03 术语速查手册](../ch03-glossary/index.md)
+
+</div>

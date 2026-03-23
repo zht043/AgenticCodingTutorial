@@ -1,4 +1,4 @@
-# Chapter 5 · 🤝 人机协同方法论 — 从"能用"到"10x"
+# Chapter 10 · 🤝 人机协同方法论
 
 > 🎯 **目标**：掌握与 Agent 高效协作的核心方法论和实操技巧——不是学更多功能，而是学会更好地"驾驭"Agent。读完本章，你将从"会用 Agent"升级到"善用 Agent"。
 
@@ -718,6 +718,8 @@ flowchart LR
 
 ---
 
-⬅️ 上一章：[Chapter 4 · Agent 驱动的软件工程工作流](../ch04-engineering/part-4-engineering.md)
+<div align="center">
 
-➡️ 下一章：[Chapter 6 · 基础实战案例](../ch06-basic-cases/part-6-basic-cases.md)
+[📚 返回目录](../../README.md) | [⬅️ 上一章：Ch09 工程化工作流](../ch09-engineering/index.md) | [➡️ 下一章：Ch11 Agent 设计模式](../ch11-design-patterns/index.md)
+
+</div>

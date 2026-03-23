@@ -79,24 +79,41 @@ graph LR
 >
 > 📖 想了解详细的选型分析，见 Reference 文档：
 > - [附录：Agent 工具与模型详细对比](./reference-tools-comparison.md)
+> - [附录：作者使用体验与心得](./reference-author-experience.md)
+> - [附录：主流 Agent 工具对比](./reference-agent-comparison.md)
+> - [附录：主流 Coding 模型对比](./reference-model-comparison.md)
 > - [附录：模型与 Agent 评测体系详解](./reference-benchmarks.md)
 
-工具和模型太多，选择困难？以下是笔者的实战推荐，**按你的情况挑一条路线跑起来就行**：
+工具和模型太多，选择困难？正文里我只给**作者主推路线 + 最短结论**，深度对比都放在附录。先记住这四句话：
+
+- **先选一条主线**，不要一上来装 6 个 Agent。
+- **工具是工作台，模型是底层马力**，不要混为一谈。
+- **正式开发任务**优先从 `Claude Code`、`Cursor`、`Codex CLI` 这三条主线里选。
+- **排行榜只能帮你缩小范围**，真正决定体验的还有工作流、上下文管理和验证习惯。
+
+> 🧭 本组附录完整覆盖的工具/模型名单见导航页，包含 `Claude Code`、`Cursor`、`GitHub Copilot`、`Codex CLI`、`Gemini CLI`、`Antigravity`、`通义灵码`、`Trae`、`Baidu Comate`、`CodeBuddy`、`Kimi Code`、`CodeArts`、`OpenCode`、`CodeGeeX`、`Aider`、`Cline`、`Windsurf`、`Devin`、`OpenClaw`、`Manus`、`ChatGPT Tasks`、`Perplexity`、`Kimi Agent`、`ArkClaw`，以及 `Claude Opus 4.6`、`GPT-5.4 Pro`、`Gemini 3.1 Pro`、`Llama 4 Maverick`、`nemotron-3-super`、`grok-code-fast`、`Kimi K2.5`、`GLM-5`、`MiniMax-M2.7`、`DeepSeek-V3.2`、`Qwen3-Max`。
 
 ### 纯新手 / 想先尝尝鲜
 
 购买 **Cursor Pro 会员**（\$20/月），开箱即用的 IDE 体验，不需要折腾终端和 API Key。适合零基础用户快速体验 Vibe Coding。
 
+如果你在中文环境里更想先低门槛试水，也可以先看 `Trae` / `通义灵码`；但本教程的主线工作流仍然更偏 `Claude Code` / `Cursor` 这两条。
+
 ### 有正式开发任务的用户（推荐）
 
-购买 **Claude Pro 会员**（\$20/月）+ **ChatGPT Plus 会员**（\$20/月），然后：
+如果你真的要拿 Agent 干活，我更推荐先准备一条“主力线”：
 
 | 主力 Agent | 主力模型 | 定位 |
 |-----------|---------|------|
-| <img src="../../resources/logos/claude-code.png" height="20" /> **Claude Code** | **Opus 4.6**（复杂任务）/ **Sonnet 4.6**（日常 90%）/ **Haiku 4.5**（简单批量） | 端到端闭环最强，benchmark 和用户口碑稳居 Top |
-| <img src="../../resources/logos/codex-color.png" height="20" /> **Codex CLI** | **GPT-5.4** / **GPT-5.3-Codex** | OpenAI 生态，沙箱隔离好，适合保守可控的协作风格 |
+| <img src="../../resources/logos/claude-code.png" height="20" /> **Claude Code** | **Sonnet 4.6**（日常主力）/ **Opus 4.6**（复杂任务）/ **Haiku 4.5**（简单批量） | 我最推荐的新主线：闭环能力强，适合正式工程任务 |
+| <img src="../../resources/logos/codex-color.png" height="20" /> **Codex CLI** | **GPT-5.4 Pro** / **GPT-5.3-Codex** | 更像高智商参谋和审查搭档，沙箱隔离与可控性很好 |
+| <img src="../../resources/logos/cursor.png" height="20" /> **Cursor** | **Claude / GPT / Gemini**（按套餐与配置选择） | 上手最快的 AI IDE 路线，适合把 Agent 当日常编辑器搭档 |
 
-为什么双持 Claude Code + Codex？两者互补——Claude Code 擅长大仓库理解和多文件联动，Codex 在沙箱安全和可控性上更出色。日常开发二选一即可，遇到各自瓶颈时切换。
+一句话说三者区别：
+
+- **Claude Code**：最像“真正能持续推进任务的工程搭档”
+- **Codex CLI**：最像“擅长 plan / review / 风险分析的参谋”
+- **Cursor**：最像“最好上手的日常 AI IDE”
 
 > 💡 **选择你喜欢的使用方式：**
 > - 🖥️ **喜欢终端操作**：直接安装 CLI 版（`claude`、`codex`），终端即战场
@@ -105,7 +122,12 @@ graph LR
 
 ### 进阶用户
 
-在上述基础上，可额外配置性价比高的其他 Agent 和模型。例如 Gemini CLI（免费额度充足、1M 超长上下文）、OpenCode + DeepSeek（极致低成本）、Kimi Code（中文友好）等。
+在上述基础上，再去补“第二条路线”会更稳，例如：
+
+- `Gemini CLI`：免费额度友好、长上下文强，适合探索和补位
+- `OpenCode + DeepSeek-V3.2`：极致低成本、多模型工作流
+- `Kimi Code + Kimi K2.5`：中文友好，适合中国大陆用户
+- `GLM-5`、`Qwen3-Max`、`MiniMax-M2.7`：适合你认真比较国产模型路线时再深入看
 
 ### 中国大陆用户特别提醒
 
@@ -115,9 +137,9 @@ graph LR
 
 | 场景 | 推荐组合 | 说明 |
 |------|---------|------|
-| 网络/合规限制 | **Claude Code + GLM-5** | 智谱模型，MIT 开源，已支持/适配华为昇腾生态 |
-| 国产最强性价比 | **Kimi Code + Kimi K2.5** | 月之暗面官方 Agent，开源权重 |
-| 极致低成本 | **OpenCode + DeepSeek V3.2** | 开源 Agent + 最便宜模型 |
+| 网络/合规限制 | **Claude Code + GLM-5** | 智谱模型，中文和工程任务都比较稳；与华为昇腾生态已有适配/支持 |
+| 国产最强性价比 | **Kimi Code + Kimi K2.5** | 月之暗面官方 Agent，中文体验友好 |
+| 极致低成本 | **OpenCode + DeepSeek-V3.2** | 开源 Agent + 最便宜模型 |
 
 > 📖 中国大陆用户的完整配置指南和注意事项见 → [附录：中国大陆用户推荐配置](./reference-china-users-guide.md)
 
@@ -321,3 +343,11 @@ claude
 恭喜你完成了 Agent 的部署和初次体验！在下一章中，我们将深入理解 Agent 的运作原理和核心概念，帮助你从"能用"走向"会用"。
 
 👉 下一章：[Chapter 2 · 🧩 Agent 核心概念](../ch02-concepts/part-2-concepts.md)
+
+---
+
+<div align="center">
+
+[📚 返回目录](../../README.md) | [➡️ 下一章：Ch02 Agent 核心原理](../ch02-concepts/index.md)
+
+</div>
