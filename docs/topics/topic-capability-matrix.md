@@ -1,5 +1,5 @@
 ---
-> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../README.md#part-iv--进阶专题--深度参考资料库27-篇)
+> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#part-iv-topics)
 ---
 
 # 📊 Agent 能力矩阵
@@ -31,4 +31,4 @@
 
 ---
 
-> 📖 **相关章节**：[🎯 任务适配度](./topic-task-fit.md) · [Chapter 4 · 工程化实践](../ch04-engineering/part-4-engineering.md)
+> 📖 **相关章节**：[🎯 任务适配度](./topic-task-fit.md) · [Chapter 9 · 工程化工作流](../ch09-engineering/part-9-engineering.md)

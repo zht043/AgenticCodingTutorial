@@ -1,6 +1,6 @@
 # 附录：MCP 与 Skills 详解
 
-> 本文是 [Chapter 2 · Agent 运作原理与核心概念](./part-2-concepts.md) 的扩展附录，深入讲解 MCP 协议、Skills 体系和工具生态。
+> 本文是 [Chapter 2 · Agent 运作原理与核心概念](../ch02-concepts/part-2-concepts.md) 的扩展附录，深入讲解 MCP 协议、Skills 体系和工具生态。
 
 ---
 
@@ -464,4 +464,4 @@ flowchart TB
 
 ---
 
-返回主文档：[Chapter 2 · Agent 运作原理与核心概念](./part-2-concepts.md)
+返回主文档：[Chapter 2 · Agent 运作原理与核心概念](../ch02-concepts/part-2-concepts.md)

@@ -1,5 +1,5 @@
 ---
-> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../README.md#part-iv--进阶专题--深度参考资料库27-篇)
+> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#part-iv-topics)
 ---
 
 # 附录：中国大陆用户推荐配置
@@ -27,11 +27,6 @@
 ## 一张图：大陆用户怎么选
 
 ```mermaid
----
-config:
-  theme: neutral
-  look: neo
----
 flowchart TD
     classDef core fill:#3D7DC8,stroke:#1A4E8A,stroke-width:2px
     classDef data fill:#48A880,stroke:#256B4E,stroke-width:2px
@@ -205,8 +200,8 @@ flowchart TD
 
 如果你已经决定了工具路线，具体配置方法直接看：
 
-- [`附录：各工具 API 配置详解`](./reference-api-config.md)
-- [`附录：CLI、VS Code 插件、桌面应用——什么关系？`](./reference-cli-ide-app.md)
+- [`附录：各工具 API 配置详解`](../ch01-quickstart/reference-api-config.md)
+- [`附录：CLI、VS Code 插件、桌面应用——什么关系？`](../ch01-quickstart/reference-cli-ide-app.md)
 
 建议顺序是：
 
@@ -222,8 +217,8 @@ flowchart TD
 - **想控制预算**：看 `OpenCode + DeepSeek-V3.2`。
 - **想认真比较国产模型**：把 `GLM-5`、`Kimi K2.5`、`Qwen3-Max`、`MiniMax-M2.7` 放到同一轮真实任务里测，不要只看榜单。
 
-> 继续读：如果你已经确定了大陆侧的访问方式，下一步建议看 [`附录：作者使用体验与心得`](./reference-author-experience.md) 和 [`附录：主流 Coding 模型对比`](./reference-model-comparison.md)。
+> 继续读：如果你已经确定了大陆侧的访问方式，下一步建议看 [`附录：作者使用体验与心得`](../ch01-quickstart/reference-author-experience.md) 和 [`附录：主流 Coding 模型对比`](../ch01-quickstart/reference-model-comparison.md)。
 
 ---
 
-返回：[Chapter 1 · 快速上手部署 Agent](./part-1-quickstart.md)
+返回：[Chapter 1 · 快速上手部署 Agent](../ch01-quickstart/part-1-quickstart.md)

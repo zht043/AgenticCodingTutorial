@@ -33,5 +33,5 @@
 
 ---
 
-上一章：[Chapter 12 · 信任边界 — Agent 安全、权限与合规](../ch12-security/part-12-security.md)
-下一章：[Chapter 14 · Agent 技术发展脉络](../ch14-evolution/part-14-evolution.md)
+上一章：[Chapter 12 · 信任边界 — Agent 安全、权限与合规](../legacy/ch12-security/part-12-security.md)
+下一章：[Chapter 14 · Agent 技术发展脉络](../legacy/ch14-evolution/part-14-evolution.md)

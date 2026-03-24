@@ -1,5 +1,5 @@
 ---
-> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#part-iv--进阶专题--深度参考资料库27-篇)
+> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#part-iv-topics)
 ---
 
 # 🧠 大模型幻觉问题（LLM Hallucination）
@@ -36,13 +36,8 @@
 ### 按来源分
 
 ```mermaid
----
-config:
-  look: neo
-  theme: dark
----
 flowchart LR
-    classDef source fill:#e06c75,stroke:#2d2d2d,stroke-width:2px,color:#fff
+    classDef source fill:#e06c75,stroke:#2d2d2d,stroke-width:2px
     classDef type fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
     A["🧠 幻觉来源"]:::source --> B["训练数据偏差"]:::type
@@ -175,7 +170,7 @@ Agent：安装 @yaml/fast-parser 包...
 
 ## 6. 与 AI 幻觉避坑指南的区别
 
-| 维度 | 本专题（大模型幻觉问题） | [AI 幻觉避坑指南](topic-ai-hallucination.md) |
+| 维度 | 本专题（大模型幻觉问题） | [AI 幻觉避坑指南](./topic-ai-hallucination.md) |
 |------|----------------------|-------------------------------------------|
 | **侧重** | 技术原理和分类体系 | 实操避坑清单 |
 | **深度** | 探讨为什么会产生幻觉 | 聚焦怎么避免和检测 |
@@ -186,6 +181,6 @@ Agent：安装 @yaml/fast-parser 包...
 
 > 📖 **相关章节**：
 > - [Ch05 · Agent 内部机制与工具体系](../ch05-agent-mechanics/part-5-agent-mechanics.md) — 理解 Agent 的工作循环
-> - [Ch13 · AI Code Review](../ch13-code-review/part-13-code-review.md) — 实战中的幻觉检测
-> - [AI 幻觉避坑指南](topic-ai-hallucination.md) — 实操避坑清单
-> - [Ch12 · 人机协同方法论](../ch12-collaboration/part-12-collaboration.md) — 验证闭环
+> - [Ch13 · AI Code Review](../ch12-code-review/part-12-code-review.md) — 实战中的幻觉检测
+> - [AI 幻觉避坑指南](./topic-ai-hallucination.md) — 实操避坑清单
+> - [Ch12 · 人机协同方法论](../ch10-collaboration/part-10-collaboration.md) — 验证闭环

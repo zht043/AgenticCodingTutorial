@@ -1,6 +1,6 @@
 # 附录：Agent 任务能力矩阵
 
-> 本文是 [Chapter 4 · Agent 驱动的软件工程工作流](./part-4-engineering.md) 的深度参考文档。
+> 本文是 [Chapter 9 · 工程化工作流](./part-9-engineering.md) 的深度参考文档。
 >
 > 📊 基于 2026 年 3 月主流 Agent（Claude Code、Cursor、Codex CLI 等）的综合能力评估。数据来源包括公开研究论文、SWE-bench 评测、社区实践反馈和作者实测经验。
 
@@ -189,4 +189,4 @@
 
 ---
 
-⬅️ 返回正文：[Chapter 4 · Agent 驱动的软件工程工作流](./part-4-engineering.md)
+⬅️ 返回正文：[Chapter 9 · 工程化工作流](./part-9-engineering.md)

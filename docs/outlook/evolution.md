@@ -1,4 +1,4 @@
-# Chapter 14 · Agent 技术发展脉络
+# 🔭 Agent 技术展望
 
 > 目标：在有了丰富实战经验之后，回顾 Agent 技术的全景——六阶段演进、行业冲击、范式对比和未来展望。
 
@@ -45,5 +45,5 @@
 
 ---
 
-上一章：[Chapter 13 · 进阶实战案例](../ch13-advanced-cases/part-13-advanced-cases.md)
-下一章：[Chapter 15 · 设计与开发你自己的 Agent](../ch15-build-agent/part-15-build-agent.md)
+返回目录：[README · Part VI 趋势与展望](../../README.md#part-vi-outlook)
+相关规划：[README · Part VII 从零构建你自己的 Agent](../../README.md#part-vii-build-agent)

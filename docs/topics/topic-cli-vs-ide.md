@@ -1,10 +1,10 @@
 ---
-> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../README.md#part-iv--进阶专题--深度参考资料库27-篇)
+> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#part-iv-topics)
 ---
 
 # 附录：CLI、VS Code 插件、桌面应用——什么关系？
 
-> 本文是 [Chapter 1 · 快速上手部署 Agent](./part-1-quickstart.md) 的扩展附录，帮你理解 Agent 工具的不同形态和它们之间的关系。
+> 本文是 [Chapter 1 · 快速上手部署 Agent](../ch01-quickstart/part-1-quickstart.md) 的扩展附录，帮你理解 Agent 工具的不同形态和它们之间的关系。
 
 ---
 
@@ -42,4 +42,4 @@
 
 ---
 
-> 📖 返回正文：[Chapter 1 · 快速上手部署 Agent](./part-1-quickstart.md)
+> 📖 返回正文：[Chapter 1 · 快速上手部署 Agent](../ch01-quickstart/part-1-quickstart.md)

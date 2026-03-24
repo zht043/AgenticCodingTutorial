@@ -1,10 +1,10 @@
 ---
-> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../README.md#part-iv--进阶专题--深度参考资料库27-篇)
+> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#part-iv-topics)
 ---
 
 # 附录：Agent 与 Claw 范式深度对比
 
-> 本文是 [README · Agent vs Claw](../../README.md#-agent-vs-clawopenclaw-之后还值得学-agent-吗) 的扩展附录。
+> 本文是 [README · Agent vs Claw](../../README.md#coding-agent-vs-general-agent) 的扩展附录。
 
 ---
 

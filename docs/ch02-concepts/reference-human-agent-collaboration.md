@@ -124,7 +124,7 @@ flowchart LR
     style Start fill:#e8f5e9
     style Mid fill:#fff3e0
     style Late fill:#ffebee
-    style Fail fill:#f44336,color:#fff
+    style Fail fill:#f44336
 ```
 
 ### 失控的六大根源

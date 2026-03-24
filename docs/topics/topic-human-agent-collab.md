@@ -1,10 +1,10 @@
 ---
-> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../README.md#part-iv--进阶专题--深度参考资料库27-篇)
+> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#part-iv-topics)
 ---
 
 # 附录：人机协同与 Agent 优化指南
 
-> 本文是 [Chapter 2 · Agent 运作原理与核心概念](./part-2-concepts.md) 的扩展附录，深入讲解人机协同方法论、Harness 工程和 Agent 使用优化策略。
+> 本文是 [Chapter 2 · Agent 运作原理与核心概念](../ch02-concepts/part-2-concepts.md) 的扩展附录，深入讲解人机协同方法论、Harness 工程和 Agent 使用优化策略。
 
 ---
 
@@ -128,7 +128,7 @@ flowchart LR
     style Start fill:#e8f5e9
     style Mid fill:#fff3e0
     style Late fill:#ffebee
-    style Fail fill:#f44336,color:#fff
+    style Fail fill:#f44336
 ```
 
 ### 失控的六大根源
@@ -437,4 +437,4 @@ Claude Code 支持启动多个子 Agent 并行工作，每个 Agent 在独立的
 
 ---
 
-返回主文档：[Chapter 2 · Agent 运作原理与核心概念](./part-2-concepts.md)
+返回主文档：[Chapter 2 · Agent 运作原理与核心概念](../ch02-concepts/part-2-concepts.md)

@@ -1,5 +1,5 @@
 ---
-> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../README.md#part-iv--进阶专题--深度参考资料库27-篇)
+> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#part-iv-topics)
 ---
 
 # 🤖 Agent vs 代码补全工具
@@ -31,4 +31,4 @@
 
 ---
 
-> 📖 **相关章节**：[Chapter 1 · 快速上手](../ch01-quickstart/part-1-quickstart.md) · [Chapter 4 · 工程化实践](../ch04-engineering/part-4-engineering.md)
+> 📖 **相关章节**：[Chapter 1 · 快速上手](../ch01-quickstart/part-1-quickstart.md) · [Chapter 9 · 工程化工作流](../ch09-engineering/part-9-engineering.md)

@@ -1,6 +1,6 @@
 # 附录：Agent 与 Claw 范式深度对比
 
-> 本文是 [README · Agent vs Claw](../../README.md#-agent-vs-clawopenclaw-之后还值得学-agent-吗) 的扩展附录。
+> 本文是 [README · Agent vs Claw](../README.md#coding-agent-vs-general-agent) 的扩展附录。
 
 ---
 
@@ -141,4 +141,4 @@
 
 ---
 
-返回：[README](../../README.md)
+返回：[README](../README.md)

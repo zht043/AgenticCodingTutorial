@@ -11,11 +11,6 @@
 ## 先怎么读这一组附录
 
 ```mermaid
----
-config:
-  theme: neutral
-  look: neo
----
 flowchart LR
     classDef core fill:#3D7DC8,stroke:#1A4E8A,stroke-width:2px
     classDef data fill:#48A880,stroke:#256B4E,stroke-width:2px

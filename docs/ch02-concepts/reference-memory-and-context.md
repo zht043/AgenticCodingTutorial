@@ -319,22 +319,17 @@ flowchart LR
 ### 演化路线（2023–2026）
 
 ```mermaid
----
-config:
-  look: neo
-  theme: dark
----
 flowchart LR
     RAG0["传统 RAG<br/>固定管道<br/>检索→生成"] --> SelfRAG["Self-RAG<br/>模型自己<br/>决定是否检索"]
     SelfRAG --> CRAG["CRAG<br/>Evaluator Agent<br/>评估检索质量"]
     CRAG --> AdaptiveRAG["Adaptive-RAG<br/>首次引入「路由」<br/>按问题复杂度选策略"]
     AdaptiveRAG --> Deep["Deep Research<br/>多轮自主研究<br/>博士级问题"]
 
-    style RAG0 fill:#2d2d2d,stroke:#61dafb,color:#fff
-    style SelfRAG fill:#2d2d2d,stroke:#e5c07b,color:#fff
-    style CRAG fill:#2d2d2d,stroke:#e06c75,color:#fff
-    style AdaptiveRAG fill:#2d2d2d,stroke:#98c379,color:#fff
-    style Deep fill:#2d2d2d,stroke:#c678dd,color:#fff
+    style RAG0 fill:#2d2d2d,stroke:#61dafb
+    style SelfRAG fill:#2d2d2d,stroke:#e5c07b
+    style CRAG fill:#2d2d2d,stroke:#e06c75
+    style AdaptiveRAG fill:#2d2d2d,stroke:#98c379
+    style Deep fill:#2d2d2d,stroke:#c678dd
 ```
 
 ### 三个关键里程碑
@@ -383,11 +378,6 @@ flowchart LR
 | **长期（知识库）** | `memory/INDEX.md` + 结构化子目录 | 提炼更新 | 经过整理的决策、教训、人物画像 |
 
 ```mermaid
----
-config:
-  look: neo
-  theme: dark
----
 flowchart TB
     NOW["📌 NOW.md<br/>短期工作台<br/>（覆写式）"]
     DAY["📅 memory/YYYY-MM-DD.md<br/>每日日志<br/>（追加式）"]

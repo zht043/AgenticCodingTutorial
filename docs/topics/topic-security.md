@@ -1,8 +1,8 @@
 ---
-> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../README.md#part-iv--进阶专题--深度参考资料库27-篇)
+> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#part-iv-topics)
 ---
 
-# Chapter 12 · 信任边界 — Agent 安全、权限与合规
+# 🔒 安全权限合规
 
 > 目标：理解 Agent 的安全风险面，学会设计权限模型和安全护栏——让 Agent 强大但可控。
 
@@ -64,5 +64,5 @@
 
 ---
 
-上一章：[Chapter 11 · 多 Agent 协作](../ch11-multi-agent/part-11-multi-agent.md)
-下一章：[Chapter 13 · 进阶实战案例](../ch13-advanced-cases/part-13-advanced-cases.md)
+相关阅读：[多 Agent 组合专题](./topic-multi-agent.md)
+相关阅读：[Chapter 12 · AI Code Review](../ch12-code-review/part-12-code-review.md)

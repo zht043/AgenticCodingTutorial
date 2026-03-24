@@ -1,8 +1,8 @@
 ---
-> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../README.md#part-iv--进阶专题--深度参考资料库27-篇)
+> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#part-iv-topics)
 ---
 
-# Chapter 8 · MCP 协议
+# 🔌 MCP 协议
 
 > 目标：深入理解 MCP 的定位、用法和局限——以及为什么 2026 年的趋势是"MCP 回归合理位置"而非"万物皆 MCP"。
 
@@ -53,5 +53,5 @@
 
 ---
 
-上一章：[Chapter 7 · Skill 系统](../ch07-skills/part-7-skills.md)
-下一章：[Chapter 9 · Claude Code 深度使用指南](../ch09-claude-code/part-9-claude-code.md)
+相关阅读：[Skill 系统专题](./topic-skills.md)
+相关阅读：[Chapter 8 · 扩展生态与会话管理](../ch08-config-session/part-8-config-session.md)

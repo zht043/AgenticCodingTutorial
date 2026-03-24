@@ -1,6 +1,6 @@
 # 附录：技术演进六阶段详解
 
-> 本文是 [Chapter 2 · Agent 运作原理与核心概念](./part-2-concepts.md) 的扩展附录，详细讲解从 LLM 到 Agent OS 的技术演进脉络。
+> 本文是 [Chapter 2 · Agent 运作原理与核心概念](../ch02-concepts/part-2-concepts.md) 的扩展附录，详细讲解从 LLM 到 Agent OS 的技术演进脉络。
 
 ---
 
@@ -316,4 +316,4 @@ ChatGPT 时代，用户主要需要：帮我写、帮我解释、帮我总结。
 
 ---
 
-返回主文档：[Chapter 2 · Agent 运作原理与核心概念](./part-2-concepts.md)
+返回主文档：[Chapter 2 · Agent 运作原理与核心概念](../ch02-concepts/part-2-concepts.md)

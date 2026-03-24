@@ -1,5 +1,5 @@
 ---
-> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../README.md#part-iv--进阶专题--深度参考资料库27-篇)
+> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#part-iv-topics)
 ---
 
 # 🎨 多模态应用场景
@@ -31,4 +31,4 @@
 
 ---
 
-> 📖 **相关章节**：[🧩 上下文工程深入](./topic-context-engineering.md) · [Chapter 6 · 基础实战案例](../ch06-basic-cases/part-6-basic-cases.md)
+> 📖 **相关章节**：[🧩 上下文工程深入](./topic-context-engineering.md) · [Chapter 6 · 代码探索与验证驱动](../ch06-explore-verify/part-6-explore-verify.md)

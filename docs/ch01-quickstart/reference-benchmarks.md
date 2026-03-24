@@ -33,11 +33,6 @@
 ## Benchmark 地图：它们到底在测什么
 
 ```mermaid
----
-config:
-  theme: neutral
-  look: neo
----
 flowchart TB
     classDef core fill:#3D7DC8,stroke:#1A4E8A,stroke-width:2px
     classDef data fill:#48A880,stroke:#256B4E,stroke-width:2px

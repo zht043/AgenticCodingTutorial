@@ -1,5 +1,5 @@
 ---
-> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../README.md#part-iv--进阶专题--深度参考资料库27-篇)
+> 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#part-iv-topics)
 ---
 
 # 💬 Prompt 模板库
@@ -31,4 +31,4 @@
 
 ---
 
-> 📖 **相关章节**：[🧩 上下文工程深入](./topic-context-engineering.md) · [Chapter 5 · 人机协同](../ch05-collaboration/part-5-collaboration.md)
+> 📖 **相关章节**：[🧩 上下文工程深入](./topic-context-engineering.md) · [Chapter 10 · 人机协同方法论](../ch10-collaboration/part-10-collaboration.md)
