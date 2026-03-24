@@ -228,6 +228,76 @@ flowchart TB
 - **大量文档 / 外部知识 / 历史数据** → 用 RAG
 - **混合最佳**：Markdown 存行为逻辑，RAG 存长文档
 
+### Contextual Retrieval：让 RAG 真正好用
+
+📌 **问题根源**：传统 RAG 把文档切成 chunk 后，每段文字往往丢失了原始语境，导致向量检索时「明明应该找到，却没找到」。
+
+**示例**：一份 API 文档中有这样一个 chunk：
+
+> "The default timeout is 30 seconds."
+
+单独看这句话，没有人（也没有向量模型）知道它讲的是哪个模块的超时。
+
+💡 **Contextual Retrieval 的解法**（Anthropic 提出）：在每个 chunk 存入向量库**之前**，先让模型为它生成一段「解释性上下文」并拼接在前面：
+
+```
+[自动生成的上下文]
+本段来自 Payments SDK 的 API 参考文档，描述的是 charge() 方法的超时配置。
+
+[原始 chunk]
+The default timeout is 30 seconds.
+```
+
+这样检索时，语义更完整，相关性更准确，Anthropic 的测试显示检索失败率可降低 **49%**。
+
+| 方式 | 检索失败率降低幅度（相对基准） | 说明 |
+|------|-------------------------------|------|
+| 传统向量 RAG | 基准 | chunk 缺乏上下文 |
+| + BM25 混合检索 | 约降低 ~30% | 补充关键词匹配 |
+| + Contextual Retrieval | 降低 ~49% | chunk 前加入上下文描述 |
+| + 两者结合 | 降低 ~67% | 效果最佳 |
+
+> 数据来源：Anthropic 官方博客；BM25 单独使用的降低幅度因数据集而异，此处为近似值。
+
+⚠️ **适用场景**：Contextual Retrieval 适合文档量大、chunk 语境依赖强的知识库（如大型 API 文档、技术手册）。对于结构化的代码仓库，直接用文件系统 + ripgrep 通常更简单有效。
+
+---
+
+### 上下文缓存：让生产 Agent 可负担
+
+📌 **问题**：生产环境中每次调用 Agent 都要重新传入系统提示、工具定义、项目说明，而这些内容往往几乎不变。重复传入相同前缀 = 重复付 token 费用。
+
+💡 **上下文缓存（Context Caching / Prompt Caching）**：将不变的前缀部分缓存在 API 侧，后续调用命中缓存后，这部分 token 按缓存价格计费（通常比正常输入 token 便宜 **70-90%**）。
+
+**核心设计原则 — 前缀稳定性（Prefix Stability）**：
+
+```
+✅ 正确的上下文结构（稳定前缀在前）：
+┌─────────────────────────────┐
+│ 系统提示（固定，最长）        │  ← 缓存命中率最高
+│ 工具定义列表（固定）          │  ← 缓存命中
+│ 项目说明 / CLAUDE.md（固定）  │  ← 缓存命中
+│ 当前任务描述（变化）          │  ← 每次新生成
+│ 本轮对话历史（变化）          │  ← 每次新生成
+└─────────────────────────────┘
+
+❌ 错误做法：把动态内容插入前缀中间
+→ 破坏缓存前缀，每次都要重新计算整个上下文
+```
+
+**实践建议**：
+
+| 建议 | 说明 |
+|------|------|
+| 固定内容放最前 | 系统提示、工具列表、项目规范永远在上下文开头 |
+| 变化内容追加在末尾 | 当前任务、本轮历史放在最后 |
+| 不要在固定前缀中插入时间戳等动态值 | 会破坏缓存 |
+| 工具列表保持稳定顺序 | 顺序变化也会破坏前缀匹配 |
+
+> 📌 对于频繁调用的生产 Agent，前缀稳定性是让系统在可负担成本内运行的关键指标，不亚于模型选择本身。
+
+---
+
 ### 上下文生命周期管理
 
 ```mermaid
@@ -242,7 +312,62 @@ flowchart LR
 
 ---
 
-## 8. 上下文问题的诊断与修复
+## 8. Agentic RAG：从检索增强到自主检索决策
+
+> 📌 传统 RAG 是"检索 → 生成"的固定管道；Agentic RAG 让 Agent 自主决策**是否检索、检索什么、检索多少轮**。
+
+### 演化路线（2023–2026）
+
+```mermaid
+---
+config:
+  look: neo
+  theme: dark
+---
+flowchart LR
+    RAG0["传统 RAG<br/>固定管道<br/>检索→生成"] --> SelfRAG["Self-RAG<br/>模型自己<br/>决定是否检索"]
+    SelfRAG --> CRAG["CRAG<br/>Evaluator Agent<br/>评估检索质量"]
+    CRAG --> AdaptiveRAG["Adaptive-RAG<br/>首次引入「路由」<br/>按问题复杂度选策略"]
+    AdaptiveRAG --> Deep["Deep Research<br/>多轮自主研究<br/>博士级问题"]
+
+    style RAG0 fill:#2d2d2d,stroke:#61dafb,color:#fff
+    style SelfRAG fill:#2d2d2d,stroke:#e5c07b,color:#fff
+    style CRAG fill:#2d2d2d,stroke:#e06c75,color:#fff
+    style AdaptiveRAG fill:#2d2d2d,stroke:#98c379,color:#fff
+    style Deep fill:#2d2d2d,stroke:#c678dd,color:#fff
+```
+
+### 三个关键里程碑
+
+| 系统 | 核心创新 | 解决的问题 |
+|------|---------|-----------|
+| **Self-RAG** | 引入 reflection tokens，模型为自己打分 | 判断是否需要检索、文档是否相关、答案是否可靠 |
+| **CRAG** | 引入 Evaluator Agent | 检索质量差时自动触发 Web Search fallback，不再盲目相信检索结果 |
+| **Adaptive-RAG** | 首次显式路由 | 先判断问题复杂度：简单问题→直接回答，中等→普通检索，复杂→多步 Agent 推理 |
+
+### 两类失败模式（AgenticRAGTracer 发现）
+
+在多跳推理场景中，Agentic RAG 系统存在两类典型失败：
+
+- **Premature Collapse（过早停止）**：Agent 在还没找到足够信息时就停止检索，给出不完整答案
+- **Over-Extension（过度延伸）**：Agent 无限制地调用检索工具，推理链越来越长但答案质量不再提升
+
+> 💡 **结论**：好的 Agentic RAG 不在于"推理更长"，而在于"推理更合理"——知道什么时候停下来。
+
+### 未来形态：混合系统
+
+```
+简单问题  →  直接回答（无需检索）
+中等问题  →  单次检索 + 生成
+复杂问题  →  Adaptive-RAG（多步推理）
+深度研究  →  多工具自治（Deep Research）
+```
+
+> ⚠️ 对于日常 Coding Agent 场景，直接用文件系统 + ripgrep 检索代码仓库通常比搭 RAG 更简单、更可靠。Agentic RAG 更适合需要跨大量外部文档的知识密集型场景。
+
+---
+
+## 9. 上下文问题的诊断与修复
 
 ### 诊断清单
 
