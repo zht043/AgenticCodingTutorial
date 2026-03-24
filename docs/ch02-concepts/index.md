@@ -128,6 +128,22 @@ flowchart LR
 
 **Claude Code 是 Agent 容器（壳 + 工具 + 工作流），Opus 4.6 是其中的大脑（推理 + 编码 + 规划）。** 同理，Codex CLI 之于 GPT-5.x、Gemini CLI 之于 Gemini 3 Pro，都是这个关系。
 
+### 📌 Harness 改变性能的真实数据
+
+> **"模型是 CPU，Harness 是操作系统——CPU 再强，OS 拉胯也白搭。"**
+> —— Harrison Chase, LangChain CEO
+
+同一个模型（Claude Opus），套上不同的 Harness，在权威 Benchmark 上的差距触目惊心：
+
+| 环境 | CORE-Bench 得分 |
+|------|----------------|
+| 原始 Claude Opus 4.5（无专属 Harness） | 42% |
+| 同模型 + 优化后的编排框架（Harness） | **78%** |
+
+LangChain 在 Terminal Bench 2.0 中也有类似案例：仅优化 Harness（不换模型），排名从 Top 30 跃升至 **Top 5**。
+
+💡 **实践含义**：与其追逐下一个更强的模型，不如先把当前模型的 Harness 打磨好。
+
 ---
 
 > 想深入了解 Agent 与 LLM 的交互细节（API 五层结构、Agentic Loop 伪代码、可靠性机制、安全编辑原理）？见 → [附录：Agent-LLM 交互解剖](./reference-agent-llm-internals.md)
@@ -193,6 +209,19 @@ flowchart TB
 **长任务漂移**：任务一长，Agent 忘记原目标，纠结细枝末节。
 → 分阶段执行：先出计划 → 每阶段结束做总结 → 必要时重开会话带上摘要。
 
+### 🔍 混合检索：让长期记忆用起来更准
+
+仅靠向量语义搜索往往不够——关键词精确匹配在某些场景下更可靠。成熟的 RAG 记忆系统通常采用**混合检索**策略：
+
+| 技术 | 建议权重 | 作用 |
+|------|---------|------|
+| **Vector Search（向量语义）** | ~70% | 语义相似度匹配，理解意图 |
+| **BM25（关键词精确）** | ~30% | 关键词精确匹配，补向量的盲点 |
+| **检索时效衰减（halfLifeDays≈30）** | 辅助因子 | 新内容优先，旧检索结果降权（注：此为检索排序衰减，有别于记忆文件的 GC 衰减） |
+| **MMR 去重（lambda≈0.7）** | 辅助因子 | 结果多样性，避免同质化 |
+
+> 📌 **核心原则**：文件 = 事实来源。你不写进文件的东西 = 你从来不知道的东西。重要信息主动写入文件系统，才能跨会话被检索利用。
+
 > 📖 Memory 的深度技术细节（认知架构演进、向量数据库 RAG、Memory 强化学习）见 👉 [附录：Memory 与上下文工程详解](./reference-memory-and-context.md)
 
 ### 💡 从 Prompt Engineering 到 Context Engineering
@@ -257,6 +286,24 @@ flowchart TB
 
 **MCP（Model Context Protocol）** 是标准化的工具集成协议，最初由 Anthropic 提出，已捐赠给 **Agentic AI Foundation（AAIF）**——这是 Linux Foundation 旗下由 Anthropic、Block、OpenAI 联合创建的定向基金。到 2026 年 3 月，OpenAI、Google、Microsoft 等公司都已公开宣布支持或接入 MCP 生态。
 
+**理解 Function Calling 与 MCP 的关系**：二者不是替代关系，而是"底层能力"与"协议标准"的关系：
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                AI Agent 工具调用架构                      │
+├─────────────────────────────────────────────────────────┤
+│  Function Calling（底层能力）                             │
+│  ├── 模型原生能力：直接调用 API/工具                       │
+│  └── 类比：浏览器调用底层 OS API                          │
+│                      ↓                                  │
+│  MCP（协议标准）                                          │
+│  ├── 定义标准框架：统一工具描述与调用方式                   │
+│  └── 类比：浏览器扩展开发规范（一次开发，到处运行）          │
+│                      ↓                                  │
+│  实际应用：Cursor、Windsurf、Claude Code 等均已支持        │
+└─────────────────────────────────────────────────────────┘
+```
+
 ```mermaid
 sequenceDiagram
     participant H as Agent（MCP Host）
@@ -269,6 +316,20 @@ sequenceDiagram
     S->>S: ⑤ 执行操作（如创建 PR）
     S-->>H: ⑥ 返回结果
 ```
+
+#### 💡 为什么 MCP 上下文代价不可小视
+
+MCP 通过把工具定义（名称、描述、参数）预加载进上下文实现「即插即用」，但这带来了真实的 token 代价：
+
+| MCP Server | 工具数量 | 预加载消耗 |
+|------------|---------|-----------|
+| GitHub MCP Server | 27 个 | ~18,000 tokens |
+| Playwright MCP Server | 21 个 | ~13,600 tokens |
+| mcp-omnisearch | 20 个 | ~14,200 tokens |
+
+有开发者同时接入 7 个 MCP Server，还没开始对话，上下文就被吃掉了 **67,000 tokens**——占一个 200K 窗口的 **33%**，极端案例可达 **41%**（约 82,000 tokens）。
+
+这正是「先用 CLI/脚本，MCP 留给真正需要协议标准化的场景」的工程原因之一：对于能用脚本调用的操作（Git、本地文件、已有 CLI 工具），避开 MCP 可以节省大量上下文预算。
 
 ### Skills：Agent 的"方法论手册"
 
