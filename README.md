@@ -457,7 +457,7 @@ Ch01 → Ch02 → **Ch03 术语速查手册**（重点精读）→ Ch04 → Part
 
 ## 🧰 Agent Skills 资源推荐
 
-> 💡 Skill 是 Agent 时代的"方法论手册"——把经验沉淀为可复用的工作流模板。详见 [Ch07 · Skill 系统](./docs/ch07-skills/part-7-skills.md)。
+> 💡 Skill 是 Agent 时代的"方法论手册"——把经验沉淀为可复用的工作流模板。详见 [Skill 系统专题](./docs/topics/topic-skills.md) · [Ch08 · 扩展生态（MCP/Skill/Plugin）](./docs/ch08-config-session/index.md#2--mcpskillplugin三种扩展能力)。
 
 | 项目 | 说明 |
 |------|------|
