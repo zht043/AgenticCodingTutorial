@@ -445,19 +445,7 @@ Agent 没有"工作软件"的内在概念。它依赖确定性系统来锚定自
 - **反思机制**：测试失败后强制 LLM 先分析原因再修改，避免盲目重试
 - **熔断器**：超过最大迭代次数（如 5-7 次）仍未通过，自动停止并汇报
 
-```python
-def verify_and_terminate(max_iterations=5):
-    for i in range(max_iterations):
-        result = run_command("npm test")
-        if result.exit_code == 0:
-            return {"status": "success", "iterations": i + 1}
-
-        # 强制反思后再修改
-        llm_response = llm.call(f"测试失败: {result.stderr}\n先分析原因，再修复。")
-        apply_fixes(llm_response.tool_calls)
-
-    return {"status": "failed", "message": f"尝试 {max_iterations} 次后仍未通过"}
-```
+> 评估与终止的完整实现逻辑（含伪代码）见 → [Agent 与 LLM 的交互内幕](../topics/topic-agent-llm-internals.md)
 
 ### 多 Agent 协作（预览）
 

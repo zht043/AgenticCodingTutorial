@@ -145,3 +145,30 @@ def safe_edit_file(filepath, search_block, replace_block):
 | **输出截断** | 命令输出保留首 50 行 + 尾 100 行，中间替换为 `[N lines truncated]` |
 | **摘要压缩** | 用轻量模型（如 Haiku）对旧对话做摘要，替换原始内容 |
 | **状态提取** | 将关键发现写入 scratchpad 文件（如 `.agent_memory.md`），清空对话后可回读 |
+
+## 评估与终止：Agent 怎么知道自己做完了
+
+Agent 没有"工作软件"的内在概念。它依赖确定性系统来锚定自己的概率输出：
+
+- **测试套件**：跑 `npm test` / `pytest`，通过 = 完成，失败 = 继续修
+- **反思机制**：测试失败后强制 LLM 先分析原因再修改，避免盲目重试
+- **熔断器**：超过最大迭代次数（如 5-7 次）仍未通过，自动停止并汇报
+
+```python
+def verify_and_terminate(max_iterations=5):
+    for i in range(max_iterations):
+        result = run_command("npm test")
+        if result.exit_code == 0:
+            return {"status": "success", "iterations": i + 1}
+
+        # 强制反思后再修改
+        llm_response = llm.call(f"测试失败: {result.stderr}\n先分析原因，再修复。")
+        apply_fixes(llm_response.tool_calls)
+
+    return {"status": "failed", "message": f"尝试 {max_iterations} 次后仍未通过"}
+```
+
+这段代码展示了三个关键机制的配合：
+1. **确定性验证**（`run_command`）提供客观的成功/失败信号
+2. **反思循环**（`llm.call` 带失败上下文）让 Agent 分析原因而非盲目重试
+3. **熔断保护**（`max_iterations`）防止无限循环和成本失控
