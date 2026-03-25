@@ -180,7 +180,7 @@ Agent：安装 @yaml/fast-parser 包...
 ---
 
 > 📖 **相关章节**：
-> - [Ch05 · Agent 内部机制与工具体系](../ch05-agent-mechanics/part-5-agent-mechanics.md) — 理解 Agent 的工作循环
-> - [Ch13 · AI Code Review](../ch12-code-review/part-12-code-review.md) — 实战中的幻觉检测
+> - [Ch05 · Agent 内部机制与工具体系](../chapters/ch05-agent-mechanics.md) — 理解 Agent 的工作循环
+> - [Ch13 · AI Code Review](../chapters/ch12-code-review.md) — 实战中的幻觉检测
 > - [AI 幻觉避坑指南](./topic-ai-hallucination.md) — 实操避坑清单
-> - [Ch12 · 人机协同方法论](../ch10-collaboration/part-10-collaboration.md) — 验证闭环
+> - [Ch12 · 人机协同方法论](../chapters/ch10-collaboration.md) — 验证闭环

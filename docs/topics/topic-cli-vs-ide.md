@@ -4,7 +4,7 @@
 
 # 附录：CLI、VS Code 插件、桌面应用——什么关系？
 
-> 本文是 [Chapter 1 · 快速上手部署 Agent](../ch01-quickstart/part-1-quickstart.md) 的扩展附录，帮你理解 Agent 工具的不同形态和它们之间的关系。
+> 本文是 [Chapter 1 · 快速上手部署 Agent](../chapters/ch01-quickstart.md) 的扩展附录，帮你理解 Agent 工具的不同形态和它们之间的关系。
 
 ---
 
@@ -42,4 +42,4 @@
 
 ---
 
-> 📖 返回正文：[Chapter 1 · 快速上手部署 Agent](../ch01-quickstart/part-1-quickstart.md)
+> 📖 返回正文：[Chapter 1 · 快速上手部署 Agent](../chapters/ch01-quickstart.md)

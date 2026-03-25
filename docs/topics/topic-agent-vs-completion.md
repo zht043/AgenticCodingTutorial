@@ -31,4 +31,4 @@
 
 ---
 
-> 📖 **相关章节**：[Chapter 1 · 快速上手](../ch01-quickstart/part-1-quickstart.md) · [Chapter 9 · 工程化工作流](../ch09-engineering/part-9-engineering.md)
+> 📖 **相关章节**：[Chapter 1 · 快速上手](../chapters/ch01-quickstart.md) · [Chapter 9 · 工程化工作流](../chapters/ch09-engineering.md)

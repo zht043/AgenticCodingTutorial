@@ -14,7 +14,7 @@
 
 Skill 就是解决这个问题的：把你沉淀下来的做事方法，打包成 Agent 可以反复使用的模块。
 
-回顾一下 [Chapter 2 附录](../ch02-concepts/reference-mcp-and-skills.md) 中的对比：
+回顾一下 [Chapter 2 附录](./topic-mcp.md) 中的对比：
 
 | 形态 | 核心价值 | 类比 |
 |------|---------|------|

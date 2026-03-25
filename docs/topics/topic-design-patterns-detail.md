@@ -31,4 +31,4 @@
 
 ---
 
-> 📖 **相关章节**：[👥 多 Agent 组合专题](./topic-multi-agent.md) · [Chapter 10 · 人机协同方法论](../ch10-collaboration/part-10-collaboration.md)
+> 📖 **相关章节**：[👥 多 Agent 组合专题](./topic-multi-agent.md) · [Chapter 10 · 人机协同方法论](../chapters/ch10-collaboration.md)

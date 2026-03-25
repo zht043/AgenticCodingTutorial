@@ -24,7 +24,7 @@
 </blockquote>
 
 <p>
-  <a href="./docs/ch01-quickstart/part-1-quickstart.md">🚀 快速开始</a> ·
+  <a href="./docs/chapters/ch01-quickstart.md">🚀 快速开始</a> ·
   <a href="#tutorial-contents">📚 教程目录</a> ·
   <a href="#why-learn-agent">💡 为什么是 Agent 时代</a> ·
   <a href="#reader-guide">🌱 新手路线</a>
@@ -32,9 +32,9 @@
 
 <p>
   <a href="./docs/topics/topic-china-users.md">🪜 大陆用户</a> ·
-  <a href="./docs/ch01-quickstart/reference-agent-comparison.md">🤖 Agent 对比</a> ·
-  <a href="./docs/ch01-quickstart/reference-model-comparison.md">🧠 模型对比</a> ·
-  <a href="./docs/ch01-quickstart/reference-benchmarks.md">📊 评测体系</a>
+  <a href="./docs/topics/topic-agent-tools-comparison.md">🤖 Agent 对比</a> ·
+  <a href="./docs/topics/topic-model-comparison.md">🧠 模型对比</a> ·
+  <a href="./docs/topics/topic-benchmarks.md">📊 评测体系</a>
 </p>
 
 </div>
@@ -69,88 +69,88 @@
 <tr><td colspan="4"><strong>Part I · 🚀 起步篇</strong></td></tr>
 <tr>
 <td align="center">1</td>
-<td><a href="./docs/ch01-quickstart/part-1-quickstart.md">🚀 快速上手部署 Agent</a></td>
+<td><a href="./docs/chapters/ch01-quickstart.md">🚀 快速上手部署 Agent</a></td>
 <td>安装<br>配置<br>跑通第一个闭环</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">2</td>
-<td><a href="./docs/ch02-concepts/part-2-concepts.md">🧩 Agent 核心原理</a></td>
+<td><a href="./docs/chapters/ch02-concepts.md">🧩 Agent 核心原理</a></td>
 <td>Agent 四要素<br>TAO 循环<br>Memory · Tools · MCP</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">3</td>
-<td><a href="./docs/ch03-glossary/part-3-glossary.md">📖 术语速查手册</a></td>
+<td><a href="./docs/chapters/ch03-glossary.md">📖 术语速查手册</a></td>
 <td>LLM · Prompt · Context<br>Token · Agent · API</td>
 <td align="center">🔄</td>
 </tr>
 <tr><td colspan="4"><strong>Part II · 🎯 基础实战篇</strong></td></tr>
 <tr>
 <td align="center">4</td>
-<td><a href="./docs/ch04-first-practice/part-4-first-practice.md">🎮 你的第一批实战</a></td>
+<td><a href="./docs/chapters/ch04-first-practice.md">🎮 你的第一批实战</a></td>
 <td>Plan→Act · 理解仓库<br>Fix Bug · 写测试<br>CRUD · Git</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">5</td>
-<td><a href="./docs/ch05-agent-mechanics/part-5-agent-mechanics.md">🔧 Agent 内部机制与工具体系</a></td>
+<td><a href="./docs/chapters/ch05-agent-mechanics.md">🔧 Agent 内部机制与工具体系</a></td>
 <td>Agent 循环<br>五类工具<br>Session 与 Context</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">6</td>
-<td><a href="./docs/ch06-explore-verify/part-6-explore-verify.md">🔍 代码探索与验证驱动</a></td>
+<td><a href="./docs/chapters/ch06-explore-verify.md">🔍 代码探索与验证驱动</a></td>
 <td>init CLAUDE.md<br>测试驱动 · Bug 修复<br>截图验证</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">7</td>
-<td><a href="./docs/ch07-plan-prompt/part-7-plan-prompt.md">📋 规划优先与 Prompt 工程</a></td>
+<td><a href="./docs/chapters/ch07-plan-prompt.md">📋 规划优先与 Prompt 工程</a></td>
 <td>探索→规划→编码<br>Prompt 约束技巧<br>@引用</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">8</td>
-<td><a href="./docs/ch08-config-session/part-8-config-session.md">⚙️ 扩展生态与会话管理</a></td>
+<td><a href="./docs/chapters/ch08-config-session.md">⚙️ 扩展生态与会话管理</a></td>
 <td>权限<br>MCP · Skills · Plugins<br>clear/compact/resume</td>
 <td align="center">🔄</td>
 </tr>
 <tr><td colspan="4"><strong>Part III · ⚙️ 方法论与认知篇</strong></td></tr>
 <tr>
 <td align="center">9</td>
-<td><a href="./docs/ch09-engineering/part-9-engineering.md">🏗️ 工程化工作流</a></td>
+<td><a href="./docs/chapters/ch09-engineering.md">🏗️ 工程化工作流</a></td>
 <td>SDD<br>任务分解<br>三种协作模式</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">10</td>
-<td><a href="./docs/ch10-collaboration/part-10-collaboration.md">🤝 人机协同方法论</a></td>
+<td><a href="./docs/chapters/ch10-collaboration.md">🤝 人机协同方法论</a></td>
 <td>Harness 工程 · 上下文<br>失败模式<br>Token 经济学 · 成熟度</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">11</td>
-<td><a href="./docs/ch11-design-patterns/part-11-design-patterns.md">🧬 Agent 设计模式</a></td>
+<td><a href="./docs/chapters/ch11-design-patterns.md">🧬 Agent 设计模式</a></td>
 <td>Router · Evaluator<br>Planner-Worker · RAG<br>Writer-Reviewer</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">12</td>
-<td><a href="./docs/ch12-code-review/part-12-code-review.md">👁️ AI Code Review</a></td>
+<td><a href="./docs/chapters/ch12-code-review.md">👁️ AI Code Review</a></td>
 <td>Agent 审查工作流<br>GitHub Actions<br>AI 幻觉避坑</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">13</td>
-<td><a href="./docs/ch13-history/part-13-history.md">📜 技术发展简史</a></td>
+<td><a href="./docs/chapters/ch13-history.md">📜 技术发展简史</a></td>
 <td>六阶段演进 · 产品大爆发<br>80% 翻转 · 职业冲击</td>
 <td align="center">🔄</td>
 </tr>
 <tr><td colspan="4"><strong>Part V · 🏗️ 进阶实战篇</strong> <a id="part-v-advanced-cases"></a></td></tr>
 <tr>
 <td align="center">—</td>
-<td><a href="./docs/advanced-cases/">🎬 复杂场景实战案例</a></td>
+<td><a href="./docs/topics/topic-advanced-cases.md">🎬 复杂场景实战案例</a></td>
 <td>完整 Agent 对话历史<br>多轮任务拆解<br>失败与恢复分析</td>
 <td align="center">📝 规划中</td>
 </tr>
@@ -169,7 +169,7 @@
 <tr><td colspan="4"><strong>Part VI · 🔭 趋势与展望</strong> <a id="part-vi-outlook"></a></td></tr>
 <tr>
 <td align="center">—</td>
-<td><a href="./docs/outlook/evolution.md">🔭 Agent 技术展望</a></td>
+<td><a href="./docs/topics/topic-evolution.md">🔭 Agent 技术展望</a></td>
 <td>职业影响<br>技术路线图<br>行业趋势</td>
 <td align="center">📝 规划中</td>
 </tr>
@@ -196,6 +196,9 @@
 
 | 专题 | 简介 |
 |------|------|
+| [🤖 Agent 工具横评](./docs/topics/topic-agent-tools-comparison.md) | 国际/国产/开源工具全面对比 |
+| [🧠 模型横评](./docs/topics/topic-model-comparison.md) | 主流 Coding 模型对比与选型 |
+| [📊 评测体系](./docs/topics/topic-benchmarks.md) | Benchmark 怎么读、怎么用 |
 | [🖥️ CLI vs IDE 插件](./docs/topics/topic-cli-vs-ide.md) | 用哪种形态 |
 | [🤖 Agent vs 代码补全](./docs/topics/topic-agent-vs-completion.md) | 和 Copilot 有什么本质区别 |
 | [💰 API vs 订阅制](./docs/topics/topic-api-vs-subscription.md) | 怎么买最划算 |
@@ -208,6 +211,7 @@
 | [⚡ Prompt Cache](./docs/topics/topic-prompt-cache.md) | 机制与优化策略 |
 | [🧠 LLM 推理与 Agent](./docs/topics/topic-llm-reasoning-and-agent.md) | CoT/Reasoning 如何影响 Agent |
 | [🧩 上下文工程](./docs/topics/topic-context-engineering.md) | WSCI 框架 · 上下文腐烂 |
+| [🧠 Agent 记忆系统](./docs/topics/topic-memory-system.md) | 短期/长期记忆 · Agentic RAG |
 | [🎨 多模态应用](./docs/topics/topic-multimodal.md) | 图片/截图/PDF 的应用 |
 | [🧠 大模型幻觉问题](./docs/topics/topic-llm-hallucination.md) | 成因与缓解策略 |
 
@@ -257,6 +261,9 @@
 | 专题 | 简介 |
 |------|------|
 | [⚔️ Agent vs Claw](./docs/topics/topic-agent-vs-claw.md) | 两种范式对比 |
+| [🔬 Agent-LLM 交互内幕](./docs/topics/topic-agent-llm-internals.md) | API 调用结构 · Agentic Loop |
+| [📜 技术演进六阶段](./docs/topics/topic-agent-evolution.md) | 从 LLM 到 Agent OS |
+| [📅 产品时间线](./docs/topics/topic-product-timeline.md) | 2020-2026 完整里程碑 |
 
 </details>
 
@@ -298,7 +305,7 @@
 - **② 配置模型访问**：要么在 Agent 前端登录已购买订阅 Plan 的账户（如 Claude Pro、GPT Plus、Cursor Pro），要么在配置里填入官方或第三方购买的模型 API 的 base URL 和 API Key，即可接入任意支持的模型。
 - **③ 跑通第一个任务**：打开项目目录，启动 Agent，开始对话。
 
-> 📖 完整安装与配置流程 → [🚀 快速上手部署 Agent（第一章）](./docs/ch01-quickstart/part-1-quickstart.md) · [大陆用户指南](./docs/topics/topic-china-users.md) · [API vs 订阅制](./docs/topics/topic-api-vs-subscription.md)
+> 📖 完整安装与配置流程 → [🚀 快速上手部署 Agent（第一章）](./docs/chapters/ch01-quickstart.md) · [大陆用户指南](./docs/topics/topic-china-users.md) · [API vs 订阅制](./docs/topics/topic-api-vs-subscription.md)
 
 ---
 
@@ -456,7 +463,7 @@
 </table>
 
 
-> 📖 深度阅读： [作者使用体验与心得](./docs/ch01-quickstart/reference-author-experience.md) · [附录：Agent 工具与模型详细对比](./docs/ch01-quickstart/reference-tools-comparison.md) · [附录：主流 Agent 工具对比](./docs/ch01-quickstart/reference-agent-comparison.md)
+> 📖 深度阅读： [作者使用体验与心得](./docs/topics/topic-agent-tools-comparison.md) · [主流 Agent 工具横评](./docs/topics/topic-agent-tools-comparison.md)
 
 ### 🧠 主流 Coding 模型一览
 
@@ -485,7 +492,7 @@
 | **DeepSeek-V3.2** | 深度求索 | 128K | `$0.28 / $0.42` | 💰 reasoning-first for agents，支持 Thinking in Tool-Use，开源性价比标杆 |
 | **Qwen3-Max** | 阿里云 | 256K | `约 $0.78-$1.00 / $3.00-$3.90` | 🌐 千问旗舰线，适合复杂多步骤任务，支持思考模式 + 内置工具 |
 
-> 📖 深度阅读： [附录：主流 Coding 模型对比](./docs/ch01-quickstart/reference-model-comparison.md) · [附录：模型与 Agent 评测体系详解](./docs/ch01-quickstart/reference-benchmarks.md)
+> 📖 深度阅读： [主流 Coding 模型横评](./docs/topics/topic-model-comparison.md) · [模型与 Agent 评测体系](./docs/topics/topic-benchmarks.md)
 >
 > ⚠️ **不要只看榜单**：公开排行榜很重要，但不等于长期真实体验。像 MiniMax 这类产品，榜单成绩很亮眼，并不自动代表你的工作流里就一定更省心；而且厂商普遍也会做 benchmark 定向优化。建议同时结合 `Google`、`Reddit`、`小红书`、`知乎`、`B 站` 上的真实反馈一起看。
 
@@ -506,7 +513,7 @@
 
 > 🎯 **核心结论**：你在 Coding Agent 中练就的任务拆解、工作流设计、验证方法，在通用 Agent 时代依然完全可迁移。
 
-> 深入了解 Agent 与 Claw 范式的架构差异见 → [附录：Agent 与 Claw 范式深度对比](./docs/reference-agent-vs-claw.md)
+> 深入了解 Agent 与 Claw 范式的架构差异见 → [附录：Agent 与 Claw 范式深度对比](./docs/topics/topic-agent-vs-claw.md)
 
 ---
 

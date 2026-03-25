@@ -198,10 +198,9 @@ flowchart TD
 
 ## 七、配置时从哪里下手
 
-如果你已经决定了工具路线，具体配置方法直接看：
+如果你已经决定了工具路线，具体配置方法参考下方各工具 API 配置详解，或参阅：
 
-- [`附录：各工具 API 配置详解`](../ch01-quickstart/reference-api-config.md)
-- [`附录：CLI、VS Code 插件、桌面应用——什么关系？`](../ch01-quickstart/reference-cli-ide-app.md)
+- [CLI、VS Code 插件、桌面应用——什么关系？](./topic-cli-vs-ide.md)
 
 建议顺序是：
 
@@ -213,12 +212,86 @@ flowchart TD
 ## 八、我给大陆用户的最终建议
 
 - **想尽快跑通**：先从 `Kimi Code + Kimi K2.5` 或 `Cursor` 这样的低门槛入口开始。
-- **想认真做正式工程任务**：优先试 `Claude Code + GLM-5` 这一类“强工作流 + 本地更容易落地”的路线。
+- **想认真做正式工程任务**：优先试 `Claude Code + GLM-5` 这一类”强工作流 + 本地更容易落地”的路线。
 - **想控制预算**：看 `OpenCode + DeepSeek-V3.2`。
 - **想认真比较国产模型**：把 `GLM-5`、`Kimi K2.5`、`Qwen3-Max`、`MiniMax-M2.7` 放到同一轮真实任务里测，不要只看榜单。
 
-> 继续读：如果你已经确定了大陆侧的访问方式，下一步建议看 [`附录：作者使用体验与心得`](../ch01-quickstart/reference-author-experience.md) 和 [`附录：主流 Coding 模型对比`](../ch01-quickstart/reference-model-comparison.md)。
+---
+
+## 九、各工具 API 配置详解
+
+### 通用概念
+
+| 参数 | 作用 | 类比 |
+|------|------|------|
+| **Base URL** | API 请求发到哪台服务器 | 网站地址 |
+| **API Key** | 身份认证 + 计费 | 门禁卡 |
+
+> ⚠️ 永远不要把 API Key 提交到 Git 仓库。
+
+### Codex CLI
+
+**环境变量：**
+```bash
+export OPENAI_BASE_URL=”https://your-provider.com/v1”
+export OPENAI_API_KEY=”sk-your-key”
+codex
+```
+
+**配置文件（推荐）：**
+
+`~/.codex/config.toml`：
+```toml
+model = “gpt-5-codex”
+model_provider = “openai”
+base_url = “https://your-provider.com/v1”
+```
+
+`~/.codex/auth.json`：
+```json
+{ “OPENAI_API_KEY”: “sk-your-key” }
+```
+
+### Cursor
+
+GUI 配置：Settings → Models → Add Model → 填入 Base URL 和 API Key。
+
+### OpenCode
+
+`~/.config/opencode/opencode.json`：
+```json
+{
+  “provider”: {
+    “anthropic”: { “endpoint”: “https://your-provider.com/v1” }
+  }
+}
+```
+
+`~/.local/share/opencode/auth.json`：
+```json
+{ “anthropic”: { “api_key”: “sk-your-key” } }
+```
+
+启动后 `/models` 选择模型。
+
+### Gemini CLI
+
+默认使用 Google 账号免费额度。如需 API Key：
+```bash
+export GEMINI_API_KEY=”your-key”
+gemini
+```
+
+### 中转服务示例（云雾 API）
+
+| 工具 | Base URL |
+|------|----------|
+| Claude Code | `ANTHROPIC_BASE_URL=”https://yunwu.ai”` |
+| Codex CLI | `base_url = “https://yunwu.ai/v1”` |
+| OpenCode | `”endpoint”: “https://yunwu.ai/v1”` |
+
+> 图文教程：[Codex 接入](https://yunwu.apifox.cn/doc-7422014) · [OpenCode 接入](https://yunwu.apifox.cn/doc-8105901)
 
 ---
 
-返回：[Chapter 1 · 快速上手部署 Agent](../ch01-quickstart/part-1-quickstart.md)
+> 📖 **相关章节**：[CLI、VS Code 插件、桌面应用](./topic-cli-vs-ide.md) · [上下文工程深入](./topic-context-engineering.md)
