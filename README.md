@@ -31,7 +31,6 @@
 </p>
 
 <p>
-  <a href="./docs/topics/topic-china-users.md">🪜 大陆用户</a> ·
   <a href="./docs/topics/topic-agent-tools-comparison.md">🤖 Agent 对比</a> ·
   <a href="./docs/topics/topic-model-comparison.md">🧠 模型对比</a> ·
   <a href="./docs/topics/topic-benchmarks.md">📊 评测体系</a>
@@ -199,10 +198,8 @@
 | [🤖 Agent 工具横评](./docs/topics/topic-agent-tools-comparison.md) | 国际/国产/开源工具全面对比 |
 | [🧠 模型横评](./docs/topics/topic-model-comparison.md) | 主流 Coding 模型对比与选型 |
 | [📊 评测体系](./docs/topics/topic-benchmarks.md) | Benchmark 怎么读、怎么用 |
-| [🖥️ CLI vs IDE 插件](./docs/topics/topic-cli-vs-ide.md) | 用哪种形态 |
 | [🤖 Agent vs 代码补全](./docs/topics/topic-agent-vs-completion.md) | 和 Copilot 有什么本质区别 |
 | [💰 API vs 订阅制](./docs/topics/topic-api-vs-subscription.md) | 怎么买最划算 |
-| [🇨🇳 中国区用户指南](./docs/topics/topic-china-users.md) | 特殊环境配置 |
 
 **🧠 核心技术原理**
 
@@ -305,7 +302,7 @@
 - **② 配置模型访问**：要么在 Agent 前端登录已购买订阅 Plan 的账户（如 Claude Pro、GPT Plus、Cursor Pro），要么在配置里填入官方或第三方购买的模型 API 的 base URL 和 API Key，即可接入任意支持的模型。
 - **③ 跑通第一个任务**：打开项目目录，启动 Agent，开始对话。
 
-> 📖 完整安装与配置流程 → [🚀 快速上手部署 Agent（第一章）](./docs/chapters/ch01-quickstart.md) · [大陆用户指南](./docs/topics/topic-china-users.md) · [API vs 订阅制](./docs/topics/topic-api-vs-subscription.md)
+> 📖 完整安装与配置流程 → [🚀 快速上手部署 Agent（第一章）](./docs/chapters/ch01-quickstart.md) · [API vs 订阅制](./docs/topics/topic-api-vs-subscription.md)
 
 ---
 

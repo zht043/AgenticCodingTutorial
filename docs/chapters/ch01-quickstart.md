@@ -8,10 +8,12 @@
   - [📑 目录](#-目录)
   - [1. 🧩 Agent 与大模型的关系：一张图看懂架构](#1--agent-与大模型的关系一张图看懂架构)
   - [2. ⭐ TLDR：小编推荐的 Agent + Model 组合](#2--tldr小编推荐的-agent--model-组合)
-    - [纯新手 / 想先尝尝鲜](#纯新手--想先尝尝鲜)
-    - [有正式开发任务的用户（推荐）](#有正式开发任务的用户推荐)
-    - [进阶用户](#进阶用户)
-    - [中国大陆用户特别提醒](#中国大陆用户特别提醒)
+    - [a. 💼 `Cursor Pro`](#a--cursor-pro)
+    - [b. 🤖 `Claude Pro` / `GPT Plus/Team` 二选一](#b--claude-pro--gpt-plusteam-二选一)
+    - [c. 🏗️ `GPT Plus/Team + Claude Pro`](#c-️-gpt-plusteam--claude-pro)
+    - [d. 🔌 第三方API中转站例如`OpenRouter`](#d--第三方api中转站例如openrouter)
+    - [e. 🇨🇳 `国产模型` / `GPT Plus + OpenRouter + 国内中转API聚合站`](#e--国产模型--gpt-plus--openrouter--国内中转api聚合站)
+    - [f. 💸 `Gemini Pro` / `Manus` / `OpenClaw` / `Perplexity`](#f--gemini-pro--manus--openclaw--perplexity)
   - [3. 📦 前置知识：Node.js](#3--前置知识nodejs)
     - [Node.js 是什么？](#nodejs-是什么)
     - [安装](#安装)
@@ -19,12 +21,8 @@
     - [各工具安装命令](#各工具安装命令)
   - [5. 🔑 配置第三方 API 供应商](#5--配置第三方-api-供应商)
     - [Claude Code 配置（推荐方式：settings.json）](#claude-code-配置推荐方式settingsjson)
-  - [6. 🇨🇳 中国大陆用户：API 中转服务](#6--中国大陆用户api-中转服务)
-    - [什么是 API 中转？](#什么是-api-中转)
-    - [⚠️ 如果必须使用中转，先确认这几件事](#️-如果必须使用中转先确认这几件事)
-    - [🔍 选择中转商注意事项](#-选择中转商注意事项)
-  - [7. ✅ 验证你的第一次对话](#7--验证你的第一次对话)
-  - [8. 🎮 新手 QuickStart：你的第一个 Agent 任务](#8--新手-quickstart你的第一个-agent-任务)
+  - [6. ✅ 验证你的第一次对话](#6--验证你的第一次对话)
+  - [7. 🎮 新手 QuickStart：你的第一个 Agent 任务](#7--新手-quickstart你的第一个-agent-任务)
     - [推荐起步路线](#推荐起步路线)
     - [第一个任务：理解一个真实仓库](#第一个任务理解一个真实仓库)
     - [第二个任务：完成一个最小修改](#第二个任务完成一个最小修改)
@@ -36,7 +34,7 @@
 
 ## 1. 🧩 Agent 与大模型的关系：一张图看懂架构
 
-在开始安装之前，你需要先建立一个核心认知：**你本地运行的 Agent 软件，本身并不具备“智能”——它是一个客户端，默认通过网络连接到远程的 LLM 大模型服务端，才能完成代码生成、理解和推理。（多数主流产品默认使用云端模型，但部分工具如 OpenCode 也支持本地模型和自托管路线。）**
+> 🧠 在开始安装之前，你最好先建立一个核心认知：**你本地运行的 Agent 软件，本身并不具备“智能”**。它更像一个客户端，默认通过网络连接到远程的 LLM 大模型服务端，才能完成代码生成、理解和推理。（多数主流产品默认使用云端模型，但部分工具如 OpenCode 也支持本地模型和自托管路线。）
 
 ```mermaid
 graph LR
@@ -75,80 +73,89 @@ graph LR
 > 📖 想了解详细的选型分析，见 Reference 文档：
 > - [附录：主流 Agent 工具对比](../topics/topic-agent-tools-comparison.md)
 > - [附录：主流 Coding 模型对比](../topics/topic-model-comparison.md)
+> - [附录：API vs 订阅](../topics/topic-api-vs-subscription.md)
+> - [附录：Agent vs 代码补全工具](../topics/topic-agent-vs-completion.md)
 > - [附录：模型与 Agent 评测体系详解](../topics/topic-benchmarks.md)
 
-工具和模型太多，选择困难？正文里我只给**作者主推路线 + 最短结论**，深度对比都放在附录。先记住这四句话：
+> 🧭 完整工具/模型名单与深度分析都放在附录，正文这里只给最短推荐。
 
-- **先选一条主线**，不要一上来装 6 个 Agent。
-- **工具是工作台，模型是底层马力**，不要混为一谈。
-- **正式开发任务**优先从 `Claude Code`、`Cursor`、`Codex CLI` 这三条主线里选。
-- **排行榜只能帮你缩小范围**，真正决定体验的还有工作流、上下文管理和验证习惯。
+💸💸💸 Money is All You Need 💸💸💸：
 
-> 🧭 本组附录完整覆盖的工具/模型名单见导航页，包含 `Claude Code`、`Cursor`、`GitHub Copilot`、`Codex CLI`、`Gemini CLI`、`Antigravity`、`通义灵码`、`Trae`、`Baidu Comate`、`CodeBuddy`、`Kimi Code`、`CodeArts`、`OpenCode`、`CodeGeeX`、`Aider`、`Cline`、`Windsurf`、`Devin`、`OpenClaw`、`Manus`、`ChatGPT Tasks`、`Perplexity`、`Kimi Agent`、`ArkClaw`，以及 `Claude Opus 4.6`、`GPT-5.4 Pro`、`Gemini 3.1 Pro`、`Llama 4 Maverick`、`nemotron-3-super`、`grok-code-fast`、`Kimi K2.5`、`GLM-5`、`MiniMax-M2.7`、`DeepSeek-V3.2`、`Qwen3-Max`。
+### a. 💼 `Cursor Pro`
 
-### 纯新手 / 想先尝尝鲜
+- 👤 **适合谁**：有开发经验、习惯 `VS Code`、希望 AI 更像结伴开发的助手实习生
+- ✅ **推荐方案**：直接充 `Cursor Pro`，\$20/月
+- 🔧 **模型特点**：后端模型可自由切 `Claude`、`GPT` 系列最新顶尖模型，也能选很多高性价比模型
+- ⚠️ **核心提醒**：前端 Agent 产品的设计哲学差异很大，即使后端模型一模一样，使用效果也可能天差地别
+- 🚗 **怎么理解 `Cursor` 和 `Claude Code` 的区别**：
+  - `Cursor` 更贴近传统开发流，人依然主导，Agent 主要代劳脏活累活
+  - `Claude Code`、`Codex` 这类新一代 Agent 更强调 AI 自主，自动化程度更高
+  - 后者对开发流程和习惯的改造更强，更适合从 0 到 1 做新特性或新应用，用法与生态更丰富，能力上限也更高
 
-购买 **Cursor Pro 会员**（\$20/月），开箱即用的 IDE 体验，不需要折腾终端和 API Key。适合零基础用户快速体验 Vibe Coding。
+### b. 🤖 `Claude Pro` / `GPT Plus/Team` 二选一
 
-如果你在中文环境里更想先低门槛试水，也可以先看 `Trae` / `通义灵码`；但本教程的主线工作流仍然更偏 `Claude Code` / `Cursor` 这两条。
+- 👤 **适合谁**：想认真学习新一代 Agent 工作流，而不只是把 AI 当补全工具的人
+- ✅ **推荐方案**：直接上 `Claude Code` 或 `Codex`
+- 💳 **订阅建议**：在 [`Claude Pro`](https://claude.ai/upgrade) 或 [`ChatGPT Plus / Team`](https://openai.com/pricing) 这类 plan 里选一个就够了
+- 🇨🇳 **中国区建议**：更建议选 `GPT` 系列，`Claude` 封号风险较高
+- 💰 **额度搭配**：包月订阅通常比单买 API 划算，常见搭配是先用订阅额度、用完再补 API（API 额度无时间限制，可长期保留）
+- 🎁 **订阅附加价值**：网页端通常还能顺带用 `deep research`、`web search`、生图等实用功能
 
-### 有正式开发任务的用户（推荐）
+### c. 🏗️ `GPT Plus/Team + Claude Pro`
 
-如果你真的要拿 Agent 干活，我更推荐先准备一条“主力线”：
+- 👤 **适合谁**：有大型重构、重大特性、复杂功能设计开发需求的人
+- ✅ **推荐方案**：[`ChatGPT Plus / Team`](https://openai.com/pricing) + [`Claude Pro`](https://claude.ai/upgrade) 双订阅
+- 🔄 **组合优势**：两套 Agent 互补 + 互相 review，两边订阅各用各家顶尖模型
+- 🧠 **实际体感**：虽然 `GPT-5.4` 这类模型已经很有竞争力，性价比也不错，但按我最近半个月的实际使用体感，做复杂工程任务时和 `Claude Opus 4.6` 相比，仍然有一段可感知的差距
+- ⏱️ **怎么权衡**：`Opus 4.6` 这类顶尖模型虽然更贵，但往往能帮你少走很多弯路；效果逊色一些的模型更容易误解需求、忽略细节，把小坑一路积累成返工成本。归根结底，取决于你更看重节省时间，还是更看重节省 Token 费用
 
-| 主力 Agent | 主力模型 | 定位 |
-|-----------|---------|------|
-| <img src="../../resources/logos/claude-code.png" height="20" /> **Claude Code** | **Sonnet 4.6**（日常主力）/ **Opus 4.6**（复杂任务）/ **Haiku 4.5**（简单批量） | 我最推荐的新主线：闭环能力强，适合正式工程任务 |
-| <img src="../../resources/logos/codex-color.png" height="20" /> **Codex CLI** | **GPT-5.4 Pro** / **GPT-5.3-Codex** | 更像高智商参谋和审查搭档，沙箱隔离与可控性很好 |
-| <img src="../../resources/logos/cursor.png" height="20" /> **Cursor** | **Claude / GPT / Gemini**（按套餐与配置选择） | 上手最快的 AI IDE 路线，适合把 Agent 当日常编辑器搭档 |
+### d. 🔌 第三方API中转站例如`OpenRouter`
 
-一句话说三者区别：
+- 👤 **适合谁**：如果你走 API Token 路线
+- ✨ **补充定位**：API 既可以作为订阅额度用完后的补充，也有额外优势
+- ✅ **推荐方案**：想要正规、不掺假、稳定可靠，优先 [`OpenRouter`](https://openrouter.ai/pricing)，但 **缺点**是贵💸
+- 🚀 **额外优势**：API 更适合接脚本、自动化和自建工作流；通常按量付费更灵活；部分平台还有额外能力，比如 `OpenAI API` 的 `Batch API` 有单独速率池和更低成本，`OpenRouter` 还能做跨 provider 路由、流式输出和故障回退
+- 🧭 **价格敏感用户**：可看其它 API 聚合平台或国内三方中转站，价格经常能差 5–10 倍，但需要接受掺假、降智、不稳定、乱涨价、数据隐私、安全、合规等风险⚠️（口碑好的平台通常风险会小一些，但依旧不是零风险）
 
-- **Claude Code**：最像“真正能持续推进任务的工程搭档”
-- **Codex CLI**：最像“擅长 plan / review / 风险分析的参谋”
-- **Cursor**：最像“最好上手的日常 AI IDE”
+### e. 🇨🇳 `国产模型` / `GPT Plus + OpenRouter + 国内中转API聚合站`
 
-> 💡 **选择你喜欢的使用方式：**
-> - 🖥️ **喜欢终端操作**：直接安装 CLI 版（`claude`、`codex`），终端即战场
-> - 🧩 **喜欢在 IDE 中使用**：安装 VS Code / JetBrains 的 Claude Code 插件或 Copilot 插件，在编辑器内直接与 Agent 协作
-> - 🌱 **没有开发经验**：下载 [Claude 桌面应用](https://claude.ai/download) 或 [ChatGPT 桌面应用](https://openai.com/chatgpt/desktop/)，图形界面更友好
+- 👤 **适合谁**：中国大陆用户
+- 🚫 **如果没法稳定访问国际互联网**：
+  - 选择国产模型
+  - 通过国内三方 API 中转站使用国外模型
+- ✅ **如果可以稳定访问外网**：
+  - 更推荐订阅 [`ChatGPT Plus`](https://openai.com/pricing) 或 `GPT Team` 拼车
+  - 然后再补一些 [`OpenRouter`](https://openrouter.ai/pricing) 和 [`Yunwu API`](https://yunwu.ai/register?aff=GTlx) 额度，这样可以灵活按需调用 `Claude` 系最强 coding 模型
+- 🧩 **国产模型补充**：`GLM` 可接入 `Claude Code` 前端，`Kimi` 在前端场景表现也不错
+- 🔁 **API中转站补充**：相对更推荐 [`Yunwu API`](https://yunwu.ai/register?aff=GTlx)
+- ⚠️ **重点提醒**：国内用户不建议直接充 `Claude` 官方订阅，除非你能搞定国外家庭IP、住址、银行卡、手机号，否则封号风险依旧很高
 
-### 进阶用户
+### f. 💸 `Gemini Pro` / `Manus` / `OpenClaw` / `Perplexity`
 
-在上述基础上，再去补“第二条路线”会更稳，例如：
+- 👤 **适合谁**：预算还有空间
+- ✅ **推荐补充**：[`Gemini`](https://gemini.google/us/subscriptions/?hl=en)，适合做搜索🔎、学术 `Deep Research`、用 `Nanobanana Pro` 生图
+- 🛠️ **还可以补**：[`Manus`](https://manus.im/pricing) / `OpenClaw`（干代码之外的日常活）、[`Perplexity`](https://www.perplexity.ai/help-center/en/articles/11187416-which-perplexity-subscription-plan-is-right-for-you)（更强的联网搜索）
+- 👑 **土豪玩家**：[`Claude Max`](https://claude.ai/upgrade)、[`ChatGPT Pro`](https://openai.com/pricing) 这类高阶 plan 弹药更足、思考深度上限也更高
 
-- `Gemini CLI`：免费额度友好、长上下文强，适合探索和补位
-- `OpenCode + DeepSeek-V3.2`：极致低成本、多模型工作流
-- `Kimi Code + Kimi K2.5`：中文友好，适合中国大陆用户
-- `GLM-5`、`Qwen3-Max`、`MiniMax-M2.7`：适合你认真比较国产模型路线时再深入看
-
-### 中国大陆用户特别提醒
-
-> ⚠️ **不推荐直接充值 Claude Pro 会员**——Anthropic 对中国区有风控策略，存在封号风险。推荐通过**专用第三方 API 供应商**使用 Claude 模型（详见第 5-6 节配置指南）。
+> 💡 小编这半个月高强度用下来，一个很直观的感受是：`GPT-5.4` 确实很能打，价格也友好，但真碰上复杂工程任务，和 `Claude Opus 4.6` 这种顶尖模型相比，还是会有一点“关键时刻差一口气”的感觉。
 >
-> ChatGPT Plus 会员相对更稳定，但也建议使用稳定的网络环境。
-
-| 场景 | 推荐组合 | 说明 |
-|------|---------|------|
-| 网络/合规限制 | **Claude Code + GLM-5** | 智谱模型，中文和工程任务都比较稳；与华为昇腾生态已有适配/支持 |
-| 国产最强性价比 | **Kimi Code + Kimi K2.5** | 月之暗面官方 Agent，中文体验友好 |
-| 极致低成本 | **OpenCode + DeepSeek-V3.2** | 开源 Agent + 最便宜模型 |
-
-> 📖 中国大陆用户的完整配置指南和注意事项见 → [附录：中国大陆用户推荐配置](../topics/topic-china-users.md)
-
-> 💡 核心原则：**先跑通一个组合，再横向对比**。不要同时装太多工具，每个都只会一点点。
+> 💸 反过来看，`Opus 4.6` 虽然贵，但贵的地方往往不是“回答更好看”，而是它更容易一次把事情想对、把细节做稳，帮你省掉很多来回返工。便宜一些的模型如果频繁误解需求、忽略边角条件，小坑一路滚大，最后烧掉的其实是你的时间。
+>
+> 🎯 所以别只盯着 `Token` 单价看，真正该算的是：你现在更缺钱，还是更缺时间。
+>
+> 🧰 顺手补一句，`Claude Code` 和 `Codex` 都提供了 `CLI`、IDE 插件、App 等不同形态。小编现在这三个版本都会装在电脑里，按任务灵活切换；但日常用得最顺手的，还是 `VSCode` 里的 `Claude Code` 和 `Codex` 插件。
 
 ---
 
 ## 3. 📦 前置知识：Node.js
 
-很多 Agent 工具（Codex CLI、Gemini CLI 等）通过 `npm` 安装。如果你是后端/算法工程师，可能没接触过 Node.js，这里快速科普。
+> 📦 很多 Agent 工具（Codex CLI、Gemini CLI 等）都是通过 `npm` 安装的。如果你是后端 / 算法工程师，之前没怎么碰过 Node.js，这里用最短篇幅帮你补一下。
 
 ### Node.js 是什么？
 
 **Node.js 是一个让 JavaScript 脱离浏览器运行的运行时环境。** 它最初是为了让 JS 也能写服务端程序，但现在它最大的实际用途之一是**作为命令行工具的分发平台**——很多开发者工具（包括 AI Agent）都选择用 JS/TS 编写，然后通过 npm 分发，因为这样跨平台（macOS/Linux/Windows）且安装一行命令搞定。
 
-你可以把它类比为 Python 之于 pip：
+🔁 你可以把它类比为 Python 之于 pip：
 - **Node.js** ≈ Python 解释器（运行环境）
 - **npm** ≈ pip（包管理器，`npm install -g xxx` ≈ `pip install xxx`）
 - **npx** ≈ `python -m xxx`（直接运行包，不需要全局安装）
@@ -168,11 +175,13 @@ node --version   # 建议 v18+
 npm --version
 ```
 
-> 注意：Claude Code 现已支持 `curl` 直接安装二进制文件，不依赖 Node.js。但了解 npm 仍有用。
+> ℹ️ 注意：`Claude Code` 现已支持 `curl` 直接安装二进制文件，不依赖 Node.js。但只要你后面还会折腾别的 Agent 工具，了解 `npm` 依然很有用。
 
 ---
 
 ## 4. 💻 安装指南
+
+> 🛠️ 这一节你不需要一次全装完。按你上面选好的主路线，先装一个能跑起来的就够了。
 
 ### 各工具安装命令
 
@@ -186,15 +195,13 @@ npm --version
 | **OpenCode** | [opencode.ai](https://opencode.ai/docs) / [GitHub](https://github.com/opencode-ai/opencode) | 参考官方安装页（支持安装脚本 / npm / Homebrew 等方式） |
 | **Trae** | [trae.ai](https://www.trae.ai/) | 下载桌面应用 |
 
-> 📖 想了解 CLI、VS Code 插件、桌面应用之间的关系？见 → [附录：CLI / IDE 插件 / 桌面应用形态详解](../topics/topic-cli-vs-ide.md)
-
 ---
 
 ## 5. 🔑 配置第三方 API 供应商
 
-如果你不直接使用官方 API，而是通过第三方供应商（如 OpenRouter、国内中转）购买 Token，需要配置 **Base URL** 和 **API Key**。
+> 🔌 如果你不直接使用官方 subscription，而是通过第三方供应商（如 `OpenRouter`、国内中转）购买 Token，就需要自己配置 **Base URL** 和 **API Key**。
 
-> `Base URL` = 请求发到哪台服务，`API Key` = 你是谁、按谁计费。
+> 🧭 `Base URL` = 请求发到哪台服务，`API Key` = 你是谁、按谁计费。
 
 ### Claude Code 配置（推荐方式：settings.json）
 
@@ -214,9 +221,9 @@ npm --version
 }
 ```
 
-这种方式不污染 shell 环境变量，且 CLI、VS Code 插件、桌面 App 都会自动生效。
+✅ 这种方式不污染 shell 环境变量，而且 `CLI`、`VS Code` 插件、桌面 `App` 都会自动生效。
 
-**或用环境变量（快速测试）：**
+⚡ **或用环境变量（快速测试）**：
 
 ```bash
 export ANTHROPIC_BASE_URL="https://your-provider.com"
@@ -226,66 +233,27 @@ claude
 
 > ⚠️ **安全提示**：永远不要把 API Key 提交到 Git 仓库。
 >
-> 📖 其它工具（Codex CLI / Cursor / OpenCode / Gemini CLI）的配置方法见 👉 [附录：各工具 API 配置详解](../topics/topic-china-users.md)
+> 💡 其它工具（Codex CLI / Cursor / OpenCode / Gemini CLI）的配置逻辑也类似：核心都是填好对应供应商的 `Base URL` 和 `API Key`。
 
 ---
 
-## 6. 🇨🇳 中国大陆用户：API 中转服务
+## 6. ✅ 验证你的第一次对话
 
-由于网络限制，国内直接访问 Anthropic / OpenAI / Google API 可能不稳定。**第三方 API 中转只能算备选方案，不应作为默认路径。**
+> 🧪 配置好后，先别急着开干，第一步是确认 **连接真的通了**。
 
-### 什么是 API 中转？
+- 🤖 **Claude Code**：`cd` 到项目目录，输入 `claude`，进入交互界面后再输入 `你好，简单介绍你自己`
+- 🧠 **Codex CLI**：终端运行 `codex`，输入一个简单问题做验证
+- 🖥️ **Cursor**：`Cmd+L`（macOS）/ `Ctrl+L` 打开 Chat 面板，随便问一个问题
 
-中转商在海外部署代理节点，转发你的 API 请求。你只需将 Base URL 指向中转商地址，使用中转商提供的 Token。
-
-### ⚠️ 如果必须使用中转，先确认这几件事
-
-- 🔧 **工具调用兼容性**：不是所有代理都完整支持 tool use、流式输出、长连接和多轮上下文
-- 🔒 **隐私与留存**：先确认代码、日志、提示词和响应会不会被记录、保留多久、能否关闭
-- 🏷️ **模型映射是否透明**：模型 ID、上下文长度、价格和限流策略要写清楚
-- 📋 **账单归属与 SLA**：出问题时到底按谁的服务条款、谁来背可用性和退款责任
-
-如果确认要接入第三方代理，Claude Code 的配置方式通常类似下面这样：
-
-```json
-{
-  "env": {
-    "ANTHROPIC_BASE_URL": "https://your-provider.com",
-    "ANTHROPIC_API_KEY": "your-provider-token"
-  }
-}
-```
-
-> 更稳妥的顺序通常是：**先尝试官方直连 → 再尝试企业网络方案 / 合规出口 → 最后才考虑第三方代理。**
-
-### 🔍 选择中转商注意事项
-
-- 📄 **文档完整、模型映射透明**：确保模型 ID 与官方一致
-- 🔧 **注意兼容性**：部分中转不完整支持工具调用（tool use）
-- 🔒 **关注隐私**：了解代码是否被记录
-- ❌ **不要用逆向方案**：短期便宜但随时失效
-
----
-
-## 7. ✅ 验证你的第一次对话
-
-配置好后，先确认**连接正常**：
-
-**Claude Code**：`cd` 到项目目录，输入 `claude`，进入交互界面后输入 `你好，简单介绍你自己`。
-
-**Codex CLI**：终端运行 `codex`，输入简单问题验证。
-
-**Cursor**：`Cmd+L`（macOS）/ `Ctrl+L` 打开 Chat 面板，输入问题。
-
-如果报错，常见原因：API Key 填错、Base URL 不对、网络不通。回到第 5/6 节检查。
+🚨 如果报错，最常见的原因就三个：`API Key` 填错、`Base URL` 不对、网络不通。别硬猜，直接回到第 5 节逐项检查。
 
 > **各工具详细使用教程**：[Claude Code Docs](https://code.claude.com/docs/en/overview) · [Codex CLI](https://developers.openai.com/codex/cli/) · [Cursor Docs](https://docs.cursor.com/)
 
 ---
 
-## 8. 🎮 新手 QuickStart：你的第一个 Agent 任务
+## 7. 🎮 新手 QuickStart：你的第一个 Agent 任务
 
-新手最容易犯的错不是"不会用"，而是**同时装太多工具**。先选一条主线，跑通最小闭环。
+> 🎯 新手最容易犯的错，不是“不会用”，而是一上来就把一堆工具全装上。先选一条主线，跑通一个最小闭环，体感通常会好很多。
 
 ### 推荐起步路线
 
@@ -297,16 +265,18 @@ claude
 
 ### 第一个任务：理解一个真实仓库
 
-进入你的真实项目目录，给 Agent 这个提示词：
+📂 进入你的真实项目目录，先给 Agent 这个提示词：
 
 ```
 先阅读这个仓库，告诉我项目结构、启动命令、测试命令和最值得优先了解的三个模块。
 不要修改代码，先给出你的判断。
 ```
 
-这让你亲眼看到 Agent 如何读取文件、理解结构、组织信息——建立信任的第一步。
+👀 这个任务的价值，不是让它立刻产出代码，而是让你亲眼看到 Agent 怎么读文件、怎么理解结构、怎么组织信息。这是建立信任感的第一步。
 
 ### 第二个任务：完成一个最小修改
+
+🛠️ 当你确认它“看得懂”仓库之后，再让它做一个低风险、可验证的小改动：
 
 ```
 基于你对仓库的理解，完成一个最小但真实的改动：
@@ -316,6 +286,8 @@ claude
 4. 修改后运行验证命令
 5. 输出改动摘要、涉及文件、验证结果
 ```
+
+✅ 这一步的重点不是改得多，而是让你开始建立一套正确节奏：先计划，再执行；执行完，一定验证。
 
 ### 📋 新手第一周三个目标
 
@@ -333,7 +305,7 @@ claude
 
 ## 🎉 下一步
 
-恭喜你完成了 Agent 的部署和初次体验！在下一章中，我们将深入理解 Agent 的运作原理和核心概念，帮助你从"能用"走向"会用"。
+> 🎉 到这里，你已经完成了 Agent 的部署和第一次上手体验。下一章我们会继续往下拆，把 Agent 的运作原理和核心概念讲透，帮助你从“能用”走向“会用”。
 
 👉 下一章：[Chapter 2 · 🧩 Agent 核心概念](./ch02-concepts.md)
 
