@@ -642,6 +642,6 @@ flowchart TB
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch03 术语速查手册](./ch03-glossary.md) | [➡️ 下一章：Ch05 Agent 内部机制](./ch05-agent-mechanics.md)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch02 Agent 核心原理](./ch02-concepts.md) | [➡️ 下一章：Ch05 Agent 内部机制](./ch05-agent-mechanics.md)
 
 </div>

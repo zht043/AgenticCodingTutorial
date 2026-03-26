@@ -78,12 +78,6 @@
 <td>Agent 四要素<br>TAO 循环<br>Memory · Tools · MCP</td>
 <td align="center">🔄</td>
 </tr>
-<tr>
-<td align="center">3</td>
-<td><a href="./docs/chapters/ch03-glossary.md">📖 术语速查手册</a></td>
-<td>LLM · Prompt · Context<br>Token · Agent · API</td>
-<td align="center">🔄</td>
-</tr>
 <tr><td colspan="4"><strong>Part II · 🎯 基础实战篇</strong></td></tr>
 <tr>
 <td align="center">4</td>
@@ -190,6 +184,13 @@
 
 > 正文保持精简，深度内容统一收入此处。
 > 新手第一遍可跳过，遇到具体问题时按需查阅。
+> 如果在 Ch02 被术语卡住，直接打开术语速查手册边读边查即可。
+
+**🧷 入门辅助速查**
+
+| 专题 | 简介 |
+|------|------|
+| [📖 术语速查手册](./docs/chapters/ch03-glossary.md) | LLM / Prompt / Context / Token / MCP 等核心术语随查随用 |
 
 **🧭 选型与环境配置**
 
@@ -529,11 +530,11 @@ Ch01 → Ch02 → Ch04 → Part II 全部（Ch05-08）
 → Part V 进阶实战
 
 #### 📊 产品经理 / 技术管理者
-Ch01 → Ch02 → Ch03 术语 → Ch04 → Ch13 技术简史与定位 → Ch11 设计模式
+Ch01 → Ch02（术语不熟时查「术语速查手册」专题）→ Ch04 → Ch13 技术简史与定位 → Ch11 设计模式
 → Ch09 工程化工作流 → Ch12 质量保障与验收 → Part VI 趋势与展望
 
 #### 🌱 零基础 / 非开发者
-Ch01 → Ch02 → **Ch03 术语速查手册**（重点精读）→ Ch04 → Part II 全部（Ch05-08）
+Ch01 → Ch02（建议同时打开 **术语速查手册** 专题）→ Ch04 → Part II 全部（Ch05-08）
 → Ch09 工程化工作流 → Ch10 驾驭 Agent → Part V 进阶实战
 
 ---

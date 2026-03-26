@@ -10,6 +10,8 @@
 - [3. 为什么 Agent 会突然变蠢](#3-为什么-agent-会突然变蠢)
 - [本章总结](#本章总结)
 
+> 📖 **阅读方式建议**：如果你对 `LLM / Context / Token / MCP / Skill` 这些词还不熟，可以把 [术语速查手册](./ch03-glossary.md) 另开一页，边读边查；本章主线不要求先通读它。
+
 ---
 
 ## 0. 先校准几个直觉
@@ -472,6 +474,8 @@ sequenceDiagram
 
 这三个词很容易混淆，但它们其实不在同一层。
 
+如果你还没把这些缩写完全分清，可以随时跳到 [术语速查手册](./ch03-glossary.md) 对照着看，不需要中断本章主线。
+
 | 概念 | 它回答什么问题 | 直白理解 |
 |---|---|---|
 | **Function Calling** | 模型怎么发出工具调用 | 一种结构化“我要调用这个工具”的表达方式 |
@@ -507,6 +511,8 @@ sequenceDiagram
 ### 2.6 Memory：由 LLM 读取和写回的状态系统
 
 Memory 最容易被神化。很多人会把它想成“Agent 真的记住了一切”。更准确的理解是：
+
+如果你对 `Context / Token` 这些词还不熟，也可以先回看 [术语速查手册](./ch03-glossary.md) 再继续。
 
 > **Memory 不是魔法记忆力，而是状态管理。**
 
@@ -684,6 +690,7 @@ while not done:
 
 ### 如果你还想继续往下学
 
+- 遇到术语卡壳时，随时打开： [术语速查手册](./ch03-glossary.md)
 - 想看这四件套在运行时怎么真正转起来： [Ch05 Agent 内部机制与工具体系](./ch05-agent-mechanics.md)
 - 想看更细的底层交互机制和伪代码： [Agent 与 LLM 的交互内幕](../topics/topic-agent-llm-internals.md)
 - 想继续深挖 Memory： [Memory 与上下文工程详解](../topics/topic-memory-system.md)
@@ -694,6 +701,6 @@ while not done:
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch01 快速上手](./ch01-quickstart.md) | [➡️ 下一章：Ch03 术语速查手册](./ch03-glossary.md)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch01 快速上手](./ch01-quickstart.md) | [➡️ 下一章：Ch04 第一批实战](./ch04-first-practice.md)
 
 </div>

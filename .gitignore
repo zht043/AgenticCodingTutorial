@@ -1,7 +1,10 @@
-.codex-temp/**
-.claude/**
-drafts/**
+.DS_Store
+.codex-temp/
+.claude/
+.superpowers/
+drafts/
+Memory.md
 MEMORY.md
-mermaid_styles/**
-.vscode/**
+mermaid_styles/
+.vscode/
 node_modules/
