@@ -32,3 +32,7 @@ Agent 工具有两种主流付费路径：API 按量付费（如 Claude Code 接
 ---
 
 > 📖 **相关章节**：[Chapter 1 · 快速上手](../chapters/ch01-quickstart.md) · [🤖 Agent 工具横评](./topic-agent-tools-comparison.md)
+
+---
+
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)

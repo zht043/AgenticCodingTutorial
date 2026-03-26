@@ -92,21 +92,28 @@
 
 ```mermaid
 flowchart LR
-    P(["💬 你的 Prompt"]):::blue
-    H(["🕰️ 之前的对话"]):::green
-    F(["📁 代码文件"]):::green
-    T(["🔧 工具返回结果"]):::green
-    
-    P --> C(["📦 Context<br/>上下文窗口"]):::purple
+    classDef input fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef source fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef core fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef result fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    P["💬 当前 Prompt"]:::input
+
+    subgraph S["📚 一起进入上下文的内容"]
+        direction TB
+        H["🕰️ 历史对话<br/>前面聊过什么"]:::source
+        F["📁 代码与文档<br/>Agent 读到的文件"]:::source
+        T["🔧 工具结果<br/>搜索 / 命令 / 读取输出"]:::source
+    end
+
+    C["📦 Context Window<br/>当前这一轮 LLM 能看到的全部信息"]:::core
+    R["🧠 基于上下文生成回答"]:::result
+
+    P --> C
     H --> C
     F --> C
     T --> C
-    C --> R(["🧠 LLM 生成回答"]):::orange
-
-    classDef blue fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef green fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef purple fill:#c678dd,stroke:#2d2d2d,stroke-width:2px
-    classDef orange fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    C --> R
 ```
 
 | | |
@@ -157,22 +164,23 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    LLM(["🧠 LLM<br/>大脑"]):::purple
-    Tools(["🔧 工具<br/>读写文件 / 执行命令"]):::blue
-    Memory(["🗂️ 记忆<br/>对话历史 / 项目知识"]):::green
-    Plan(["📋 规划<br/>拆解任务 / 制定步骤"]):::orange
-    
-    LLM --- Tools
-    LLM --- Memory
-    LLM --- Plan
-    
-    LLM --> Agent(["🤖 Agent"]):::red
+    classDef core fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef llm fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef mem fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef tool fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef plan fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    classDef purple fill:#c678dd,stroke:#2d2d2d,stroke-width:2px
-    classDef blue fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef green fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef orange fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef red fill:#e06c75,stroke:#2d2d2d,stroke-width:2px
+    Agent["🤖 Agent<br/>会持续推进任务的执行系统"]:::core
+
+    LLM["🧠 LLM<br/>负责理解、推理、生成"]:::llm
+    Memory["🗂️ Memory<br/>保留上下文与状态"]:::mem
+    Tools["🔧 Tools<br/>读文件、跑命令、查外部信息"]:::tool
+    Plan["📋 Planning<br/>决定先做什么、何时结束"]:::plan
+
+    Agent --> LLM
+    Agent --> Memory
+    Agent --> Tools
+    Agent --> Plan
 ```
 
 **和普通聊天 AI 的区别：**

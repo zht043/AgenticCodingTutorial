@@ -128,3 +128,7 @@ flowchart TB
 ---
 
 > 📖 **相关章节**：[🔌 MCP 协议专题](./topic-mcp.md) · [📝 Skill 系统专题](./topic-skills.md) · [🪝 Hooks 专题](./topic-hooks.md)
+
+---
+
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)

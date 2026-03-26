@@ -31,4 +31,8 @@
 
 ---
 
-> 📖 **相关章节**：[👥 多 Agent 组合专题](./topic-multi-agent.md) · [Chapter 10 · 人机协同方法论](../chapters/ch10-collaboration.md)
+> 📖 **相关章节**：[👥 多 Agent 组合专题](./topic-multi-agent.md) · [Chapter 10 · 驾驭 Agent：控制面与会话管理](../chapters/ch10-collaboration.md)
+
+---
+
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)

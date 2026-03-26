@@ -121,13 +121,13 @@ CLAUDE.md 建立了基础记忆，接下来让 Agent 做一次深度分析。在
 
 ```mermaid
 flowchart LR
-    classDef tool fill:#2d2d2d,stroke:#61dafb
-    classDef output fill:#2d2d2d,stroke:#98c379
+    classDef tool fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef output fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    G(["📂 Glob<br/>扫描目录结构"]):::tool
-    R(["📄 Read<br/>读取关键文件"]):::tool
-    S(["🔍 Grep<br/>搜索关键符号"]):::tool
-    A(["🧠 分析推理<br/>汇总形成结论"]):::output
+    G["📂 Glob<br/>先扫描目录结构"]:::tool
+    R["📄 Read<br/>读取关键文件"]:::tool
+    S["🔍 Grep<br/>追踪关键符号与调用链"]:::tool
+    A["🧠 分析归纳<br/>汇总形成结论"]:::output
 
     G --> R --> S --> A
 ```
@@ -213,22 +213,24 @@ Anthropic 官方最佳实践中有一条被反复强调的原则：
 
 ```mermaid
 flowchart TB
-    classDef bad fill:#2d2d2d,stroke:#e06c75
-    classDef good fill:#2d2d2d,stroke:#98c379
+    classDef bad fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef good fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    subgraph NO["❌ 无验证：Agent 靠'自信'"]
-        N1(["生成代码"]):::bad
-        N2(["'看起来对'"]):::bad
-        N3(["提交给你"]):::bad
+    subgraph NO["❌ 无验证：靠“看起来对”"]
+        direction TB
+        N1["写出代码"]:::bad
+        N2["凭模式猜测<br/>应该没问题"]:::bad
+        N3["直接交付给你"]:::bad
         N1 --> N2 --> N3
     end
 
-    subgraph YES["✅ 有验证：Agent 靠'证据'"]
-        Y1(["生成代码"]):::good
-        Y2(["运行测试"]):::good
-        Y3(["发现 2 个失败"]):::good
-        Y4(["修复并重跑"]):::good
-        Y5(["全部通过，提交"]):::good
+    subgraph YES["✅ 有验证：靠“证据闭环”"]
+        direction TB
+        Y1["写出代码"]:::good
+        Y2["运行测试 / 验证命令"]:::good
+        Y3["拿到失败信号"]:::good
+        Y4["修复并重新验证"]:::good
+        Y5["全部通过后再提交"]:::good
         Y1 --> Y2 --> Y3 --> Y4 --> Y5
     end
 ```
@@ -296,26 +298,22 @@ Agent 会汇报测试结果。你需要关注：
 
 ```mermaid
 flowchart TB
-    classDef action fill:#2d2d2d,stroke:#61dafb
-    classDef check fill:#2d2d2d,stroke:#e5c07b
-    classDef success fill:#2d2d2d,stroke:#98c379
-    classDef fail fill:#2d2d2d,stroke:#e06c75
+    classDef action fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef check fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef success fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    Run(["🧪 运行测试<br/>pytest -x --tb=short"]):::action
-    Analyze(["🔍 分析失败原因<br/>读错误信息 + 源码"]):::action
-    Fix(["🔧 修复代码"]):::action
-    Rerun(["🧪 重新运行测试"]):::check
-    
-    Pass(["✅ 全部通过"]):::success
-    Fail(["❌ 仍有失败"]):::fail
-    Lint(["🔎 运行 Lint 检查"]):::action
-    Done(["🏁 完成"]):::success
+    Run["🧪 先跑失败测试"]:::action
+    Analyze["🔍 读报错 + 看源码"]:::action
+    Fix["🔧 修改代码"]:::action
+    Rerun["🧪 重跑验证"]:::check
+    Lint["📏 再跑 Lint / 类型检查"]:::check
+    Done["✅ 通过，结束"]:::success
 
     Run --> Analyze --> Fix --> Rerun
-    Rerun -->|通过| Lint
-    Rerun -->|失败| Analyze
-    Lint -->|通过| Done
-    Lint -->|有问题| Fix
+    Rerun -->|"仍失败"| Analyze
+    Rerun -->|"已通过"| Lint
+    Lint -->|"有问题"| Fix
+    Lint -->|"通过"| Done
 ```
 
 **实操：用一个 Prompt 启动整个循环**
@@ -417,38 +415,37 @@ npx playwright test --update-snapshots
 
 ```mermaid
 flowchart TB
-    classDef phase fill:#2d2d2d,stroke:#61dafb
-    classDef action fill:#2d2d2d,stroke:#98c379
-    classDef verify fill:#2d2d2d,stroke:#e5c07b
+    classDef setup fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef verify fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef work fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
     subgraph PHASE1["阶段一：建立认知"]
-        I(["① /init 生成 CLAUDE.md"]):::action
-        E(["② 审查 + 手动补充约束"]):::action
-        D(["③ Agent 深度分析仓库"]):::action
-        Q(["④ 针对性追问细节"]):::action
+        direction TB
+        I["① /init 生成 CLAUDE.md"]:::setup
+        E["② 审查并补充约束"]:::setup
+        D["③ Agent 深度分析仓库"]:::setup
+        Q["④ 继续追问关键细节"]:::setup
         I --> E --> D --> Q
     end
 
     subgraph PHASE2["阶段二：建立验证"]
-        T(["⑤ 让 Agent 跑通测试"]):::verify
-        R(["⑥ 审查测试结果"]):::verify
-        W(["⑦ 写入验证命令到 CLAUDE.md"]):::verify
+        direction TB
+        T["⑤ 让 Agent 跑通测试"]:::verify
+        R["⑥ 审查测试结果"]:::verify
+        W["⑦ 把验证命令写进 CLAUDE.md"]:::verify
         T --> R --> W
     end
 
     subgraph PHASE3["阶段三：开始工作"]
-        F(["⑧ 给 Agent 具体任务"]):::phase
-        V(["⑨ 每次修改后跑验证"]):::phase
-        L(["⑩ 持续沉淀经验到 CLAUDE.md"]):::phase
+        direction TB
+        F["⑧ 下达具体任务"]:::work
+        V["⑨ 每次修改后都验证"]:::work
+        L["⑩ 持续沉淀经验"]:::work
         F --> V --> L
     end
 
     PHASE1 --> PHASE2 --> PHASE3
-    L -.->|"经验累积"| E
-
-    style PHASE1 fill:#1a1a2e,stroke:#61dafb
-    style PHASE2 fill:#1a1a2e,stroke:#e5c07b
-    style PHASE3 fill:#1a1a2e,stroke:#98c379
+    L -.->|"经验反哺"| E
 ```
 
 每次你接手一个新项目或新仓库，都可以按这个流程走一遍。前两个阶段通常在 30-60 分钟内完成，但它们带来的效率提升会贯穿整个项目生命周期。

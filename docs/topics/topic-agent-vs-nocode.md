@@ -32,3 +32,7 @@
 ---
 
 > 📖 **相关章节**：[🤖 Agent vs 代码补全工具](./topic-agent-vs-completion.md) · [⚔️ Agent vs Claw 范式对比](./topic-agent-vs-claw.md)
+
+---
+
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)

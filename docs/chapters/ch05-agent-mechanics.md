@@ -1,22 +1,26 @@
 # Chapter 5 · 🔧 Agent 内部机制与工具体系
 
-> 🎯 **目标**：深入理解 Agent 的内部运行机制——它如何循环工作、能调用哪些工具、记忆从哪来又到哪去。Ch02 给了你"是什么"的认知框架，本章给你"怎么运转"的操作级理解。读完后你会知道，Agent 每一次回复背后到底发生了什么。
+> 🎯 **目标**：从运行时视角理解 Agent。Ch02 已经用 `LLM + Planning + Tools + Memory` 解释了 Agent“是什么”；本章改看外层 Harness 怎么把这四部分真正跑起来。读完后你会知道，Agent 每一次回复背后到底发生了什么，以及它为什么会在长任务里开始跑偏。
 
 ## 📑 目录
 
 - [1. 🔄 Agent 的核心循环](#1--agent-的核心循环)
 - [2. 🌐 Agent 能访问什么（和不能访问什么）](#2--agent-能访问什么和不能访问什么)
-- [3. 🧰 五类内置工具详解](#3--五类内置工具详解)
-- [4. 💾 Session 与 Context：短期记忆 vs 长期记忆](#4--session-与-context短期记忆-vs-长期记忆)
-- [5. 📄 长文档如何"杀死"你的 Agent](#5--长文档如何杀死你的-agent)
+- [3. 🧰 运行时里的五类工具](#3--运行时里的五类工具)
+- [4. 💾 Session 与 Context：Memory 在运行时如何表现](#4--session-与-contextmemory-在运行时如何表现)
+- [5. 📄 长文档如何压垮 Working Memory](#5--长文档如何压垮-working-memory)
 
 ---
+
+> 📌 **阅读定位**：如果你还没看 Ch02 的“四件套”解释，建议先读 [Ch02 Agent 核心原理](./ch02-concepts.md)。本章默认你已经知道 `LLM / Planning / Tools / Memory` 各自是什么，这里主要解释它们在运行时如何被 Harness 组织起来。
+>
+> 📖 **代码视角延伸**：如果你想直接看 payload、伪代码、工具回写和 while 循环实现，可继续读 [Agent 与 LLM 的交互内幕](../topics/topic-agent-llm-internals.md)。
 
 ## 1. 🔄 Agent 的核心循环
 
 ### 它不是"一问一答"
 
-你在终端里输入一句话，Agent 几秒后给你一大段回复——看起来像是一次性生成的。但实际上，**Agent 内部可能已经循环了十几轮**。每一轮都在做同一件事：思考 → 行动 → 观察结果 → 决定下一步。
+从 Ch02 的视角看，Agent 的四件套之所以能协同工作，靠的就是一个被 Harness 包起来的循环。你在终端里输入一句话，Agent 几秒后给你一大段回复，看起来像是一次性生成的；但实际上，**Agent 内部可能已经循环了十几轮**。每一轮都在做同一件事：思考 → 行动 → 观察结果 → 决定下一步。
 
 这就是 **Agentic Loop（智能体循环）**——Agent 区别于普通聊天 AI 的核心机制。
 
@@ -24,23 +28,29 @@
 
 ```mermaid
 flowchart TB
-    classDef input fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef think fill:#c678dd,stroke:#2d2d2d,stroke-width:2px
-    classDef act fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef observe fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef decide fill:#e06c75,stroke:#2d2d2d,stroke-width:2px
-    classDef output fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef input fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef think fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef act fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef observe fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef decide fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef output fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    Input(["👤 用户输入"]):::input
-    Think(["🧠 理解意图<br/>分析上下文<br/>制定计划"]):::think
-    Select(["🔧 选择工具<br/>Read? Shell? Write?<br/>还是直接回答？"]):::act
-    Execute(["⚡ 执行工具<br/>读文件 / 跑命令<br/>搜索代码"]):::act
-    Observe(["👁️ 观察结果<br/>成功？失败？<br/>信息是否充足？"]):::observe
-    Decide{{"继续循环<br/>还是结束？"}}:::decide
-    Output(["💬 输出给用户"]):::output
+    Input["👤 用户输入"]:::input
 
-    Input --> Think --> Select --> Execute --> Observe --> Decide
-    Decide -->|"信息不够 / 还有下一步"| Think
+    subgraph Loop["🔄 Agentic Loop"]
+        direction TB
+        Think["🧠 理解目标<br/>分析上下文与约束"]:::think
+        Select["🔧 决定下一步<br/>选工具或直接回答"]:::act
+        Execute["⚡ 执行动作<br/>读文件 / 跑命令 / 搜索"]:::act
+        Observe["👀 读取反馈<br/>看结果、错误与新线索"]:::observe
+        Decide{"继续推进<br/>还是结束？"}:::decide
+    end
+
+    Output["💬 输出给用户"]:::output
+
+    Input --> Think
+    Think --> Select --> Execute --> Observe --> Decide
+    Decide -->|"信息还不够"| Think
     Decide -->|"任务完成"| Output
 ```
 
@@ -59,6 +69,8 @@ flowchart TB
 | 7 | 任务完成，汇报结果 | — | 输出给用户 |
 
 > 💡 **关键认知**：**你看到的一条回复，背后是 Agent 在自主循环。** 它不是一次性输出所有文字，而是在"思考-行动-观察"的循环中逐步推进，直到认为任务完成。这就是为什么 Agent 能处理复杂的多步骤任务，而普通的 LLM 对话做不到。
+
+> 🔎 **再往下一层看**：如果把这个循环写成代码，它往往就是“组装上下文 → 调用 LLM → 执行工具 → 回写结果 → 再调用 LLM”的 while-loop。具体伪代码见 [Agent 与 LLM 的交互内幕](../topics/topic-agent-llm-internals.md)。
 
 ### Agentic Loop vs 普通 LLM 对话
 
@@ -79,17 +91,23 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    classDef agent fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef access fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef core fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef access fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    A(["🤖 Agent"]):::agent
+    A["🤖 Agent"]:::core
 
-    F(["📁 项目文件<br/>所有源码、配置、文档"]):::access
-    T(["🖥️ 终端<br/>运行命令、脚本"]):::access
-    N(["🌐 网络<br/>搜索、获取 URL"]):::access
-    G(["📦 Git<br/>提交、分支、历史"]):::access
+    subgraph Reach["✅ 默认可访问的工作区资源"]
+        direction TB
+        F["📁 项目文件<br/>源码、配置、文档"]:::access
+        T["🖥️ 终端<br/>命令、脚本、构建"]:::access
+        N["🌐 网络<br/>搜索、获取 URL"]:::access
+        G["📦 Git<br/>diff、提交、历史"]:::access
+    end
 
-    A --> F & T & N & G
+    A --> F
+    A --> T
+    A --> N
+    A --> G
 ```
 
 | 资源 | 说明 | 典型用途 |
@@ -122,49 +140,48 @@ Agent 的访问限制是**安全默认值，而非硬性围墙**。理解"默认
 
 ---
 
-## 3. 🧰 五类内置工具详解
+## 3. 🧰 运行时里的五类工具
 
-Agent 的"手脚"就是工具。不同 Agent 产品的工具命名不同，但从功能上可以归纳为**五个类别**。以下以 Claude Code 为例，但这套分类框架适用于所有主流 Agent。
+Ch02 已经解释了“为什么 Tools 让 Agent 从会说变成会做”。这一节换成运行时视角：当 Harness 真正把工具暴露给模型时，你实际会见到哪些类型。不同 Agent 产品的工具命名不同，但从功能上仍然可以归纳为**五个类别**。以下以 Claude Code 为例，但这套分类框架适用于所有主流 Agent。
 
 ### 工具全景图
 
 ```mermaid
 flowchart TB
-    classDef read fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef write fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef exec fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef ext fill:#c678dd,stroke:#2d2d2d,stroke-width:2px
-    classDef orch fill:#e06c75,stroke:#2d2d2d,stroke-width:2px
+    classDef core fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef read fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef write fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef exec fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef ext fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef orch fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    Agent(["🤖 Agent"])
+    Agent["🤖 Agent"]:::core
 
     subgraph READ["📖 读取类"]
-        R1(["Read"]):::read
-        R2(["Glob"]):::read
-        R3(["Grep"]):::read
-        R4(["SemanticSearch"]):::read
+        R["Read / Glob / Grep / SemanticSearch<br/>先理解代码和结构"]:::read
     end
 
     subgraph WRITE["✏️ 写入类"]
-        W1(["Write"]):::write
-        W2(["StrReplace"]):::write
-        W3(["EditNotebook"]):::write
+        W["Write / StrReplace / EditNotebook<br/>创建或精确修改内容"]:::write
     end
 
     subgraph EXEC["🖥️ 执行类"]
-        E1(["Shell"]):::exec
+        E["Shell<br/>运行命令、脚本、构建"]:::exec
     end
 
     subgraph EXT["🌐 外部类"]
-        X1(["WebSearch"]):::ext
-        X2(["WebFetch"]):::ext
+        X["WebSearch / WebFetch<br/>查外部文档与资料"]:::ext
     end
 
     subgraph ORCH["🤖 编排类"]
-        O1(["Task"]):::orch
+        O["Task<br/>把子任务分给其他 Agent"]:::orch
     end
 
-    Agent --> READ & WRITE & EXEC & EXT & ORCH
+    Agent --> R
+    Agent --> W
+    Agent --> E
+    Agent --> X
+    Agent --> O
 ```
 
 ### 📖 第一类：读取类工具
@@ -254,7 +271,9 @@ curl https://...    ← 网络请求
 
 ---
 
-## 4. 💾 Session 与 Context：短期记忆 vs 长期记忆
+## 4. 💾 Session 与 Context：Memory 在运行时如何表现
+
+Ch02 把 `Memory` 解释成“状态系统”。到了运行时，它最常见的两个表面形态就是：**当前 session 里的工作记忆**，以及**写进文件后的长期状态**。
 
 ### 两种记忆机制
 
@@ -262,24 +281,26 @@ Agent 的"记忆"分为两类，运作方式完全不同：
 
 ```mermaid
 flowchart LR
-    classDef short fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef long fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef lost fill:#e06c75,stroke:#2d2d2d,stroke-width:2px
+    classDef short fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef long fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef state fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    subgraph SHORT["⏱️ 短期记忆（Session Context）"]
-        S1(["你说的每句话"]):::short
-        S2(["Agent 的每次回复"]):::short
-        S3(["工具返回的结果<br/>（文件内容、命令输出）"]):::short
+    subgraph SHORT["⏱️ 短期记忆：Session Context"]
+        direction TB
+        S1["💬 你的消息"]:::short
+        S2["🤖 Agent 回复"]:::short
+        S3["🔧 工具结果<br/>文件内容、命令输出"]:::short
     end
 
-    subgraph LONG["💾 长期记忆（Persistent Files）"]
-        L1(["CLAUDE.md<br/>项目级配置"]):::long
-        L2(["AGENTS.md<br/>Cursor 规则文件"]):::long
-        L3(["你的源码和文档"]):::long
+    subgraph LONG["💾 长期记忆：Persistent Files"]
+        direction TB
+        L1["📄 CLAUDE.md<br/>项目级规则与习惯"]:::long
+        L2["📄 AGENTS.md / .cursor/rules<br/>工具侧规则文件"]:::long
+        L3["📁 源码与文档<br/>被写进仓库的成果"]:::long
     end
 
-    SHORT -->|"会话结束"| GONE(["💨 消失"]):::lost
-    LONG -->|"下次会话"| RELOAD(["📂 重新加载"]):::long
+    SHORT -->|"会话结束后"| Gone["💨 消失"]:::state
+    LONG -->|"下次会话时"| Reload["📂 重新加载"]:::long
 ```
 
 ### 短期记忆：会话上下文
@@ -333,15 +354,16 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    classDef good fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef mid fill:#e5c07b,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef bad fill:#e06c75,stroke:#2d2d2d,stroke-width:2px
+    classDef good fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef mid fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef bad fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    T1(["🟢 会话初期<br/>上下文清晰<br/>执行精准"]):::good
-    T2(["🟡 会话中期<br/>上下文渐满<br/>偶尔遗漏细节"]):::mid
-    T3(["🔴 会话后期<br/>上下文溢出<br/>开始忘记早期指令"]):::bad
+    T1["🟢 会话初期<br/>上下文清晰、执行精准"]:::good
+    T2["🟡 会话中期<br/>历史堆积，开始漏细节"]:::mid
+    T3["🔴 会话后期<br/>上下文溢出，忘早期约束"]:::bad
 
-    T1 -->|"任务推进"| T2 -->|"继续推进"| T3
+    T1 -->|"任务推进"| T2
+    T2 -->|"继续推进"| T3
 ```
 
 **应对策略**：
@@ -363,23 +385,25 @@ flowchart LR
 
 ---
 
-## 5. 📄 长文档如何"杀死"你的 Agent
+## 5. 📄 长文档如何压垮 Working Memory
 
-长文档是上下文污染最常见的来源。理解它的破坏机制，才能设计出正确的处理策略。
+长文档是工作记忆层最常见的污染源。理解它怎样压垮上下文窗口，才能设计出正确的处理策略。
 
 ### 长文档的破坏链条
 
 ```mermaid
-graph TD
-    A[长文档直接喂给 Agent] --> B[上下文窗口爆炸]
-    B --> C[信息密度下降]
-    C --> D[关键指令被淹没]
-    D --> E[Compaction 压缩触发]
-    E --> F[早期重要内容被丢弃]
-    F --> G[Agent 表现变差]
+flowchart TB
+    classDef risk fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef process fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    style A fill:#e06c75,stroke:#2d2d2d
-    style G fill:#e06c75,stroke:#2d2d2d
+    A["📄 长文档整份塞给 Agent"]:::risk
+    B["📦 上下文窗口迅速膨胀"]:::process
+    C["📉 信息密度下降<br/>关键点被噪音淹没"]:::process
+    D["🗜️ Compaction / 摘要压缩触发"]:::process
+    E["❗ 早期重要内容被丢弃"]:::risk
+    F["🤯 Agent 表现变差<br/>更容易遗漏与跑偏"]:::risk
+
+    A --> B --> C --> D --> E --> F
 ```
 
 ### 长上下文 ≠ 记忆
@@ -398,20 +422,24 @@ graph TD
 
 ```mermaid
 flowchart LR
-    subgraph 输入层
-        I1[原始长文档]
+    classDef input fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef process fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef use fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    subgraph Input["📥 输入层"]
+        I1["原始长文档"]:::input
     end
 
-    subgraph 处理层
-        P1[文档切分 Chunking]
-        P2[关键信息提取]
-        P3[结构化索引存储]
+    subgraph Process["🧱 处理层"]
+        P1["文档切分<br/>Chunking"]:::process
+        P2["提取关键信息<br/>做摘要和结构化"]:::process
+        P3["建立索引<br/>便于后续检索"]:::process
     end
 
-    subgraph 使用层
-        U1[按需检索]
-        U2[RAG 增强]
-        U3[渐进式披露]
+    subgraph Use["🎯 使用层"]
+        U1["按需检索"]:::use
+        U2["RAG 增强"]:::use
+        U3["渐进式披露"]:::use
     end
 
     I1 --> P1 --> P2 --> P3 --> U1 --> U2 --> U3
@@ -444,13 +472,13 @@ flowchart LR
 
 | 核心概念 | 一句话总结 |
 |----------|-----------|
-| **Agentic Loop** | Agent 不是一问一答，而是在"思考→行动→观察"的循环中自主推进，一次请求可能内部循环十几轮 |
+| **Agentic Loop** | Harness 会反复组装上下文、调用 LLM、执行工具、回写结果，直到完成或停止 |
 | **感知边界** | Agent 内置工具默认限于当前工作区，但 Shell 工具可突破此限制；浏览器 GUI、私有服务、运行时状态是真正的硬边界 |
-| **五类工具** | 读取类（理解代码）→ 写入类（修改代码）→ 执行类（运行命令）→ 外部类（搜索信息）→ 编排类（分配子任务） |
-| **短期 vs 长期记忆** | 会话上下文会消失，写进文件（CLAUDE.md）的才能跨会话存活 |
+| **五类工具** | 读取、写入、执行、外部、编排五类工具共同构成运行时行动面 |
+| **Session vs 文件记忆** | 会话上下文会消失，写进文件（CLAUDE.md）的才能跨会话存活 |
 | **上下文衰减** | 会话越长精度越低，及时开新会话 + 关键信息持久化是最佳应对 |
 
-> 🔑 **本章核心**：理解 Agent 的循环机制和工具体系，是后续所有实验和进阶技巧的基础。当你知道 Agent 内部在做什么，你就能更好地设计指令、预判它的行为、在它犯错时快速定位原因。
+> 🔑 **本章核心**：Ch02 让你知道 Agent 为什么会工作；本章让你知道 Harness 是怎么把它跑起来的。当你理解了这个运行层，就能更好地设计指令、预判行为，并在它犯错时更快定位问题。
 
 ---
 

@@ -298,3 +298,7 @@ claude mcp remove <name>     # 卸载指定 MCP 服务器
 ---
 
 > 📖 **相关章节**：[Skill 系统专题](./topic-skills.md) · [CLI vs MCP 选择](./topic-cli-vs-mcp.md) · [MCP 与 Skills 完整参考](./topic-mcp-and-skills-ref.md)
+
+---
+
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)

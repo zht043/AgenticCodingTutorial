@@ -4,7 +4,7 @@
 
 # 附录：人机协同与 Agent 优化指南
 
-> 本文是 [Chapter 2 · Agent 运作原理与核心概念](../chapters/ch02-concepts.md) 的扩展附录，深入讲解人机协同方法论、Harness 工程和 Agent 使用优化策略。
+> 本文是 [Chapter 2 · Agent 运作原理与核心概念](../chapters/ch02-concepts.md) 的扩展附录，深入讲解 Agent 控制面、Harness 工程和使用优化策略。
 
 ---
 
@@ -438,3 +438,7 @@ Claude Code 支持启动多个子 Agent 并行工作，每个 Agent 在独立的
 ---
 
 > 📖 **相关章节**：[🧩 上下文工程深入](./topic-context-engineering.md) · [🔄 Prompt → Harness 演进案例](./topic-prompt-to-harness.md) · [💬 Prompt 模板库](./topic-prompt-templates.md)
+
+---
+
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)

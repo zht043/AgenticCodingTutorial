@@ -1,0 +1,15 @@
+{
+  "name": "agentic-coding-tutorial-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "lint:mermaid": "node scripts/check-mermaid.mjs",
+    "render:mermaid": "node scripts/check-mermaid.mjs --render",
+    "check:docs": "npm run lint:mermaid"
+  },
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.6.0",
+    "fast-glob": "^3.3.3"
+  }
+}

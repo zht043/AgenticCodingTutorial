@@ -226,3 +226,7 @@ Claude 完成相同任务的 Token 消耗通常是 GPT-5.4 的 **3.2x--4.2x**：
 4. 最后比较：成功率、review 成本、速度、价格、疲劳感。
 
 > 下一步建议：如果你想知道这些 benchmark 到底各自测什么、为什么同一模型在不同榜单会像"两个人"，接着看 [模型与 Agent 评测体系](./topic-benchmarks.md)。
+
+---
+
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)

@@ -16,20 +16,16 @@
 
 ```mermaid
 flowchart LR
-    classDef explore fill:#2d2d2d,stroke:#61dafb
-    classDef plan fill:#2d2d2d,stroke:#e5c07b
-    classDef code fill:#2d2d2d,stroke:#98c379
-    classDef check fill:#2d2d2d,stroke:#c678dd
+    classDef explore fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef plan fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef code fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef gate fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    E(["🔍 探索<br/>Agent 读代码<br/>发现问题<br/>不改任何文件"]):::explore
-    P(["📋 规划<br/>Agent 生成 Plan<br/>你审查调整<br/>不执行代码"]):::plan
-    C(["💻 编码<br/>Agent 按 Plan 执行<br/>每步验证<br/>你做最终审查"]):::code
-
-    E -->|"你确认理解正确"| P
-    P -->|"你确认计划合理"| C
-
-    G1(["✅ 检查点 1"]):::check
-    G2(["✅ 检查点 2"]):::check
+    E["🔍 探索<br/>先理解现状，不改文件"]:::explore
+    G1["✅ 检查点 1<br/>确认理解没跑偏"]:::gate
+    P["📋 规划<br/>只出 Plan，不执行"]:::plan
+    G2["✅ 检查点 2<br/>确认计划合理"]:::gate
+    C["💻 编码<br/>按 Plan 执行并验证"]:::code
 
     E --> G1 --> P --> G2 --> C
 ```
@@ -191,20 +187,18 @@ Plan 整体不错，但我有两个调整：
 
 ```mermaid
 flowchart TB
-    classDef explore fill:#2d2d2d,stroke:#61dafb
-    classDef plan fill:#2d2d2d,stroke:#e5c07b
-    classDef code fill:#2d2d2d,stroke:#98c379
-    classDef feedback fill:#2d2d2d,stroke:#c678dd
+    classDef explore fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef plan fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef code fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef feedback fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
     E["🔍 探索"]:::explore
     P["📋 规划"]:::plan
     C["💻 编码"]:::code
-    F["💬 反馈"]:::feedback
+    F["💬 反馈与校正"]:::feedback
 
-    E --> P
-    P --> C
-    C --> F
-    F -->|"调整 Plan"| P
+    E --> P --> C --> F
+    F -->|"调整计划"| P
     F -->|"继续执行"| C
     F -->|"发现新问题"| E
 ```

@@ -23,7 +23,6 @@
     - [Claude Code 配置（推荐方式：settings.json）](#claude-code-配置推荐方式settingsjson)
   - [6. ✅ 验证你的第一次对话](#6--验证你的第一次对话)
   - [7. 🎮 新手 QuickStart：你的第一个 Agent 任务](#7--新手-quickstart你的第一个-agent-任务)
-    - [推荐起步路线](#推荐起步路线)
     - [第一个任务：理解一个真实仓库](#第一个任务理解一个真实仓库)
     - [第二个任务：完成一个最小修改](#第二个任务完成一个最小修改)
     - [📋 新手第一周三个目标](#-新手第一周三个目标)
@@ -37,23 +36,48 @@
 > 🧠 在开始安装之前，你最好先建立一个核心认知：**你本地运行的 Agent 软件，本身并不具备“智能”**。它更像一个客户端，默认通过网络连接到远程的 LLM 大模型服务端，才能完成代码生成、理解和推理。（多数主流产品默认使用云端模型，但部分工具如 OpenCode 也支持本地模型和自托管路线。）
 
 ```mermaid
-graph LR
-    subgraph LC["💻 本地环境"]
-        A(["🤖 Agent 客户端"]):::blue
-        B(["📁 项目代码"]):::green
-        A <-->|"✏️ 读写文件<br/>⚡ 执行命令"| B
+flowchart TB
+    classDef server fill:#edf4ff,stroke:#4f86ff,stroke-width:2px,color:#1f3352
+    classDef client fill:#effcf8,stroke:#26b69a,stroke-width:2px,color:#1f4d45
+    classDef config fill:#fff8e8,stroke:#f0b44c,stroke-width:1.5px,color:#6a4b12
+    classDef local fill:#f3f8ff,stroke:#8fb3e8,stroke-width:1.5px,color:#3d5878
+    classDef link fill:#ffffff,stroke:#9ebcf0,stroke-width:1.5px,color:#36506e
+
+    subgraph Cloud["☁️ Server Side · 云端模型服务"]
+        direction TB
+        LLM["🧠 LLM Server<br/>理解代码 · 推理 · 生成结果"]:::server
     end
 
-    subgraph Cloud["☁️ 云端服务"]
-        C(["🧠 LLM 大模型"]):::purple
+    subgraph Net["📡 API 通信链路"]
+        direction TB
+        Link["🌐 HTTP / Streaming API"]:::link
+        Req["⬆️ 上传<br/>Prompt · Context · Tool Results"]:::link
+        Res["⬇️ 返回<br/>Answer · Tool Calls · Next Step"]:::link
     end
 
-    A -->|"📡 HTTP 请求<br/>🔑 API Key"| C
-    C -->|"💬 生成结果<br/>🔧 工具指令"| A
-    
-    classDef blue fill:#61dafb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef green fill:#98c379,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
-    classDef purple fill:#c678dd,stroke:#2d2d2d,stroke-width:2px
+    subgraph Local["💻 Client Side · 本地 Agent"]
+        direction TB
+        Agent["🤖 Agent Client<br/>组装上下文 · 发起请求 · 展示结果"]:::client
+        Files["📁 Project Files<br/>源码 · 配置 · 文档"]:::local
+        Tools["🛠️ Local Tools<br/>终端 · 搜索 · 编辑"]:::local
+    end
+
+    BaseURL["🌐 Base URL<br/>模型服务地址"]:::config
+    ApiKey["🔑 API Key<br/>调用认证"]:::config
+
+    LLM <--> Link
+    Link <--> Agent
+    Link --- Req
+    Link --- Res
+
+    BaseURL -.-> Agent
+    ApiKey -.-> Agent
+    Agent <--> Files
+    Agent <--> Tools
+
+    style Cloud fill:#f7fbff,stroke:#c7daf8,stroke-width:1.5px
+    style Net fill:#f9fbff,stroke:#d4e2f7,stroke-width:1.5px
+    style Local fill:#f7fffc,stroke:#cfe9df,stroke-width:1.5px
 ```
 
 **🔑 关键要点：**
@@ -78,13 +102,19 @@ graph LR
 > - [附录：模型与 Agent 评测体系详解](../topics/topic-benchmarks.md)
 
 > 🧭 完整工具/模型名单与深度分析都放在附录，正文这里只给最短推荐。
+>
+> ━━━━━━━━━━━━━━━━━━━━━━━
+> 💸 **Money is All You Need** 💸
+> 💳 买订阅  ·  ⚡ 买效率  ·  🚀 买时间
+> 🪙 在 Agent 时代，最贵的通常不是模型费，而是你自己反复试错的时间。
+> ━━━━━━━━━━━━━━━━━━━━━━━
 
-💸💸💸 Money is All You Need 💸💸💸：
+### 💼 A. `Cursor Pro`
 
-### a. 💼 `Cursor Pro`
+> 👤 **适合谁**：有开发经验、习惯 `VS Code`、希望 AI 更像结伴开发的助手实习生
+> ✅ **一句话推荐**：直接充 `Cursor Pro`，\$20/月，省心起步
+> 🏷️ **关键词**：`VS Code` · `订阅即用` · `传统开发流`
 
-- 👤 **适合谁**：有开发经验、习惯 `VS Code`、希望 AI 更像结伴开发的助手实习生
-- ✅ **推荐方案**：直接充 `Cursor Pro`，\$20/月
 - 🔧 **模型特点**：后端模型可自由切 `Claude`、`GPT` 系列最新顶尖模型，也能选很多高性价比模型
 - ⚠️ **核心提醒**：前端 Agent 产品的设计哲学差异很大，即使后端模型一模一样，使用效果也可能天差地别
 - 🚗 **怎么理解 `Cursor` 和 `Claude Code` 的区别**：
@@ -92,34 +122,43 @@ graph LR
   - `Claude Code`、`Codex` 这类新一代 Agent 更强调 AI 自主，自动化程度更高
   - 后者对开发流程和习惯的改造更强，更适合从 0 到 1 做新特性或新应用，用法与生态更丰富，能力上限也更高
 
-### b. 🤖 `Claude Pro` / `GPT Plus/Team` 二选一
+### 🤖 B. `Claude Pro` / `GPT Plus/Team` 二选一
 
-- 👤 **适合谁**：想认真学习新一代 Agent 工作流，而不只是把 AI 当补全工具的人
-- ✅ **推荐方案**：直接上 `Claude Code` 或 `Codex`
+> 👤 **适合谁**：想认真学习新一代 Agent 工作流，而不只是把 AI 当补全工具的人
+> ✅ **一句话推荐**：直接上 `Claude Code` 或 `Codex`，并配一个主力订阅
+> 🏷️ **关键词**：`新一代 Agent` · `主力订阅` · `认真入门`
+
 - 💳 **订阅建议**：在 [`Claude Pro`](https://claude.ai/upgrade) 或 [`ChatGPT Plus / Team`](https://openai.com/pricing) 这类 plan 里选一个就够了
 - 🇨🇳 **中国区建议**：更建议选 `GPT` 系列，`Claude` 封号风险较高
 - 💰 **额度搭配**：包月订阅通常比单买 API 划算，常见搭配是先用订阅额度、用完再补 API（API 额度无时间限制，可长期保留）
 - 🎁 **订阅附加价值**：网页端通常还能顺带用 `deep research`、`web search`、生图等实用功能
 
-### c. 🏗️ `GPT Plus/Team + Claude Pro`
+### 🏗️ C. `GPT Plus/Team + Claude Pro`
 
-- 👤 **适合谁**：有大型重构、重大特性、复杂功能设计开发需求的人
-- ✅ **推荐方案**：[`ChatGPT Plus / Team`](https://openai.com/pricing) + [`Claude Pro`](https://claude.ai/upgrade) 双订阅
+> 👤 **适合谁**：有大型重构、重大特性、复杂功能设计开发需求的人
+> ✅ **一句话推荐**：[`ChatGPT Plus / Team`](https://openai.com/pricing) + [`Claude Pro`](https://claude.ai/upgrade) 双订阅，直接拉满主力组合
+> 🏷️ **关键词**：`复杂工程` · `双订阅` · `互补 review`
+
 - 🔄 **组合优势**：两套 Agent 互补 + 互相 review，两边订阅各用各家顶尖模型
 - 🧠 **实际体感**：虽然 `GPT-5.4` 这类模型已经很有竞争力，性价比也不错，但按我最近半个月的实际使用体感，做复杂工程任务时和 `Claude Opus 4.6` 相比，仍然有一段可感知的差距
 - ⏱️ **怎么权衡**：`Opus 4.6` 这类顶尖模型虽然更贵，但往往能帮你少走很多弯路；效果逊色一些的模型更容易误解需求、忽略细节，把小坑一路积累成返工成本。归根结底，取决于你更看重节省时间，还是更看重节省 Token 费用
 
-### d. 🔌 第三方API中转站例如`OpenRouter`
+### 🔌 D. 第三方 API 中转站，例如 `OpenRouter`
 
-- 👤 **适合谁**：如果你走 API Token 路线
+> 👤 **适合谁**：如果你走 API Token 路线
+> ✅ **一句话推荐**：想要正规、不掺假、稳定可靠，优先 [`OpenRouter`](https://openrouter.ai/pricing)，但 **缺点**是贵 💸
+> 🏷️ **关键词**：`API Token` · `自动化接入` · `按量付费`
+
 - ✨ **补充定位**：API 既可以作为订阅额度用完后的补充，也有额外优势
-- ✅ **推荐方案**：想要正规、不掺假、稳定可靠，优先 [`OpenRouter`](https://openrouter.ai/pricing)，但 **缺点**是贵💸
 - 🚀 **额外优势**：API 更适合接脚本、自动化和自建工作流；通常按量付费更灵活；部分平台还有额外能力，比如 `OpenAI API` 的 `Batch API` 有单独速率池和更低成本，`OpenRouter` 还能做跨 provider 路由、流式输出和故障回退
 - 🧭 **价格敏感用户**：可看其它 API 聚合平台或国内三方中转站，价格经常能差 5–10 倍，但需要接受掺假、降智、不稳定、乱涨价、数据隐私、安全、合规等风险⚠️（口碑好的平台通常风险会小一些，但依旧不是零风险）
 
-### e. 🇨🇳 `国产模型` / `GPT Plus + OpenRouter + 国内中转API聚合站`
+### 🇨🇳 E. `国产模型` / `GPT Plus + OpenRouter + 国内中转 API 聚合站`
 
-- 👤 **适合谁**：中国大陆用户
+> 👤 **适合谁**：中国大陆用户
+> ✅ **一句话推荐**：有外网条件就优先国际订阅 + API 补充；没有就走国产模型或国内中转
+> 🏷️ **关键词**：`中国大陆` · `灵活组合` · `网络条件敏感`
+
 - 🚫 **如果没法稳定访问国际互联网**：
   - 选择国产模型
   - 通过国内三方 API 中转站使用国外模型
@@ -130,10 +169,12 @@ graph LR
 - 🔁 **API中转站补充**：相对更推荐 [`Yunwu API`](https://yunwu.ai/register?aff=GTlx)
 - ⚠️ **重点提醒**：国内用户不建议直接充 `Claude` 官方订阅，除非你能搞定国外家庭IP、住址、银行卡、手机号，否则封号风险依旧很高
 
-### f. 💸 `Gemini Pro` / `Manus` / `OpenClaw` / `Perplexity`
+### 💸 F. `Gemini Pro` / `Manus` / `OpenClaw` / `Perplexity`
 
-- 👤 **适合谁**：预算还有空间
-- ✅ **推荐补充**：[`Gemini`](https://gemini.google/us/subscriptions/?hl=en)，适合做搜索🔎、学术 `Deep Research`、用 `Nanobanana Pro` 生图
+> 👤 **适合谁**：预算还有空间
+> ✅ **一句话推荐**：先补 [`Gemini`](https://gemini.google/us/subscriptions/?hl=en)，再按场景补 `Manus` / `Perplexity` 这类专项工具
+> 🏷️ **关键词**：`预算充足` · `搜索研究` · `专项补强`
+
 - 🛠️ **还可以补**：[`Manus`](https://manus.im/pricing) / `OpenClaw`（干代码之外的日常活）、[`Perplexity`](https://www.perplexity.ai/help-center/en/articles/11187416-which-perplexity-subscription-plan-is-right-for-you)（更强的联网搜索）
 - 👑 **土豪玩家**：[`Claude Max`](https://claude.ai/upgrade)、[`ChatGPT Pro`](https://openai.com/pricing) 这类高阶 plan 弹药更足、思考深度上限也更高
 
@@ -255,13 +296,6 @@ claude
 
 > 🎯 新手最容易犯的错，不是“不会用”，而是一上来就把一堆工具全装上。先选一条主线，跑通一个最小闭环，体感通常会好很多。
 
-### 推荐起步路线
-
-| 偏好 | 推荐 |
-|------|------|
-| 终端工作流，想体验最强 Agent | **Claude Code** |
-| OpenAI 生态，想试并行 Agent | **Codex CLI** |
-| IDE 可视化，边看 diff 边操作 | **Claude Code VS Code 插件** / **Cursor** |
 
 ### 第一个任务：理解一个真实仓库
 

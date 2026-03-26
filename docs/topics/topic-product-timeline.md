@@ -61,3 +61,7 @@
 | 2026.02 | 🇨🇳 Qwen3-Max 发布 | 阿里云 | 🧠 | 千问旗舰线，适合复杂多步骤任务，支持思考模式 + 内置工具 |
 | 2026.03 | 🇨🇳 MiniMax-M2.7 发布 | MiniMax | 🧠 | 当前最新 M 系旗舰，强调 real-world engineering / tool calling |
 | 2026.03 | 🇨🇳 GLM-5 发布 | 智谱 AI | 🧠 | 智谱新一代旗舰基座，面向 Agentic Engineering、复杂系统工程 |
+
+---
+
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)

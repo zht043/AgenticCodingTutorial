@@ -136,6 +136,11 @@
 ---
 
 返回：[附录：Agent 工具与模型详细对比](./topic-agent-tools-comparison.md)
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)
+
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)
+
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)
 
 ---
 
@@ -295,3 +300,4 @@
 ---
 
 返回：[附录：Agent 工具与模型详细对比](./topic-agent-tools-comparison.md)
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)

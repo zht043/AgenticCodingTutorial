@@ -1,5 +1,5 @@
 <div align="center">
-<img src="./resources/figures/image-20260312231419463.png" alt="Agentic Coding Tutorial cover" width="720" />
+
 
 <h1>面向Agent编程</h1>
 
@@ -119,31 +119,31 @@
 <tr>
 <td align="center">9</td>
 <td><a href="./docs/chapters/ch09-engineering.md">🏗️ 工程化工作流</a></td>
-<td>SDD<br>任务分解<br>三种协作模式</td>
+<td>生命周期 · 介入矩阵<br>SDD · 任务分解 · 验证闭环</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">10</td>
-<td><a href="./docs/chapters/ch10-collaboration.md">🤝 人机协同方法论</a></td>
-<td>Harness 工程 · 上下文<br>失败模式<br>Token 经济学 · 成熟度</td>
+<td><a href="./docs/chapters/ch10-collaboration.md">🎛️ 驾驭 Agent：控制面与会话管理</a></td>
+<td>Harness · 上下文 · Prompt<br>会话生命周期 · Token · 成熟度</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">11</td>
 <td><a href="./docs/chapters/ch11-design-patterns.md">🧬 Agent 设计模式</a></td>
-<td>Router · Evaluator<br>Planner-Worker · RAG<br>Writer-Reviewer</td>
+<td>Router · Evaluator · Planner-Worker<br>大型代码库策略 · Worktree · 安全护栏</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">12</td>
-<td><a href="./docs/chapters/ch12-code-review.md">👁️ AI Code Review</a></td>
-<td>Agent 审查工作流<br>GitHub Actions<br>AI 幻觉避坑</td>
+<td><a href="./docs/chapters/ch12-code-review.md">✅ 质量保障与验收</a></td>
+<td>Writer-Reviewer · 测试策略<br>验收 / Eval · CI · Merge 前清单</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
 <td align="center">13</td>
-<td><a href="./docs/chapters/ch13-history.md">📜 技术发展简史</a></td>
-<td>六阶段演进 · 产品大爆发<br>80% 翻转 · 职业冲击</td>
+<td><a href="./docs/chapters/ch13-history.md">📜 技术简史与当前定位</a></td>
+<td>六阶段演进 · 关键拐点<br>产品形态 · 能力边界</td>
 <td align="center">🔄</td>
 </tr>
 <tr><td colspan="4"><strong>Part V · 🏗️ 进阶实战篇</strong> <a id="part-v-advanced-cases"></a></td></tr>
@@ -525,16 +525,16 @@
 
 #### 👨‍💻 程序员 / 软件工程师
 Ch01 → Ch02 → Ch04 → Part II 全部（Ch05-08）
-→ Ch09 工程化工作流 → Ch10 人机协同 → Part IV Skill/MCP 专题
+→ Ch09 工程化工作流 → Ch10 驾驭 Agent → Part IV Skill/MCP 专题
 → Part V 进阶实战
 
 #### 📊 产品经理 / 技术管理者
-Ch01 → Ch02 → Ch03 术语 → Ch04 → Ch13 技术简史 → Ch11 设计模式
-→ Ch09 工程化工作流 → Ch12 Code Review → Part VI 趋势与展望
+Ch01 → Ch02 → Ch03 术语 → Ch04 → Ch13 技术简史与定位 → Ch11 设计模式
+→ Ch09 工程化工作流 → Ch12 质量保障与验收 → Part VI 趋势与展望
 
 #### 🌱 零基础 / 非开发者
 Ch01 → Ch02 → **Ch03 术语速查手册**（重点精读）→ Ch04 → Part II 全部（Ch05-08）
-→ Ch09 工程化工作流 → Ch10 人机协同 → Part V 进阶实战
+→ Ch09 工程化工作流 → Ch10 驾驭 Agent → Part V 进阶实战
 
 ---
 

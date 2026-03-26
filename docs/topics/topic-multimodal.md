@@ -32,3 +32,7 @@
 ---
 
 > 📖 **相关章节**：[🧩 上下文工程深入](./topic-context-engineering.md) · [Chapter 6 · 代码探索与验证驱动](../chapters/ch06-explore-verify.md)
+
+---
+
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)

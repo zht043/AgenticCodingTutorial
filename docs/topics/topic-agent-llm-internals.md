@@ -172,3 +172,7 @@ def verify_and_terminate(max_iterations=5):
 1. **确定性验证**（`run_command`）提供客观的成功/失败信号
 2. **反思循环**（`llm.call` 带失败上下文）让 Agent 分析原因而非盲目重试
 3. **熔断保护**（`max_iterations`）防止无限循环和成本失控
+
+---
+
+返回目录：[README · 章节目录](../../README.md#tutorial-contents)

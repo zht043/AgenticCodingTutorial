@@ -1,6 +1,6 @@
-# Chapter 11 · 🧬 Agent 设计模式
+# Chapter 11 · 🧬 Agent 设计模式与代码库策略
 
-> 🎯 **目标**：掌握六种经过实战验证的 Agent 协作模式——理解每种模式的结构、数据流和适用场景，并学会将多种模式组合成完整的工作流。读完本章，你将从"临时拼凑"升级到"系统设计 Agent 协作"。
+> 🎯 **目标**：掌握六种经过实战验证的 Agent 协作模式，理解它们在大型代码库中的组合方式、隔离策略和安全边界。读完本章，你将从“临时拼凑”升级到“系统设计 Agent 协作”。
 
 ## 📑 目录
 
@@ -13,7 +13,7 @@
   - [👁️ Writer-Reviewer — 写审互纠](#️-writer-reviewer--写审互纠)
   - [🌿 Worktree Isolation — 并行隔离](#-worktree-isolation--并行隔离)
 - [3. 📊 模式适用场景矩阵](#3--模式适用场景矩阵)
-- [4. 🔗 模式组合案例：superpowers 的 7 阶段流程](#4--模式组合案例superpowers-的-7-阶段流程)
+- [4. 🏢 大型项目中的模式组合与代码库策略](#4--大型项目中的模式组合与代码库策略)
 - [5. 🛡️ 安全护栏模式：风险分级执行](#5-️-安全护栏模式风险分级执行)
 - [6. ⚙️ Harness 演进原则：工具与模型共同进化](#6-️-harness-演进原则工具与模型共同进化)
 - [📌 本章总结](#-本章总结)
@@ -356,60 +356,67 @@ flowchart TB
 
 ---
 
-## 4. 🔗 模式组合案例：superpowers 的 7 阶段流程
+## 4. 🏢 大型项目中的模式组合与代码库策略
 
-单个模式解决单个问题，但真正的复杂项目需要**模式组合**。superpowers 插件是目前 Agent 社区中模式组合的标杆实现——它将六种模式编排成一条完整的开发流水线。
+单个模式解决单个问题，但真正的老项目 / 大仓库问题，通常需要**模式组合 + 代码库策略**一起上。
 
-### 全景流程图
+### 接手旧仓库时，模式怎么落地
 
 ```mermaid
 flowchart TB
-    classDef brainstorm fill:#2d2d2d,stroke:#e5c07b
     classDef plan fill:#2d2d2d,stroke:#c678dd
-    classDef exec fill:#2d2d2d,stroke:#61dafb
+    classDef read fill:#2d2d2d,stroke:#61dafb
+    classDef exec fill:#2d2d2d,stroke:#98c379
     classDef review fill:#2d2d2d,stroke:#e06c75
-    classDef verify fill:#2d2d2d,stroke:#98c379
-    classDef finish fill:#2d2d2d,stroke:#56b6c2
 
-    S1(["💡 阶段 1 · Brainstorm<br/>探索需求 · 收敛设计<br/>产出 Spec 文档"]):::brainstorm
-    S2(["📐 阶段 2 · Plan<br/>拆解任务 · 定义步骤<br/>产出 Plan 文档"]):::plan
-    S3(["🌿 阶段 3 · Isolate<br/>创建 Worktree<br/>隔离工作环境"]):::exec
-    S4(["⚡ 阶段 4 · Execute<br/>每个 Task 分发子 Agent<br/>并行实现"]):::exec
-    S5(["👁️ 阶段 5 · Review<br/>两阶段审查<br/>Spec 合规 → 代码质量"]):::review
-    S6(["✅ 阶段 6 · Verify<br/>运行测试 · 检查证据<br/>不允许空口声明"]):::verify
-    S7(["🏁 阶段 7 · Finish<br/>合并 / PR / 清理<br/>完成闭环"]):::finish
+    S1(["① 读目录 / README / AGENTS"]):::read
+    S2(["② RAG 检索入口文件与调用链"]):::read
+    S3(["③ Planner 拆任务<br/>定义文件边界与验收"]):::plan
+    S4(["④ Worker 在独立 Worktree 中执行"]):::exec
+    S5(["⑤ Writer-Reviewer 审查 + 验证"]):::review
 
-    S1 --> S2 --> S3 --> S4
-    S4 --> S5
-    S5 -->|"未通过"| S4
-    S5 -->|"通过"| S6
-    S6 -->|"测试失败"| S4
-    S6 -->|"全部通过"| S7
+    S1 --> S2 --> S3 --> S4 --> S5
 ```
 
-### 每个阶段的模式映射
+### 一个够用的组合范式
 
-| 阶段 | 做什么 | 对应模式 | 关键设计决策 |
-|:---:|---|:---:|---|
-| 💡 **Brainstorm** | 探索需求、问澄清问题、提出 2~3 种方案、产出设计文档 | — (人机协作) | 硬性门禁：设计未经批准不得写代码 |
-| 📐 **Plan** | 读取 Spec，拆解为 bite-sized Task（每步 2~5 分钟），指定每个 Task 涉及的文件 | **Planner-Worker** | 主 Agent 用强模型规划，Worker 用快速模型执行 |
-| 🌿 **Isolate** | 创建 Git Worktree，为后续执行提供隔离环境 | **Worktree Isolation** | 自动检测 `.worktrees/` 目录或 CLAUDE.md 中的配置 |
-| ⚡ **Execute** | 每个 Task 分发一个独立子 Agent，子 Agent 接收精心构造的上下文（而非会话历史） | **Planner-Worker** + **Router** | 子 Agent 上下文隔离，避免"上下文污染" |
-| 👁️ **Review** | 两阶段审查：先检查 Spec 合规性，再检查代码质量 | **Writer-Reviewer** + **Eval-Opt** | Reviewer 仅接收 diff + Spec + SHA 范围 |
-| ✅ **Verify** | 运行完整测试套件，检查退出码，要求"先有证据再声明完成" | **Evaluator-Optimizer** | 铁律：没有运行验证命令 = 不允许声称通过 |
-| 🏁 **Finish** | 验证测试通过 → 展示选项（合并/PR/清理）→ 执行选择 → 清理 Worktree | — (流程收尾) | 测试未通过则阻断，不进入此阶段 |
+| 阶段 | 主要动作 | 对应模式 | 关键收益 |
+|------|---------|---------|---------|
+| **读仓库** | 看目录、入口、依赖图 | **RAG-Augmented** | 避免 Agent 在大仓库里盲搜 |
+| **拆任务** | 按模块、按文件边界切任务 | **Planner-Worker** | 让任务变成可并行、可验证单元 |
+| **执行** | 把不同任务交给不同 Agent | **Router** + **Worktree** | 降低互相覆盖和上下文污染 |
+| **审查** | 用独立上下文审 diff 和 Spec | **Writer-Reviewer** | 降低确认偏误 |
+| **回环** | 测试失败就带证据回写 | **Evaluator-Optimizer** | 把“修 bug”变成闭环而不是猜测 |
 
-### 三个架构原则
+### 大代码库的固定策略
 
-这套组合之所以有效，核心在于三条原则：
+| 仓库规模 | 主要问题 | 推荐策略 |
+|---------|---------|---------|
+| **< 50 文件** | 全局理解成本低 | 单 Agent 即可 |
+| **50-500 文件** | 需要控制读入范围 | RAG + 明确入口文件 |
+| **500-5K 文件** | 模块边界复杂 | Planner-Worker + Writer-Reviewer |
+| **5K+ 文件** | 上下文严重不足 | Worktree 隔离 + 多 Agent 分模块执行 |
 
-| 原则 | 机制 | 效果 |
-|:---|---|---|
-| **上下文隔离** | 子 Agent 获得精心构造的上下文，而非继承主 Agent 会话历史 | Worker 专注、主 Agent 不被细节污染 |
-| **门禁（Gate）** | Brainstorm 未批准不进 Plan；Review 未通过回退 Execute；测试失败阻断 Finish | 每个阶段有明确的"通过/不通过"判定 |
-| **关注点分离** | 每个阶段有且只有一个职责——不在 Execute 时顺便 Review，不在 Plan 时直接写代码 | 与传统软件工程的"单一职责原则"一脉相承 |
+### 入口文件与边界文件
 
-> **🔑 核心洞察**：superpowers 证明了"Agent 设计模式可以像管道一样组合，构建出超越单一 Agent 能力上限的系统"。每种模式解决一类问题，组合起来覆盖完整的开发生命周期。
+大型项目里，不要让 Agent “自己想办法理解全仓库”。至少准备这些入口：
+
+1. `README.md`：项目目标、模块概览、启动方式。
+2. `AGENTS.md` / `CLAUDE.md`：规则、禁区、命令、常见坑。
+3. 入口路由或主程序：例如 `main.ts`、`app.tsx`、`server.ts`。
+4. 契约文件：OpenAPI、Schema、接口定义、测试夹具。
+
+### 一个缩短版案例
+
+社区里的 `superpowers` 工作流很适合作为“示意案例”，但它更像**组合范式的参考实现**，不是你必须完整照搬的七步法。真正该学的是三条原则：
+
+| 原则 | 解释 |
+|------|------|
+| **上下文隔离** | 子 Agent 接收精心构造的上下文，不继承主会话历史 |
+| **阶段门禁** | Plan 未确认不执行，Review 未通过不合并，测试未通过不宣称完成 |
+| **物理隔离** | 多个 Agent 尽量在不同分支 / Worktree 工作，减少互踩 |
+
+> 🔑 **核心洞察**：在大仓库里，模式不是“锦上添花”，而是让 Agent 不至于迷路的地图。
 
 ---
 
@@ -534,7 +541,7 @@ flowchart TB
 
 1. **从单模式开始**：先在项目中尝试一种模式（推荐从 Writer-Reviewer 入手），感受到效果后再组合
 2. **模式选择看任务**：参照第 3 节的矩阵和决策树，根据任务类型选择最匹配的模式
-3. **组合模式看流程**：当项目足够复杂时，参照 superpowers 的 7 阶段流程设计你自己的组合
+3. **组合模式看代码库规模**：仓库越大，越要依赖入口文件、Worktree 隔离和阶段门禁
 
 > **🎯 本章核心认知**：Agent 设计模式是 Harness Engineering 的核心工具箱。掌握了这些模式，你不再是"调 Prompt 的人"，而是"设计 Agent 系统的架构师"。
 
@@ -542,6 +549,6 @@ flowchart TB
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch10 人机协同方法论](./ch10-collaboration.md) | [➡️ 下一章：Ch12 AI Code Review](./ch12-code-review.md)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch10 驾驭 Agent：控制面与会话管理](./ch10-collaboration.md) | [➡️ 下一章：Ch12 质量保障与验收](./ch12-code-review.md)
 
 </div>
