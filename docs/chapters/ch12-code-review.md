@@ -4,6 +4,7 @@
 
 ## 📑 目录
 
+- [0. 一条最小交付链](#0-一条最小交付链)
 - [1. 🔍 为什么质量保障必须前移](#1--为什么质量保障必须前移)
 - [2. 🔄 Writer-Reviewer：双 Agent 审查工作流](#2--writer-reviewer双-agent-审查工作流)
 - [3. ✅ 验收标准与 Eval 设计](#3--验收标准与-eval-设计)
@@ -13,18 +14,32 @@
 
 ---
 
+> 📌 **章节职责**：Ch11 解释为什么要把“写、审、验收、护栏”拆开；本章只关注怎么把它们排成一条可执行、可复盘、可合并的交付链。
+
+## 0. 一条最小交付链
+
+先把本章压成 5 个动作看：
+
+1. 先写验收标准，不要写完代码再猜什么叫“完成”
+2. Writer 负责实现和自验证，不负责给自己打分
+3. Reviewer 只看 `diff + spec + 验收标准 + 验证结果`
+4. 自动化门禁负责挡掉低级错误，人类负责做最终裁决
+5. 只有“证据链完整”的改动，才进入 merge 决策
+
+如果你已经读过 Ch11，可以把本章理解成：**把 Writer-Reviewer、验收标准、CI 门禁、合并清单串成一条真实可执行的 PR 流水线。**
+
 ## 1. 🔍 为什么质量保障必须前移
 
 代码生成加速以后，真正变慢的通常不是“写代码”，而是“确认这段代码到底能不能进主干”。如果你只强化生成，不强化验证，瓶颈就会从开发阶段转移到审查与验收阶段。
 
 ```mermaid
-flowchart LR
-    classDef fast fill:#2d2d2d,stroke:#98c379
-    classDef slow fill:#2d2d2d,stroke:#e06c75
-    classDef neutral fill:#2d2d2d,stroke:#61dafb
+flowchart TD
+    classDef fast fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef slow fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef neutral fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    Write(["💻 Agent 生成代码"]):::fast
-    Verify(["🧪 验证与审查"]):::slow
+    Write["💻 Agent 生成代码"]:::fast
+    Verify["🧪 验证与审查"]:::slow
     Merge(["✅ 合并上线"]):::neutral
 
     Write --> Verify --> Merge
@@ -47,22 +62,22 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    classDef auto fill:#2d2d2d,stroke:#61dafb
-    classDef agent fill:#2d2d2d,stroke:#c678dd
-    classDef human fill:#2d2d2d,stroke:#e5c07b
+    classDef auto fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef agent fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef human fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
     PR(["📬 提交改动"]) --> L1 --> L2 --> L3 --> Done(["✅ 合并"])
 
     subgraph L1["Layer 1 · 自动化门禁"]
-        A1(["lint / typecheck / unit test"]):::auto
+        A1["lint / typecheck / unit test"]:::auto
     end
 
     subgraph L2["Layer 2 · Agent 审查"]
-        A2(["Reviewer Agent 审 diff / spec / 风险"]):::agent
+        A2["Reviewer Agent 审 diff / spec / 风险"]:::agent
     end
 
     subgraph L3["Layer 3 · 人工裁决"]
-        A3(["确认业务、架构、风险可接受"]):::human
+        A3["确认业务、架构、风险可接受"]:::human
     end
 ```
 
@@ -74,13 +89,13 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    classDef writer fill:#2d2d2d,stroke:#98c379
-    classDef reviewer fill:#2d2d2d,stroke:#e06c75
-    classDef human fill:#2d2d2d,stroke:#e5c07b
+    classDef writer fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef reviewer fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef human fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    Task(["📝 Spec / 任务"]) --> Writer(["✍️ Writer<br/>实现 + 跑验证"]):::writer
-    Writer --> Reviewer(["👁️ Reviewer<br/>独立上下文审查"]):::reviewer
-    Reviewer --> Human(["👤 人工裁决"]):::human
+    Task["📝 Spec / 任务"] --> Writer["✍️ Writer<br/>实现 + 跑验证"]:::writer
+    Writer --> Reviewer["👁️ Reviewer<br/>独立上下文审查"]:::reviewer
+    Reviewer --> Human["👤 人工裁决"]:::human
     Human --> Merge(["✅ 合并或打回"])
 ```
 

@@ -44,6 +44,12 @@
 <img src="./resources/figures/coding-agent-why-learn.png" alt="什么是 Coding Agent 与为什么要学习 Agent" width="960" />
 </div>
 
+### ✨ 一句话先讲透
+
+> **AI Agent 时代，手写代码的重要性在下降，定义问题和驾驭 Agent 的重要性在上升。**
+>
+> 真正拉开差距的，不是谁写得更快，而是谁更懂原理、需求和产品，能更精准提问、更高效编排管理 Agent。
+
 
 
 <a id="tutorial-contents"></a>
@@ -65,7 +71,7 @@
 <th width="36%">你会学到</th>
 <th width="10%" align="center">状态</th>
 </tr>
-<tr><td colspan="4"><strong>Part I · 🚀 起步篇</strong></td></tr>
+<tr><td colspan="4"><strong>Part I · 🧠 理论篇</strong></td></tr>
 <tr>
 <td align="center">1</td>
 <td><a href="./docs/chapters/ch01-quickstart.md">🚀 快速上手部署 Agent</a></td>
@@ -75,7 +81,7 @@
 <tr>
 <td align="center">2</td>
 <td><a href="./docs/chapters/ch02-concepts.md">🧩 Agent 核心原理</a></td>
-<td>Agent 四要素<br>TAO 循环<br>Memory · Tools · MCP</td>
+<td>LLM / Planning / Tools / Memory<br>运行闭环<br>失效机制</td>
 <td align="center">🔄</td>
 </tr>
 <tr><td colspan="4"><strong>Part II · 🎯 基础实战篇</strong></td></tr>
@@ -83,12 +89,6 @@
 <td align="center">4</td>
 <td><a href="./docs/chapters/ch04-first-practice.md">🎮 你的第一批实战</a></td>
 <td>Plan→Act · 理解仓库<br>Fix Bug · 写测试<br>CRUD · Git</td>
-<td align="center">🔄</td>
-</tr>
-<tr>
-<td align="center">5</td>
-<td><a href="./docs/chapters/ch05-agent-mechanics.md">🔧 Agent 内部机制与工具体系</a></td>
-<td>Agent 循环<br>五类工具<br>Session 与 Context</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
@@ -149,9 +149,6 @@
 </tr>
 </table>
 
-<details>
-<summary><strong>Part VI · 🔭 趋势与展望 &nbsp; Part VII · 🧬 从零构建 Agent</strong></summary>
-
 <table width="100%">
 <tr>
 <th width="6%" align="center">#</th>
@@ -174,8 +171,6 @@
 <td align="center">📝 规划中</td>
 </tr>
 </table>
-
-</details>
 
 </td>
 <td width="45%" valign="top">
@@ -244,24 +239,27 @@
 | [🔄 Prompt→Harness](./docs/topics/topic-prompt-to-harness.md) | 演进案例 |
 
 <details>
-<summary><strong>展开更多专题（安全与质量 · 对比与视野）</strong></summary>
+<summary><strong>🧩 更多专题（安全与质量 · 对比与视野）</strong></summary>
+<br />
 
-**🛡️ 安全与质量**
+<strong>🛡️ 安全与质量</strong>
 
-| 专题 | 简介 |
-|------|------|
-| [🤥 AI 幻觉避坑](./docs/topics/topic-ai-hallucination.md) | 检测与防御 |
-| [🔒 安全权限合规](./docs/topics/topic-security.md) | 最小权限 · Agent 治理 |
-| [🤝 人机协同详解](./docs/topics/topic-human-agent-collab.md) | 深度协作方法论 |
+<table width="100%">
+<tr><th align="left">专题</th><th align="left">简介</th></tr>
+<tr><td><a href="./docs/topics/topic-ai-hallucination.md">🤥 AI 幻觉避坑</a></td><td>检测与防御</td></tr>
+<tr><td><a href="./docs/topics/topic-security.md">🔒 安全权限合规</a></td><td>最小权限 · Agent 治理</td></tr>
+<tr><td><a href="./docs/topics/topic-human-agent-collab.md">🤝 人机协同详解</a></td><td>深度协作方法论</td></tr>
+</table>
 
-**🔭 对比与视野**
+<strong>🔭 对比与视野</strong>
 
-| 专题 | 简介 |
-|------|------|
-| [⚔️ Agent vs Claw](./docs/topics/topic-agent-vs-claw.md) | 两种范式对比 |
-| [🔬 Agent-LLM 交互内幕](./docs/topics/topic-agent-llm-internals.md) | API 调用结构 · Agentic Loop |
-| [📜 技术演进六阶段](./docs/topics/topic-agent-evolution.md) | 从 LLM 到 Agent OS |
-| [📅 产品时间线](./docs/topics/topic-product-timeline.md) | 2020-2026 完整里程碑 |
+<table width="100%">
+<tr><th align="left">专题</th><th align="left">简介</th></tr>
+<tr><td><a href="./docs/topics/topic-agent-vs-claw.md">⚔️ Agent vs Claw</a></td><td>两种范式对比</td></tr>
+<tr><td><a href="./docs/topics/topic-agent-llm-internals.md">🔬 Agent-LLM 交互内幕</a></td><td>API 调用结构 · Agentic Loop</td></tr>
+<tr><td><a href="./docs/topics/topic-agent-evolution.md">📜 技术演进六阶段</a></td><td>从 LLM 到 Agent OS</td></tr>
+<tr><td><a href="./docs/topics/topic-product-timeline.md">📅 产品时间线</a></td><td>2020-2026 完整里程碑</td></tr>
+</table>
 
 </details>
 
@@ -525,7 +523,7 @@
 ### 🗺️ 推荐阅读路线
 
 #### 👨‍💻 程序员 / 软件工程师
-Ch01 → Ch02 → Ch04 → Part II 全部（Ch05-08）
+Ch01 → Ch02 → Ch04 → Ch06-08
 → Ch09 工程化工作流 → Ch10 驾驭 Agent → Part IV Skill/MCP 专题
 → Part V 进阶实战
 
@@ -534,7 +532,7 @@ Ch01 → Ch02（术语不熟时查「术语速查手册」专题）→ Ch04 → 
 → Ch09 工程化工作流 → Ch12 质量保障与验收 → Part VI 趋势与展望
 
 #### 🌱 零基础 / 非开发者
-Ch01 → Ch02（建议同时打开 **术语速查手册** 专题）→ Ch04 → Part II 全部（Ch05-08）
+Ch01 → Ch02（建议同时打开 **术语速查手册** 专题）→ Ch04 → Ch06-08
 → Ch09 工程化工作流 → Ch10 驾驭 Agent → Part V 进阶实战
 
 ---

@@ -19,6 +19,11 @@
 
 ---
 
+> ✅ **读完本章你手上应该有三样东西**：
+> 1. 一份可以长期复用的 `CLAUDE.md`
+> 2. 一组 Agent 能直接执行的验证命令
+> 3. 一条从“发现问题”到“验证修复”的最小闭环
+
 ## 实验 A：初始化 CLAUDE.md 并理解代码仓
 
 > 🎯 场景：你刚 clone 了一个项目（自己的或开源的），想让 Agent 快速建立对项目的全面理解，并把关键信息固化下来供后续会话复用。
@@ -486,6 +491,6 @@ flowchart TB
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch05 Agent 内部机制](./ch05-agent-mechanics.md) | [➡️ 下一章：Ch07 规划与 Prompt 工程](./ch07-plan-prompt.md)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch04 第一批实战](./ch04-first-practice.md) | [➡️ 下一章：Ch07 规划与 Prompt 工程](./ch07-plan-prompt.md)
 
 </div>

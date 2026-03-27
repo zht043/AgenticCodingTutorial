@@ -1,6 +1,6 @@
 # Chapter 9 · 🏗️ 工程化工作流
 
-> 🎯 **目标**：系统了解 Agent 在软件开发全生命周期中能介入哪些环节、擅长什么、不擅长什么，以及如何用 Spec、任务拆解和验证闭环把工作流工程化。即使你没有编程经验，读完本章也能理解软件开发的基本流程和 Agent 的角色。
+> 🎯 **目标**：把 Ch04-Ch08 学到的碎片方法，收束成一条从 Spec 到 Merge 的工程化工作流。你可以把本章当成“真实项目里，Agent 到底该在哪些环节介入、介入到什么深度”的总装图。
 
 ## 📑 目录
 
@@ -12,6 +12,8 @@
 
 ---
 
+> 📌 **贯穿案例**：阅读时默认想象一个正在维护的 Web 应用，你要为它新增“用户注册 + 验证 + 审查上线”这条功能链。本章每一节都在回答这条链上的一个工程问题。
+
 ## 1. 🏗️ 软件开发全流程概览
 
 > 💡 **写给零基础读者**：如果你已经熟悉软件开发流程，可以直接跳到第 2 节。
@@ -19,7 +21,7 @@
 软件开发不是"坐下来就写代码"——它是一个有明确阶段和质量检查的工程流程。每个阶段都有特定的目标、产出和检查点。理解这个流程，才能理解 Agent 在哪些环节能帮上忙、哪些环节必须你亲自把关。
 
 ```mermaid
-flowchart LR
+flowchart TD
     classDef plan fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
     classDef build fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
     classDef verify fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
