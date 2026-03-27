@@ -663,14 +663,14 @@ flowchart TB
 - ✅ 你知道怎么验证 Agent 的输出
 - ✅ 你开始积累自己的 `CLAUDE.md`
 
-接下来，建议直接回到更完整的理论主线和验证型实战：`Ch02` 已经吸收了原先关于 Agent 运行机制、工具体系与上下文衰减的讲解，后续你可以直接进入 `Ch06`，把这些认知变成可复用的工作流。
+接下来，建议直接回到更完整的理论主线和验证型实战：`Ch02` 已经吸收了原先关于 Agent 运行机制、工具体系与上下文衰减的讲解，后续你可以直接进入 `Ch05`，把这些认知变成可复用的工作流。
 
-👉 下一章：[Chapter 6 · 代码探索与验证驱动](./ch06-explore-verify.md)
+👉 下一章：[Chapter 5 · 代码探索与验证驱动](./ch05-explore-verify.md)
 
 ---
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch02 Agent 核心原理](./ch02-concepts.md) | [➡️ 下一章：Ch06 代码探索与验证驱动](./ch06-explore-verify.md)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch02 Agent 核心原理](./ch02-concepts.md) | [➡️ 下一章：Ch05 代码探索与验证驱动](./ch05-explore-verify.md)
 
 </div>

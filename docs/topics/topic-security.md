@@ -490,7 +490,7 @@ Claude Code Analytics API 可按用户/日期返回会话、代码行数、提�
 ---
 
 相关阅读：[多 Agent 组合专题](./topic-multi-agent.md)
-相关阅读：[Chapter 12 - 质量保障与验收](../chapters/ch12-code-review.md)
+相关阅读：[Chapter 11 - 质量保障与验收](../chapters/ch11-code-review.md)
 
 ---
 

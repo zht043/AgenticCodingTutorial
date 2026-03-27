@@ -546,7 +546,7 @@ flowchart TB
 
 ---
 
-> 相关阅读：[安全权限合规专题](./topic-security.md) | [多 Agent 协作专题](./topic-multi-agent.md) | [设计模式详解](./topic-design-patterns-detail.md)
+> 相关阅读：[安全权限合规专题](./topic-security.md) | [多 Agent 协作专题](./topic-multi-agent.md) | [Ch10 · Agent 设计模式与代码库策略](../chapters/ch10-design-patterns.md)
 
 ---
 

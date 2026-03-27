@@ -325,9 +325,9 @@ flowchart TB
 ---
 
 > 📖 相关内容：
-> - 多 Agent 的设计模式细节 → [设计模式详解](./topic-design-patterns-detail.md)
+> - 多 Agent 的设计模式细节 → [Ch10 · Agent 设计模式与代码库策略](../chapters/ch10-design-patterns.md)
 > - 多 Agent 的上下文管理 → [上下文工程](./topic-context-engineering.md)
-> - Swarm vs Team 架构对比 → [Swarm vs Team](./topic-swarm-vs-team.md)
+> - Swarm vs Team 的组织权衡 → [Ch10 · Agent 设计模式与代码库策略](../chapters/ch10-design-patterns.md)
 
 ---
 

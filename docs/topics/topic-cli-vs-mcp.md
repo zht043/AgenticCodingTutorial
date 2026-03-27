@@ -127,7 +127,7 @@ flowchart TB
 
 ---
 
-> 📖 **相关章节**：[🔌 MCP 协议专题](./topic-mcp.md) · [📝 Skill 系统专题](./topic-skills.md) · [🪝 Hooks 专题](./topic-hooks.md)
+> 📖 **相关章节**：[🔌 MCP 协议专题](./topic-mcp.md) · [📝 Skill 系统专题](./topic-skills.md) · [Ch07 · 扩展生态与会话管理](../chapters/ch07-config-session.md)
 
 ---
 

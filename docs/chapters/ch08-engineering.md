@@ -1,6 +1,6 @@
-# Chapter 9 · 🏗️ 工程化工作流
+# Chapter 8 · 🏗️ 工程化工作流
 
-> 🎯 **目标**：把 Ch04-Ch08 学到的碎片方法，收束成一条从 Spec 到 Merge 的工程化工作流。你可以把本章当成“真实项目里，Agent 到底该在哪些环节介入、介入到什么深度”的总装图。
+> 🎯 **目标**：把 Ch04-Ch07 学到的碎片方法，收束成一条从 Spec 到 Merge 的工程化工作流。你可以把本章当成“真实项目里，Agent 到底该在哪些环节介入、介入到什么深度”的总装图。
 
 ## 📑 目录
 
@@ -489,6 +489,6 @@ flowchart LR
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch08 扩展生态与会话管理](./ch08-config-session.md) | [➡️ 下一章：Ch10 驾驭 Agent：控制面与会话管理](./ch10-collaboration.md)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch07 扩展生态与会话管理](./ch07-config-session.md) | [➡️ 下一章：Ch09 驾驭 Agent：控制面与会话管理](./ch09-collaboration.md)
 
 </div>

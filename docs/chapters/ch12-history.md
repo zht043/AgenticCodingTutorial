@@ -1,4 +1,4 @@
-# Chapter 13 · 📜 技术简史与当前定位
+# Chapter 12 · 📜 技术简史与当前定位
 
 > 🎯 **目标**：把 Agent 放回完整技术史里看，理解它为什么不是“突然出现的新物种”，而是程序合成、IDE 智能辅助、LLM、推理、工具调用、评测基准、系统工程化一路叠加的结果。本章会比前几章更像“收束章”：不是导购，不是热点点评，而是帮你建立一条足够稳定的历史主线。
 
@@ -609,9 +609,9 @@ flowchart TD
 读完整条历史线，再回看本教程前面的内容，你会更清楚：
 
 - 为什么我们反复强调**先探索上下文，再动手改代码**
-- 为什么 `Ch06` 和 `Ch12` 会不断强调**验证、审查、验收**
-- 为什么 `Ch07`、`Ch08`、`Ch11` 会强调**prompt、session、memory、design pattern**
-- 为什么 `Ch09`、`Ch10` 会强调**工程化协作与权限边界**
+- 为什么 `Ch05` 和 `Ch11` 会不断强调**验证、审查、验收**
+- 为什么 `Ch06`、`Ch07`、`Ch10` 会强调**prompt、session、memory、design pattern**
+- 为什么 `Ch08`、`Ch09` 会强调**工程化协作与权限边界**
 
 因为今天有效的 Agent 用法，本质上就是对这条技术史做出的工程回应。
 
@@ -773,6 +773,6 @@ flowchart TD
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch12 质量保障与验收](./ch12-code-review.md) | [➡️ 下一章：Part IV 进阶专题](../topics/)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch11 质量保障与验收](./ch11-code-review.md) | [➡️ 下一章：Part IV 进阶专题](../topics/)
 
 </div>

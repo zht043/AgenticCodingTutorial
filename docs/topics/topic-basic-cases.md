@@ -1,4 +1,4 @@
-# Chapter 6 · Agent 基础实战案例
+# Agent 基础实战案例
 
 > 目标：通过一系列真实场景案例，掌握 Agent 在日常开发中的基础用法。本章以 [zht043/AgentSkills](https://github.com/zht043/AgentSkills) 和 [obra/superpowers](https://github.com/obra/superpowers) 两个开源项目为实战案例，边学边练。
 

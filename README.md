@@ -84,6 +84,12 @@
 <td>LLM / Planning / Tools / Memory<br>运行闭环<br>失效机制</td>
 <td align="center">🔄</td>
 </tr>
+<tr>
+<td align="center">3</td>
+<td><a href="./docs/chapters/ch03-glossary.md">📖 术语速查手册</a></td>
+<td>LLM · Prompt · Context<br>Token · Agent · API</td>
+<td align="center">🔄</td>
+</tr>
 <tr><td colspan="4"><strong>Part II · 🎯 基础实战篇</strong></td></tr>
 <tr>
 <td align="center">4</td>
@@ -92,51 +98,51 @@
 <td align="center">🔄</td>
 </tr>
 <tr>
-<td align="center">6</td>
-<td><a href="./docs/chapters/ch06-explore-verify.md">🔍 代码探索与验证驱动</a></td>
+<td align="center">5</td>
+<td><a href="./docs/chapters/ch05-explore-verify.md">🔍 代码探索与验证驱动</a></td>
 <td>init CLAUDE.md<br>测试驱动 · Bug 修复<br>截图验证</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
-<td align="center">7</td>
-<td><a href="./docs/chapters/ch07-plan-prompt.md">📋 规划优先与 Prompt 工程</a></td>
+<td align="center">6</td>
+<td><a href="./docs/chapters/ch06-plan-prompt.md">📋 规划优先与 Prompt 工程</a></td>
 <td>探索→规划→编码<br>Prompt 约束技巧<br>@引用</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
-<td align="center">8</td>
-<td><a href="./docs/chapters/ch08-config-session.md">⚙️ 扩展生态与会话管理</a></td>
+<td align="center">7</td>
+<td><a href="./docs/chapters/ch07-config-session.md">⚙️ 扩展生态与会话管理</a></td>
 <td>权限<br>MCP · Skills · Plugins<br>clear/compact/resume</td>
 <td align="center">🔄</td>
 </tr>
 <tr><td colspan="4"><strong>Part III · ⚙️ 方法论与认知篇</strong></td></tr>
 <tr>
-<td align="center">9</td>
-<td><a href="./docs/chapters/ch09-engineering.md">🏗️ 工程化工作流</a></td>
+<td align="center">8</td>
+<td><a href="./docs/chapters/ch08-engineering.md">🏗️ 工程化工作流</a></td>
 <td>生命周期 · 介入矩阵<br>SDD · 任务分解 · 验证闭环</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
-<td align="center">10</td>
-<td><a href="./docs/chapters/ch10-collaboration.md">🎛️ 驾驭 Agent：控制面与会话管理</a></td>
+<td align="center">9</td>
+<td><a href="./docs/chapters/ch09-collaboration.md">🎛️ 驾驭 Agent：控制面与会话管理</a></td>
 <td>Harness · 上下文 · Prompt<br>会话生命周期 · Token · 成熟度</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
-<td align="center">11</td>
-<td><a href="./docs/chapters/ch11-design-patterns.md">🧬 Agent 设计模式</a></td>
+<td align="center">10</td>
+<td><a href="./docs/chapters/ch10-design-patterns.md">🧬 Agent 设计模式</a></td>
 <td>Router · Evaluator · Planner-Worker<br>大型代码库策略 · Worktree · 安全护栏</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
-<td align="center">12</td>
-<td><a href="./docs/chapters/ch12-code-review.md">✅ 质量保障与验收</a></td>
+<td align="center">11</td>
+<td><a href="./docs/chapters/ch11-code-review.md">✅ 质量保障与验收</a></td>
 <td>Writer-Reviewer · 测试策略<br>验收 / Eval · CI · Merge 前清单</td>
 <td align="center">🔄</td>
 </tr>
 <tr>
-<td align="center">13</td>
-<td><a href="./docs/chapters/ch13-history.md">📜 技术简史与当前定位</a></td>
+<td align="center">12</td>
+<td><a href="./docs/chapters/ch12-history.md">📜 技术简史与当前定位</a></td>
 <td>六阶段演进 · 关键拐点<br>产品形态 · 能力边界</td>
 <td align="center">🔄</td>
 </tr>
@@ -166,7 +172,7 @@
 <tr><td colspan="4"><strong>Part VII · 🧬 从零构建你自己的 Agent</strong> <a id="part-vii-build-agent"></a></td></tr>
 <tr>
 <td align="center">—</td>
-<td>🧬 Nano Agent 从零实现</td>
+<td><a href="./docs/topics/topic-build-agent.md">🧬 Nano Agent 从零实现</a></td>
 <td>ReAct 循环实现<br>工具调用机制<br>Memory 设计</td>
 <td align="center">📝 规划中</td>
 </tr>
@@ -194,18 +200,14 @@
 | [🤖 Agent 工具横评](./docs/topics/topic-agent-tools-comparison.md) | 国际/国产/开源工具全面对比 |
 | [🧠 模型横评](./docs/topics/topic-model-comparison.md) | 主流 Coding 模型对比与选型 |
 | [📊 评测体系](./docs/topics/topic-benchmarks.md) | Benchmark 怎么读、怎么用 |
-| [🤖 Agent vs 代码补全](./docs/topics/topic-agent-vs-completion.md) | 和 Copilot 有什么本质区别 |
-| [💰 API vs 订阅制](./docs/topics/topic-api-vs-subscription.md) | 怎么买最划算 |
 
 **🧠 核心技术原理**
 
 | 专题 | 简介 |
 |------|------|
-| [⚡ Prompt Cache](./docs/topics/topic-prompt-cache.md) | 机制与优化策略 |
 | [🧠 LLM 推理与 Agent](./docs/topics/topic-llm-reasoning-and-agent.md) | CoT/Reasoning 如何影响 Agent |
-| [🧩 上下文工程](./docs/topics/topic-context-engineering.md) | WSCI 框架 · 上下文腐烂 |
+| [🧩 上下文工程](./docs/topics/topic-context-engineering.md) | WSCI 框架 · 上下文腐烂 · 前缀稳定性 |
 | [🧠 Agent 记忆系统](./docs/topics/topic-memory-system.md) | 短期/长期记忆 · Agentic RAG |
-| [🎨 多模态应用](./docs/topics/topic-multimodal.md) | 图片/截图/PDF 的应用 |
 | [🧠 大模型幻觉问题](./docs/topics/topic-llm-hallucination.md) | 成因与缓解策略 |
 
 **🔧 工具生态深入**
@@ -214,7 +216,6 @@
 |------|------|
 | [📝 Skill 系统](./docs/topics/topic-skills.md) | 完整指南 · 5 种设计模式 |
 | [🔌 MCP 协议](./docs/topics/topic-mcp.md) | MCP 完整指南 |
-| [🪝 Hooks](./docs/topics/topic-hooks.md) | Claude Code Hooks 机制 |
 | [⚖️ CLI vs MCP](./docs/topics/topic-cli-vs-mcp.md) | 何时用 Shell 何时用 MCP |
 | [📁 .claude 文件夹解析](./docs/topics/topic-claude-folder.md) | CLAUDE.md · rules · settings.json |
 
@@ -222,10 +223,8 @@
 
 | 专题 | 简介 |
 |------|------|
-| [🧬 设计模式详解](./docs/topics/topic-design-patterns-detail.md) | 架构图 + 伪代码 + 完整实现 |
 | [👥 多 Agent 组合](./docs/topics/topic-multi-agent.md) | Orchestrator · 上下文隔离 |
-| [🐝 Swarm vs Team](./docs/topics/topic-swarm-vs-team.md) | 去中心化 vs 有协调者 |
-| [🆚 Agent vs NoCode](./docs/topics/topic-agent-vs-nocode.md) | Agent 与 ComfyUI/Diffy 等的区别 |
+| [⚔️ Agent vs Claw](./docs/topics/topic-agent-vs-claw.md) | 两种范式对比 |
 
 **📐 方法论深入**
 
@@ -246,7 +245,7 @@
 
 <table width="100%">
 <tr><th align="left">专题</th><th align="left">简介</th></tr>
-<tr><td><a href="./docs/topics/topic-ai-hallucination.md">🤥 AI 幻觉避坑</a></td><td>检测与防御</td></tr>
+<tr><td><a href="./docs/topics/topic-llm-hallucination.md">🧠 大模型幻觉问题</a></td><td>成因、分类与缓解策略</td></tr>
 <tr><td><a href="./docs/topics/topic-security.md">🔒 安全权限合规</a></td><td>最小权限 · Agent 治理</td></tr>
 <tr><td><a href="./docs/topics/topic-human-agent-collab.md">🤝 人机协同详解</a></td><td>深度协作方法论</td></tr>
 </table>
@@ -301,7 +300,7 @@
 - **② 配置模型访问**：要么在 Agent 前端登录已购买订阅 Plan 的账户（如 Claude Pro、GPT Plus、Cursor Pro），要么在配置里填入官方或第三方购买的模型 API 的 base URL 和 API Key，即可接入任意支持的模型。
 - **③ 跑通第一个任务**：打开项目目录，启动 Agent，开始对话。
 
-> 📖 完整安装与配置流程 → [🚀 快速上手部署 Agent（第一章）](./docs/chapters/ch01-quickstart.md) · [API vs 订阅制](./docs/topics/topic-api-vs-subscription.md)
+> 📖 完整安装与配置流程 → [🚀 快速上手部署 Agent（第一章）](./docs/chapters/ch01-quickstart.md) · [🤖 Agent 工具横评](./docs/topics/topic-agent-tools-comparison.md) · [🧠 模型横评](./docs/topics/topic-model-comparison.md)
 
 ---
 
@@ -523,17 +522,17 @@
 ### 🗺️ 推荐阅读路线
 
 #### 👨‍💻 程序员 / 软件工程师
-Ch01 → Ch02 → Ch04 → Ch06-08
-→ Ch09 工程化工作流 → Ch10 驾驭 Agent → Part IV Skill/MCP 专题
+Ch01 → Ch02 → Ch04 → Ch05-07
+→ Ch08 工程化工作流 → Ch09 驾驭 Agent → Part IV Skill/MCP 专题
 → Part V 进阶实战
 
 #### 📊 产品经理 / 技术管理者
-Ch01 → Ch02（术语不熟时查「术语速查手册」专题）→ Ch04 → Ch13 技术简史与定位 → Ch11 设计模式
-→ Ch09 工程化工作流 → Ch12 质量保障与验收 → Part VI 趋势与展望
+Ch01 → Ch02（术语不熟时查「术语速查手册」专题）→ Ch04 → Ch12 技术简史与定位 → Ch10 设计模式
+→ Ch08 工程化工作流 → Ch11 质量保障与验收 → Part VI 趋势与展望
 
 #### 🌱 零基础 / 非开发者
-Ch01 → Ch02（建议同时打开 **术语速查手册** 专题）→ Ch04 → Ch06-08
-→ Ch09 工程化工作流 → Ch10 驾驭 Agent → Part V 进阶实战
+Ch01 → Ch02（建议同时打开 **术语速查手册** 专题）→ Ch04 → Ch05-07
+→ Ch08 工程化工作流 → Ch09 驾驭 Agent → Part V 进阶实战
 
 ---
 
