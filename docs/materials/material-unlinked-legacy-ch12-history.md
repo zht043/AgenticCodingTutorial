@@ -773,6 +773,6 @@ flowchart TD
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch11 质量保障与验收](./ch11-code-review.md) | [➡️ 下一章：Part IV 进阶专题](../topics/)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch11 质量保障与验收](./ch21-quality-assurance-review-eval.md) | [➡️ 下一章：Part IV 进阶专题](../../README.md#tutorial-contents)
 
 </div>

@@ -502,6 +502,6 @@ flowchart TB
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch04 第一批实战](./ch04-first-practice.md) | [➡️ 下一章：Ch06 规划与 Prompt 工程](./ch06-plan-prompt.md)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch04 第一批实战](./ch02-agent-first-practice.md) | [➡️ 下一章：Ch06 规划与 Prompt 工程](./ch10-planning.md)
 
 </div>

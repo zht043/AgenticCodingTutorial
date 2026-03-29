@@ -85,7 +85,7 @@ LangChain 团队的编码 Agent 优化实验给出了最有力的证据：
 
 Ch02 讲过"上下文 ≠ 越多越好"。本节进入实操层面：**如何精确控制 Agent 看到什么、记住什么、忘掉什么。**
 
-> 📖 **延伸阅读**：想把“上下文到底是什么、为什么顺序和前缀稳定性会改变效果上限”继续讲透，去看 [上下文工程](../topics/topic-context-engineering.md)；想把记忆分层、Tool Use 和 Harness 的关系补齐，再看 [Agent 记忆系统](../topics/topic-memory-system.md)。
+> 📖 **延伸阅读**：想把“上下文到底是什么、为什么顺序和前缀稳定性会改变效果上限”继续讲透，去看 [上下文工程](./ch11-memory-context-harness.md)；想把记忆分层、Tool Use 和 Harness 的关系补齐，再看 [Agent 记忆系统](./ch11-memory-context-harness.md)。
 
 ### 上下文是 Agent 的第一资源
 
@@ -672,12 +672,12 @@ flowchart TD
 > 🔑 **理解你的代码** — Agent 是执行者，你是负责人。无论 Agent 生成多快多好，你必须理解核心逻辑，否则"理解债务"会在某天把你淹没。
 
 > 📖 深度参考：
-> - [附录：人机协同与 Agent 优化指南](../topics/topic-human-agent-collab.md)（Harness 六层架构、Token 节约详解、大型项目策略、Agent Team 互审）
+> - [附录：人机协同与 Agent 优化指南](./ch11-memory-context-harness.md)（Harness 六层架构、Token 节约详解、大型项目策略、Agent Team 互审）
 
 ---
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch08 工程化工作流](./ch08-engineering.md) | [➡️ 下一章：Ch10 Agent 设计模式](./ch10-design-patterns.md)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch08 工程化工作流](./ch19-engineering-workflow.md) | [➡️ 下一章：Ch10 Agent 设计模式](./ch18-agent-patterns.md)
 
 </div>

@@ -575,6 +575,6 @@ flowchart TB
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch09 驾驭 Agent：控制面与会话管理](./ch09-collaboration.md) | [➡️ 下一章：Ch11 质量保障与验收](./ch11-code-review.md)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch09 驾驭 Agent：控制面与会话管理](./ch11-memory-context-harness.md) | [➡️ 下一章：Ch11 质量保障与验收](./ch21-quality-assurance-review-eval.md)
 
 </div>

@@ -1,6 +1,6 @@
-# Chapter 2 · 🧩 Agent 核心原理
+# Chapter 8 · 🧩 Agent = Model + Harness = LLM + Planning + Memory + Tools
 
-> 目标：建立一套更完整、也更工程化的 Agent 心智模型。读完这一章，你应该能同时回答这些问题：Agent 和普通 LLM 到底差在哪？它为什么能“自己干活”？`LLM / Planning / Tools / Memory / Harness` 各自负责什么？这套闭环在运行时怎么转？为什么很多系统会继续走向 `Multi-Agent`？它为什么会在长任务里变蠢？作为使用者你该怎么应对？
+> 目标：把 Agent 拆回最关键的那几层：模型本体、规划、记忆、工具，以及把这些东西真正组织起来的 Harness。读完这一章，你应该能从系统视角理解 Agent 为什么会有上限、为什么会失控、又为什么很多问题其实不在模型本身。
 
 ## 目录
 
@@ -16,12 +16,12 @@
 - [⚠️ 9. 失效模式与恢复动作](#ch2-sec-9)
 - [📝 本章总结](#ch2-sec-summary)
 
-> 📖 **阅读方式建议**：如果你对 `LLM / Context / Token / MCP / Skill / Harness` 这些词还不熟，可以把 [术语速查手册](./ch03-glossary.md) 另开一页，边读边查；本章主线已经尽量自洽，不要求你先把术语全背下来。
+> 📖 **阅读方式建议**：如果你对 `LLM / Context / Token / MCP / Skill / Harness` 这些词还不熟，可以把 [基础概念与术语](./ch06-glossary.md) 另开一页，边读边查；本章主线已经尽量自洽，不要求你先把术语全背下来。
 >
-> 🧠 **想深入理解原理**：本章先讲主线；如果你想把底层机制继续挖深，可以配合这三篇专题一起读：
-> - [🧠 LLM 推理与 Agent](../topics/topic-llm-reasoning-and-agent.md)
-> - [🧩 上下文工程](../topics/topic-context-engineering.md)
-> - [💾 Agent 记忆系统](../topics/topic-memory-system.md)
+> 🧠 **想深入理解原理**：本章先讲总公式；如果你想把底层机制继续拆开读，推荐直接接着看：
+> - [🧠 LLM 推理基础](./ch09-llm-reasoning-basics.md)
+> - [💾 Memory](./ch11-memory-context-harness.md)
+> - [🛠️ Tools](./ch12-tools.md)
 
 ---
 
@@ -263,7 +263,7 @@ flowchart LR
     classDef ctrl fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
     classDef mem fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 
-    subgraph H["🧰 Harness / Control Plane"]:::shell
+    subgraph H["🧰 Harness / Control Plane"]
         C["🧱 Context Assembly"]:::ctrl
         P["📋 Planning Gates"]:::ctrl
         T["🔧 Tool Orchestration"]:::ctrl
@@ -581,7 +581,7 @@ flowchart LR
 
 > 🧪 **很多工具稳定性问题，根本不是采样参数问题，而是接口设计和执行护栏问题。**
 
-### 5.4 工具链怎么分层：固定工具链、自主选工具、MCP、Skill、Hook、Plugin
+### 5.4 工具链怎么分层：固定工具链、自主选工具、MCP、Skill、Hook、Plugin、Command
 
 先看两种常见系统设计：
 
@@ -598,6 +598,7 @@ flowchart LR
 | `连接层` | `MCP` | 工具和资源如何被标准化接入 |
 | `方法层` | `Skill` | 某类任务该按什么流程做更稳 |
 | `自动化层` | `Hook` | 哪些动作应在特定时机自动触发 |
+| `入口层` | `Command` | 哪些常用工作流值得给用户一个显式手动入口 |
 | `打包层` | `Plugin` | 如何把多种能力作为一个可安装单元分发 |
 
 对 Coding Agent 来说，最常见的运行时工具也大多能压成五类：
@@ -1024,12 +1025,11 @@ Multi-Agent 很强，但绝对不是默认答案。
 
 ### 如果你还想继续往下学
 
-- 📘 遇到术语卡壳时，随时打开：[术语速查手册](./ch03-glossary.md)
-- 🧠 想看更细的底层交互机制和伪代码：[Agent 与 LLM 的交互内幕](../topics/topic-agent-llm-internals.md)
-- 🧩 想继续深挖上下文问题：[上下文工程深入](../topics/topic-context-engineering.md)
-- 🚑 想系统看失败与恢复：[失败模式与恢复术](../topics/topic-failure-modes.md)
-- 💾 想继续深挖 Memory：[Memory 与上下文工程详解](../topics/topic-memory-system.md)
-- 🔌 想理解扩展机制的深水区：[MCP 协议](../topics/topic-mcp.md) / [Skill 系统](../topics/topic-skills.md) / [Ch07 · 扩展生态与会话管理](./ch07-config-session.md)
+- 📘 遇到术语卡壳时，随时打开：[基础概念与术语](./ch06-glossary.md)
+- 🧠 想继续理解模型为什么会“像在推理”：继续看 [LLM 推理基础](./ch09-llm-reasoning-basics.md)
+- 💾 想把状态管理和上下文问题讲透：继续看 [Memory](./ch11-memory-context-harness.md)
+- 🛠️ 想把 Tool Use、MCP、Skill、Hook、Plugin、Command 分开看清：继续看 [Tools](./ch12-tools.md)、[配置使用第一个](./ch03-first-extension-setup.md) 和后面的四个专题章节
+- 🚑 想从“会解释原理”走向“会减少跑偏”：继续看 [Agent 错误用法](./ch17-agent-failure-modes.md) 和 [质量保障与验收](./ch21-quality-assurance-review-eval.md)
 
 ### 参考资料
 
@@ -1039,6 +1039,28 @@ Multi-Agent 很强，但绝对不是默认答案。
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch01 快速上手](./ch01-quickstart.md) | [➡️ 下一章：Ch04 第一批实战](./ch04-first-practice.md)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch07 从 LLM 到 Agent](./ch07-llm-to-agent.md) | [➡️ 下一章：Ch09 LLM 推理基础](./ch09-llm-reasoning-basics.md)
 
 </div>
+
+---
+
+## 📎 保留原文与延伸材料
+
+> ⚠️ **阅读提示**：下面这部分是 `main` 分支原 Chapter 2 的整篇留档，用来保证本轮迁移“不丢原文”。它不是当前推荐阅读主线，也保留了旧章节体系和旧链接语境。正常阅读请以前半部分的新正文为准，只在需要逐段对照或回收原句时再展开。
+
+这章已经在新结构里被重排过一轮。为了避免后续裁剪时丢掉原始内容，这里把 main 分支原 Chapter 2 整体保留下来。
+
+<details>
+<summary>⚠️ 留档：main 分支原 Chapter 2（已移出本章正文）</summary>
+
+完整原文已转存到：
+
+- `docs/materials/material-unlinked-main-ch02-original.md`
+
+这样做是为了同时满足两件事：
+
+1. 不丢 main 分支原文
+2. 不让同一公开章节里同时出现两套完整目录和两套叙事结构
+
+</details>

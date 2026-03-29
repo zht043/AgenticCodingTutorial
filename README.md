@@ -1,7 +1,6 @@
 <div align="center">
 
-
-<h1>面向Agent编程</h1>
+<h1>面向 Agent 编程</h1>
 
 <p>
   <a href="https://creativecommons.org/licenses/by-sa/4.0/">
@@ -12,28 +11,22 @@
   </a>
   <img src="https://img.shields.io/badge/Last%20Updated-2026.03-blue" alt="Last Updated 2026.03" />
   <img src="https://img.shields.io/badge/语言-中文-red" alt="Language: 中文" />
-  <img src="https://img.shields.io/badge/Status-Active%20Development-orange" alt="Status: Active Development" />
+  <img src="https://img.shields.io/badge/Status-Restructuring-orange" alt="Status: Restructuring" />
 </p>
 
 <blockquote>
 
-🏗️ 重度实战踩坑：3 个月投入至少 2k RMB，做过大型项目分析与旧代码重构，深度尝试多种Agent和模型  
+🏗️ 重度实战踩坑：长期在真实项目里尝试多种 Coding Agent 与模型  
 🎯 面向新手转型：帮助你告别「古法写码」，建立 AI 时代的开发方式  
-⭐ 欢迎支持：教程制作不易，欢迎点个 Star  
+📚 本轮重构：教程正在从“章节 + 专题”改造成连续编号的书式结构  
 
 </blockquote>
 
 <p>
-  <a href="./docs/chapters/ch01-quickstart.md">🚀 快速开始</a> ·
+  <a href="./docs/chapters/ch01-quickstart.md">🚀 从第 1 章开始</a> ·
   <a href="#tutorial-contents">📚 教程目录</a> ·
-  <a href="#why-learn-agent">💡 为什么是 Agent 时代</a> ·
-  <a href="#reader-guide">🌱 新手路线</a>
-</p>
-
-<p>
-  <a href="./docs/topics/topic-agent-tools-comparison.md">🤖 Agent 对比</a> ·
-  <a href="./docs/topics/topic-model-comparison.md">🧠 模型对比</a> ·
-  <a href="./docs/topics/topic-benchmarks.md">📊 评测体系</a>
+  <a href="#reader-guide">🌱 新手路线</a> ·
+  <a href="#about-this-restructure">🧭 重构说明</a>
 </p>
 
 </div>
@@ -46,499 +39,99 @@
 
 ### ✨ 一句话先讲透
 
-> **AI Agent 时代，手写代码的重要性在下降，定义问题和驾驭 Agent 的重要性在上升。**
+> **AI Agent 时代，手写代码的重要性在下降，定义问题、组织上下文、验证结果和驾驭 Agent 的重要性在上升。**
 >
-> 真正拉开差距的，不是谁写得更快，而是谁更懂原理、需求和产品，能更精准提问、更高效编排管理 Agent。
-
-
+> 真正拉开差距的，不是谁写得更快，而是谁更懂原理、更会拆任务、更会搭控制面，也更懂得什么时候该让 Agent 自治，什么时候该收回人工裁决。
 
 <a id="tutorial-contents"></a>
 
-## 📚 章节目录
+## 📚 教程目录
 
-> ⏱️ **关于时效性**：⚡ Agent 相关工具与方法更新频繁，教程会尽量按月更新，保持信息新鲜度。🔄
+> ⏱️ **关于时效性**：Agent 相关工具、模型和工作流变化很快。本教程会持续按月整理，但涉及产品、模型和协议的部分，仍建议以官方文档和最新版本为准。
 
-<table>
-<tr>
-<td width="55%" valign="top">
+### Part I · 🚀 快速开始
 
-### 📖 系统章节
+| # | 章节 | 你会学到 | 状态 |
+|---|---|---|---|
+| 1 | [🚀 快速开始](./docs/chapters/ch01-quickstart.md) | 先装什么、怎么跑通第一轮闭环、如何避免一上来就把环境搞复杂 | 🔄 |
+| 2 | [🎮 Agent 入门实战](./docs/chapters/ch02-agent-first-practice.md) | 用基础实验和真实仓库小任务，先建立对 Agent 的第一批信任 | 🔄 |
+| 3 | [⚙️ 配置使用第一个：MCP、Skill、Hook、Plugin、Command](./docs/chapters/ch03-first-extension-setup.md) | 先把规则、会话、扩展三层分清，再装第一批真正值得上的能力与手动入口 | 🔄 |
+| 4 | [🟠 Claude Code 实用技巧](./docs/chapters/ch04-claude-code-tips.md) | Claude Code 的最小工作流、权限模式、CLAUDE.md 和长期高 ROI 用法 | 🔄 |
+| 5 | [🟢 Codex 实用技巧](./docs/chapters/ch05-codex-tips.md) | Codex 的终端协作心智、AGENTS.md、隔离执行与审查感 | 🔄 |
 
-<table width="100%">
-<tr>
-<th width="6%" align="center">#</th>
-<th width="48%">章节</th>
-<th width="36%">你会学到</th>
-<th width="10%" align="center">状态</th>
-</tr>
-<tr><td colspan="4"><strong>Part I · 🧠 理论篇</strong></td></tr>
-<tr>
-<td align="center">1</td>
-<td><a href="./docs/chapters/ch01-quickstart.md">🚀 快速上手部署 Agent</a></td>
-<td>安装<br>配置<br>跑通第一个闭环</td>
-<td align="center">🔄</td>
-</tr>
-<tr>
-<td align="center">2</td>
-<td><a href="./docs/chapters/ch02-concepts.md">🧩 Agent 核心原理</a></td>
-<td>LLM / Planning / Tools / Memory<br>运行闭环<br>失效机制</td>
-<td align="center">🔄</td>
-</tr>
-<tr>
-<td align="center">3</td>
-<td><a href="./docs/chapters/ch03-glossary.md">📖 术语速查手册</a></td>
-<td>LLM · Prompt · Context<br>Token · Agent · API</td>
-<td align="center">🔄</td>
-</tr>
-<tr><td colspan="4"><strong>Part II · 🎯 基础实战篇</strong></td></tr>
-<tr>
-<td align="center">4</td>
-<td><a href="./docs/chapters/ch04-first-practice.md">🎮 你的第一批实战</a></td>
-<td>Plan→Act · 理解仓库<br>Fix Bug · 写测试<br>CRUD · Git</td>
-<td align="center">🔄</td>
-</tr>
-<tr>
-<td align="center">5</td>
-<td><a href="./docs/chapters/ch05-explore-verify.md">🔍 代码探索与验证驱动</a></td>
-<td>init CLAUDE.md<br>测试驱动 · Bug 修复<br>截图验证</td>
-<td align="center">🔄</td>
-</tr>
-<tr>
-<td align="center">6</td>
-<td><a href="./docs/chapters/ch06-plan-prompt.md">📋 规划优先与 Prompt 工程</a></td>
-<td>探索→规划→编码<br>Prompt 约束技巧<br>@引用</td>
-<td align="center">🔄</td>
-</tr>
-<tr>
-<td align="center">7</td>
-<td><a href="./docs/chapters/ch07-config-session.md">⚙️ 扩展生态与会话管理</a></td>
-<td>权限<br>MCP · Skills · Plugins<br>clear/compact/resume</td>
-<td align="center">🔄</td>
-</tr>
-<tr><td colspan="4"><strong>Part III · ⚙️ 方法论与认知篇</strong></td></tr>
-<tr>
-<td align="center">8</td>
-<td><a href="./docs/chapters/ch08-engineering.md">🏗️ 工程化工作流</a></td>
-<td>生命周期 · 介入矩阵<br>SDD · 任务分解 · 验证闭环</td>
-<td align="center">🔄</td>
-</tr>
-<tr>
-<td align="center">9</td>
-<td><a href="./docs/chapters/ch09-collaboration.md">🎛️ 驾驭 Agent：控制面与会话管理</a></td>
-<td>Harness · 上下文 · Prompt<br>会话生命周期 · Token · 成熟度</td>
-<td align="center">🔄</td>
-</tr>
-<tr>
-<td align="center">10</td>
-<td><a href="./docs/chapters/ch10-design-patterns.md">🧬 Agent 设计模式</a></td>
-<td>Router · Evaluator · Planner-Worker<br>大型代码库策略 · Worktree · 安全护栏</td>
-<td align="center">🔄</td>
-</tr>
-<tr>
-<td align="center">11</td>
-<td><a href="./docs/chapters/ch11-code-review.md">✅ 质量保障与验收</a></td>
-<td>Writer-Reviewer · 测试策略<br>验收 / Eval · CI · Merge 前清单</td>
-<td align="center">🔄</td>
-</tr>
-<tr>
-<td align="center">12</td>
-<td><a href="./docs/chapters/ch12-history.md">📜 技术简史与当前定位</a></td>
-<td>六阶段演进 · 关键拐点<br>产品形态 · 能力边界</td>
-<td align="center">🔄</td>
-</tr>
-<tr><td colspan="4"><strong>Part V · 🏗️ 进阶实战篇</strong> <a id="part-v-advanced-cases"></a></td></tr>
-<tr>
-<td align="center">—</td>
-<td><a href="./docs/topics/topic-advanced-cases.md">🎬 复杂场景实战案例</a></td>
-<td>完整 Agent 对话历史<br>多轮任务拆解<br>失败与恢复分析</td>
-<td align="center">📝 规划中</td>
-</tr>
-</table>
+### Part II · 🧠 解剖 Agent 的原理与机制
 
-<table width="100%">
-<tr>
-<th width="6%" align="center">#</th>
-<th width="48%">章节</th>
-<th width="36%">你会学到</th>
-<th width="10%" align="center">状态</th>
-</tr>
-<tr><td colspan="4"><strong>Part VI · 🔭 趋势与展望</strong> <a id="part-vi-outlook"></a></td></tr>
-<tr>
-<td align="center">—</td>
-<td><a href="./docs/topics/topic-evolution.md">🔭 Agent 技术展望</a></td>
-<td>职业影响<br>技术路线图<br>行业趋势</td>
-<td align="center">📝 规划中</td>
-</tr>
-<tr><td colspan="4"><strong>Part VII · 🧬 从零构建你自己的 Agent</strong> <a id="part-vii-build-agent"></a></td></tr>
-<tr>
-<td align="center">—</td>
-<td><a href="./docs/topics/topic-build-agent.md">🧬 Nano Agent 从零实现</a></td>
-<td>ReAct 循环实现<br>工具调用机制<br>Memory 设计</td>
-<td align="center">📝 规划中</td>
-</tr>
-</table>
+| # | 章节 | 你会学到 | 状态 |
+|---|---|---|---|
+| 6 | [📖 基础概念与术语](./docs/chapters/ch06-glossary.md) | Token、Prompt、Context、Session、KV Cache、MCP / Skill / Hook / Plugin / Command 等基础词汇随查随用 | 🔄 |
+| 7 | [🧠 从 LLM 到 Agent](./docs/chapters/ch07-llm-to-agent.md) | 开环与闭环、Augmented LLM、为什么 Agent 不是聊天框升级版 | 🔄 |
+| 8 | [🧩 Agent = Model + Harness = LLM + Planning + Memory + Tools](./docs/chapters/ch08-agent-formula.md) | 用一章建立 Agent 的总公式，把模型、规划、记忆、工具和控制面一次讲透 | 🔄 |
+| 9 | [🧠 LLM 推理基础](./docs/chapters/ch09-llm-reasoning-basics.md) | 概率性、采样、CoT、为什么“会想”不等于“可靠” | 🔄 |
+| 10 | [📋 Planning](./docs/chapters/ch10-planning.md) | Spec、任务分解、停止条件、ReAct 与 Reflection 各自解决什么 | 🔄 |
+| 11 | [💾 Memory](./docs/chapters/ch11-memory-context-harness.md) | 短期记忆、长期记忆、RAG、状态管理和上下文衰减 | 🔄 |
+| 12 | [🛠️ Tools](./docs/chapters/ch12-tools.md) | Tool Use、Function Calling、CLI 与工具栈分层、能力边界 | 🔄 |
+| 13 | [🔌 MCP](./docs/chapters/ch13-mcp.md) | MCP 的原理、定位和一个最小示例 | 🔄 |
+| 14 | [📝 Skill](./docs/chapters/ch14-skill.md) | Skill 的方法论角色、边界与最小示例 | 🔄 |
+| 15 | [🪝 Hook](./docs/chapters/ch15-hook.md) | Hook 的事件时机、自动化插槽定位和典型场景 | 🔄 |
+| 16 | [🧰 Plugin](./docs/chapters/ch16-plugin.md) | Plugin 的打包层角色、组成方式与最小示例 | 🔄 |
 
-</td>
-<td width="45%" valign="top">
+### Part III · ✅ Agent 的正确使用姿势
 
-### 📚 进阶专题 <a id="part-iv-topics"></a>
+| # | 章节 | 你会学到 | 状态 |
+|---|---|---|---|
+| 17 | [🚨 Agent 错误用法（9 种失效模式）](./docs/chapters/ch17-agent-failure-modes.md) | 常见错误协作姿势、为什么会反复跑偏，以及第一恢复动作 | 🔄 |
+| 18 | [🧬 Agent 设计模式](./docs/chapters/ch18-agent-patterns.md) | 常见模式、何时拆角色、代码库分工与 Worktree 隔离 | 🔄 |
+| 19 | [🏗️ 工程化工作流](./docs/chapters/ch19-engineering-workflow.md) | 从 Spec 到 Merge 的工程化协作总装图，以及 Agent 在各环节的合适介入深度 | 🔄 |
+| 20 | [💰 Token 经济学](./docs/chapters/ch20-token-economics.md) | Token 如何同时影响成本、速度、上下文质量，以及该怎么节约 | 🔄 |
+| 21 | [✅ 质量保障与验收](./docs/chapters/ch21-quality-assurance-review-eval.md) | Verify / Review / Eval 的边界、最小交付链、验收与人工裁决 | 🔄 |
+| — | [🎬 复杂场景实战案例](./docs/topics/topic-advanced-cases.md) | 现有素材先继续挂着，后续再决定拆成正式章节还是并回 Part III 主线 | 📝 规划中 |
 
-> 正文保持精简，深度内容统一收入此处。
-> 新手第一遍可跳过，遇到具体问题时按需查阅。
-> 如果在 Ch02 被术语卡住，直接打开术语速查手册边读边查即可。
+### Part IV · 🔬 深度洞察与分析篇
 
-**🧷 入门辅助速查**
+| # | 章节 | 你会学到 | 状态 |
+|---|---|---|---|
+| 22 | [📜 技术简史、演进主线与时间线](./docs/chapters/ch22-history-evolution-timeline.md) | 从程序合成到 Agent OS 的历史主线，为什么今天会走到这一步 | 📝 整合中 |
+| 23 | [📊 模型、工具与评测怎么看](./docs/chapters/ch23-models-tools-benchmarks.md) | 模型榜单、Agent 工具、Benchmark 各自回答什么问题，怎么读而不被误导 | 📝 整合中 |
+| 24 | [📐 任务适配度、能力边界与成熟度](./docs/chapters/ch24-task-fit-boundaries-maturity.md) | 哪些任务值得大胆交给 Agent，哪些任务必须保留人工把关 | 📝 整合中 |
+| 25 | [🔒 安全、权限与信任边界](./docs/chapters/ch25-security-permissions-trust-boundaries.md) | 最小权限、沙箱、供应链风险、Prompt 注入与治理边界 | 📝 整合中 |
+| 26 | [🔬 Agent 内幕、范式对比与未来形态](./docs/chapters/ch26-internals-paradigms-futures.md) | Agent payload、Claw 范式、未来形态与仍未解决的问题 | 📝 整合中 |
 
-| 专题 | 简介 |
-|------|------|
-| [📖 术语速查手册](./docs/chapters/ch03-glossary.md) | LLM / Prompt / Context / Token / MCP 等核心术语随查随用 |
+### Part V · 🧬 从零构建你自己的 Agent
 
-**🧭 选型与环境配置**
+| # | 章节 | 你会学到 | 状态 |
+|---|---|---|---|
+| — | [🧬 从零构建你自己的 Agent](./docs/topics/topic-build-agent.md) | 从使用者走向构建者，理解 Agent 的最小可实现骨架 | 📝 规划中 |
 
-| 专题 | 简介 |
-|------|------|
-| [🤖 Agent 工具横评](./docs/topics/topic-agent-tools-comparison.md) | 国际/国产/开源工具全面对比 |
-| [🧠 模型横评](./docs/topics/topic-model-comparison.md) | 主流 Coding 模型对比与选型 |
-| [📊 评测体系](./docs/topics/topic-benchmarks.md) | Benchmark 怎么读、怎么用 |
+---
 
-**🧠 核心技术原理**
+<a id="about-this-restructure"></a>
 
-| 专题 | 简介 |
-|------|------|
-| [🧠 LLM 推理与 Agent](./docs/topics/topic-llm-reasoning-and-agent.md) | CoT/Reasoning 如何影响 Agent |
-| [🧩 上下文工程](./docs/topics/topic-context-engineering.md) | WSCI 框架 · 上下文腐烂 · 前缀稳定性 |
-| [🧠 Agent 记忆系统](./docs/topics/topic-memory-system.md) | 短期/长期记忆 · Agentic RAG |
-| [🧠 大模型幻觉问题](./docs/topics/topic-llm-hallucination.md) | 成因与缓解策略 |
+## 🧭 本轮重构说明
 
-**🔧 工具生态深入**
+- 公开目录已经切到“快速开始 → 原理机制 → 正确使用姿势 → 深度分析 → 构建自己的 Agent”这条新主线。
+- 原先的“专题栏”已经取消；能并入 Part II 的内容会尽量并回正文，减少读者在章节和专题之间来回跳。
+- 已被主线吸收的旧 topic 会继续保存在 `docs/materials/`，作为未链接素材留档，不再作为公开入口。
+- `Part III` 现在开始承接“怎么把 Agent 用对”的内容；`Part V` 仍先保留规划中入口。
 
-| 专题 | 简介 |
-|------|------|
-| [📝 Skill 系统](./docs/topics/topic-skills.md) | 完整指南 · 5 种设计模式 |
-| [🔌 MCP 协议](./docs/topics/topic-mcp.md) | MCP 完整指南 |
-| [⚖️ CLI vs MCP](./docs/topics/topic-cli-vs-mcp.md) | 何时用 Shell 何时用 MCP |
-| [📁 .claude 文件夹解析](./docs/topics/topic-claude-folder.md) | CLAUDE.md · rules · settings.json |
+---
 
-**🏗️ 架构与协作模式**
+<a id="reader-guide"></a>
 
-| 专题 | 简介 |
-|------|------|
-| [👥 多 Agent 组合](./docs/topics/topic-multi-agent.md) | Orchestrator · 上下文隔离 |
-| [⚔️ Agent vs Claw](./docs/topics/topic-agent-vs-claw.md) | 两种范式对比 |
+## 🌱 新手路线
 
-**📐 方法论深入**
+如果你是第一次认真使用 Coding Agent，建议这样读：
 
-| 专题 | 简介 |
-|------|------|
-| [🎯 任务适配度](./docs/topics/topic-task-fit.md) | 哪些任务适合 Agent |
-| [📊 Agent 能力矩阵](./docs/topics/topic-capability-matrix.md) | 各类任务的表现评级 |
-| [💬 Prompt 模板库](./docs/topics/topic-prompt-templates.md) | 可复用的 Prompt 模板 |
-| [🚨 失败模式](./docs/topics/topic-failure-modes.md) | 七种失败模式与恢复术 |
-| [🏗️ 大型项目策略](./docs/topics/topic-large-project.md) | 大项目的 Agent 使用策略 |
-| [🔄 Prompt→Harness](./docs/topics/topic-prompt-to-harness.md) | 演进案例 |
-
-<details>
-<summary><strong>🧩 更多专题（安全与质量 · 对比与视野）</strong></summary>
-<br />
-
-<strong>🛡️ 安全与质量</strong>
-
-<table width="100%">
-<tr><th align="left">专题</th><th align="left">简介</th></tr>
-<tr><td><a href="./docs/topics/topic-llm-hallucination.md">🧠 大模型幻觉问题</a></td><td>成因、分类与缓解策略</td></tr>
-<tr><td><a href="./docs/topics/topic-security.md">🔒 安全权限合规</a></td><td>最小权限 · Agent 治理</td></tr>
-<tr><td><a href="./docs/topics/topic-human-agent-collab.md">🤝 人机协同详解</a></td><td>深度协作方法论</td></tr>
-</table>
-
-<strong>🔭 对比与视野</strong>
-
-<table width="100%">
-<tr><th align="left">专题</th><th align="left">简介</th></tr>
-<tr><td><a href="./docs/topics/topic-agent-vs-claw.md">⚔️ Agent vs Claw</a></td><td>两种范式对比</td></tr>
-<tr><td><a href="./docs/topics/topic-agent-llm-internals.md">🔬 Agent-LLM 交互内幕</a></td><td>API 调用结构 · Agentic Loop</td></tr>
-<tr><td><a href="./docs/topics/topic-agent-evolution.md">📜 技术演进六阶段</a></td><td>从 LLM 到 Agent OS</td></tr>
-<tr><td><a href="./docs/topics/topic-product-timeline.md">📅 产品时间线</a></td><td>2020-2026 完整里程碑</td></tr>
-</table>
-
-</details>
-
-</td>
-</tr>
-</table>
+1. 先读 `Part I`，重点是先跑起来，先建立第一批正反馈和基本操作感。
+2. 遇到名词卡住时，回查 `Part II / Ch06` 的术语手册。
+3. 当你开始感觉“会用但不稳”时，再进入 `Part II`，把 LLM、Planning、Memory、Tools、Harness 这些母概念补齐。
+4. 当你想系统减少跑偏、建立工程习惯和验收标准时，再进入 `Part III`。
+5. 真正要做选型、评测判断、安全治理和趋势分析时，再进入 `Part IV`。
 
 ---
 
 ## 📝 关于本教程的几点说明
 
-- 🔧 **工具说明**：本教程以 Claude Code（CLI + VS Code 插件）作为实操主线，但核心是可迁移的方法论：SDD、任务分解、上下文工程、验证闭环等思路，同样适用于 Cursor、Codex CLI、Gemini CLI 以及其他 Agent 工具 💡
-- 🔄 **产品和模型都在快速变化**，教程内容定期校对，请以各厂商最新官方文档为准
-- 📚 **前面章节正文保持精简**，深度内容统一收入 Part IV 进阶专题，新手第一遍可跳过
-- 🎯 **所有技巧和方法论都来自实战**，非纸上谈兵
-
----
-
-
-<a id="why-learn-agent"></a>
-
-## 🚀 现在是时候告别「古法写码」了
-
-> **Coding Agent** 不是更聪明的聊天框，而是一个能围绕你的目标去**读代码、规划步骤、调用工具、执行修改、再自己验证结果**的任务执行系统。
->
-> 你关心的，不再只是"它能不能回答问题"，而是：「它能不能在真实项目里，和我一起把事情做完？」
-
-- ⚡ **效率跃迁**：Agent 已经能覆盖读代码、改代码、写测试、跑验证这些高频研发动作。
-- 🌱 **门槛下降**：零基础用户也更容易靠 Agent 搭出可运行的产品原型。
-- 🔄 **分工改变**：你越来越像是在设计任务、边界和检查点，而不只是手写每一行代码。
-- 🎯 **技能可迁移**：任务拆解、上下文管理、验证闭环这些能力，不会因为换一个工具就失效。
-
----
-
-
-## 👩 如何在自己的电脑上安装部署并开始面向 Agent 编程
-
-- **① 安装 Agent**：根据习惯选择形态——CLI 工具（如 Claude Code、Codex CLI）、VSCode 插件（如 Claude Code或Codex的VSCode插件）、AI 原生 IDE（如 Cursor、Trae）。
-- **② 配置模型访问**：要么在 Agent 前端登录已购买订阅 Plan 的账户（如 Claude Pro、GPT Plus、Cursor Pro），要么在配置里填入官方或第三方购买的模型 API 的 base URL 和 API Key，即可接入任意支持的模型。
-- **③ 跑通第一个任务**：打开项目目录，启动 Agent，开始对话。
-
-> 📖 完整安装与配置流程 → [🚀 快速上手部署 Agent（第一章）](./docs/chapters/ch01-quickstart.md) · [🤖 Agent 工具横评](./docs/topics/topic-agent-tools-comparison.md) · [🧠 模型横评](./docs/topics/topic-model-comparison.md)
-
----
-
-### 🛠️ 主流 Agent 工具一览
-
-> 🌱 **新手提醒**：这一节的作用是帮你建立对市场的整体感觉，知道现在的 Agent 工具、模型、路线和生态有多活跃。你现在不用把它们全部搞懂，更不用全装一遍，先选 1-2 个顺手工具真正跑起来就够了。
-
-**🇺🇸 国际主流 (Coding)**
-
-<table>
-  <tr>
-    <td align="center" width="16%">
-      <img src="./resources/logos/claude-code.png" alt="Claude Code" height="32" /><br />
-      <strong><a href="https://claude.com/product/claude-code">Claude Code</a></strong><br />
-      <sub>Anthropic · 代码代理口碑标杆</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/cursor.png" alt="Cursor" height="32" /><br />
-      <strong><a href="https://cursor.com">Cursor</a></strong><br />
-      <sub>Anysphere · AI 编辑器代表作</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/github-copilot.png" alt="GitHub Copilot" height="32" /><br />
-      <strong><a href="https://github.com/features/copilot">GitHub Copilot</a></strong><br />
-      <sub>GitHub · 助手 + Agent 双形态</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/codex-color.png" alt="Codex CLI" height="32" /><br />
-      <strong><a href="https://github.com/openai/codex">Codex CLI</a></strong><br />
-      <sub>OpenAI · 开源终端代码代理</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/Gemini_CLI_logo.webp" alt="Gemini CLI" height="32" /><br />
-      <strong><a href="https://geminicli.com/">Gemini CLI</a></strong><br />
-      <sub>Google · 开源终端代理</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/Google_Antigravity_icon.webp" alt="Antigravity" height="32" /><br />
-      <strong><a href="https://antigravity.google/">Antigravity</a></strong><br />
-      <sub>Google · Agent-first 开发平台</sub>
-    </td>
-  </tr>
-</table>
-
-**🇨🇳 国产主流 (Coding)**
-
-<table>
-  <tr>
-    <td align="center" width="16%">
-      <img src="./resources/logos/tongyi_lingma_logo.png" alt="通义灵码" height="32" /><br />
-      <strong><a href="https://lingma.aliyun.com/">通义灵码</a></strong><br />
-      <sub>阿里云 · 国内主流代码助手</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/trae.png" alt="Trae" height="32" /><br />
-      <strong><a href="https://www.trae.ai">Trae</a></strong><br />
-      <sub>字节跳动 · AI 原生 IDE</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/baidu_comate.png" alt="Baidu Comate" height="32" /><br />
-      <strong><a href="https://comate.baidu.com/">Baidu Comate</a></strong><br />
-      <sub>百度 · 工程向代码助手</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/codebuddy_logo.png" alt="CodeBuddy" height="32" /><br />
-      <strong><a href="https://codebuddy.tencent.com/">CodeBuddy</a></strong><br />
-      <sub>腾讯 · 一体化编码工具</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/kimi_code_logo.png" alt="Kimi Code" height="32" /><br />
-      <strong><a href="https://kimi.ai/">Kimi Code</a></strong><br />
-      <sub>月之暗面 · 终端代码代理</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/huawei_codearts.png" alt="CodeArts" height="32" /><br />
-      <strong><a href="https://www.huaweicloud.com/product/codeartssnap.html">CodeArts</a></strong><br />
-      <sub>华为云 · 企业研发智能体</sub>
-    </td>
-  </tr>
-</table>
-
-
-**🌐 开源生态 / 更多工具**
-
-<table>
-  <tr>
-    <td align="center" width="16%">
-      <img src="./resources/logos/opencode-logo.png" alt="OpenCode" height="32" /><br />
-      <strong><a href="https://opencode.ai">OpenCode</a></strong><br />
-      <sub>开源 · 全形态 Coding Agent</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/codegeex_logo.png" alt="CodeGeeX" height="32" /><br />
-      <strong><a href="https://codegeex.cn/">CodeGeeX</a></strong><br />
-      <sub>智谱 · 多语言代码助手</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/aider_logo.png" alt="Aider" height="32" /><br />
-      <strong><a href="https://github.com/paul-gauthier/aider">Aider</a></strong><br />
-      <sub>开源 · 终端结对编程</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/cline_logo.png" alt="Cline" height="32" /><br />
-      <strong><a href="https://github.com/cline/cline">Cline</a></strong><br />
-      <sub>开源 · IDE 内自主代码代理</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/windsurf_logo.png" alt="Windsurf" height="32" /><br />
-      <strong><a href="https://codeium.com/windsurf">Windsurf</a></strong><br />
-      <sub>Codeium · AI 原生 IDE</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/devin_logo.png" alt="Devin" height="32" /><br />
-      <strong><a href="https://devin.ai/">Devin</a></strong><br />
-      <sub>Cognition · 云端自主软件工程师</sub>
-    </td>
-  </tr>
-</table>
-
-**🤖 通用 Agent / Claw 🦞 (非代码专精)**
-
-<table>
-  <tr>
-    <td align="center" width="16%">
-      <img src="./resources/logos/openclaw_logo.png" alt="OpenClaw" height="32" /><br />
-      <strong><a href="https://github.com/OpenClawAI/OpenClaw">OpenClaw</a></strong><br />
-      <sub>开源 · Skills 生态通用 Agent</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/manus_logo.png" alt="Manus" height="32" /><br />
-      <strong><a href="https://manus.im/">Manus</a></strong><br />
-      <sub>通用 · 结果交付型 Agent</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/chatgpt.png" alt="ChatGPT Tasks" height="32" /><br />
-      <strong><a href="https://openai.com/">ChatGPT Tasks</a></strong><br />
-      <sub>OpenAI · 定时任务引擎</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/perplexity_logo.png" alt="Perplexity" height="32" /><br />
-      <strong><a href="https://www.perplexity.ai/">Perplexity</a></strong><br />
-      <sub>实时检索 / 深度研究</sub>
-    </td>
-    <td align="center" width="16%">
-      <img src="./resources/logos/kimi_logo.png" alt="Kimi Agent" height="32" /><br />
-      <strong><a href="https://kimi.moonshot.cn/">Kimi Agent</a></strong><br />
-      <sub>月之暗面 · 办公型通用 Agent</sub>
-    </td>
-    <td align="center" width="16%">
-      🦞<br />
-      <strong><a href="https://www.volcengine.com/">ArkClaw</a></strong><br />
-      <sub>火山引擎 · 云端 OpenClaw</sub>
-    </td>
-  </tr>
-</table>
-
-
-> 📖 深度阅读： [作者使用体验与心得](./docs/topics/topic-agent-tools-comparison.md) · [主流 Agent 工具横评](./docs/topics/topic-agent-tools-comparison.md)
-
-### 🧠 主流 Coding 模型一览
-
-> 🐎 **好马配好鞍**：优秀的 Agent 就像是一套精良的马具（Harness），但要真正搞定艰巨复杂的代码任务，你还需要一匹强健的「好马」——也就是底层驱动的大模型。以下是各家最新的旗舰模型：
->
-> 💰 **价格说明**：下表按 **每 1M tokens 的输入 / 输出价格** 粗略列出 API 成本。优先采用官方公开价；若厂商未直接公开或没有统一官方 API 渠道，则使用主流托管价的近似值，并在价格前加 `约`。
-
-**🇺🇸 国际模型**
-
-| 模型 | 出品方 | 上下文 | API 价格（输入 / 输出） | 特色 |
-|:---:|---|:---:|:---:|:---|
-| **Claude Opus 4.6** | Anthropic | 1M | `$5 / $25` | 🏆 Anthropic 最强复杂任务，coding / agents 强项 |
-| **GPT-5.4** | OpenAI | 1M | `$2.50 / $15` | ⚡ 官方主旗舰，面向 agentic、编码、专业工作流 |
-| **Gemini 3.1 Pro** | Google | 1M | `$2-$4 / $12-$18` | 🌊 Google Gemini 3 系 Pro 线，支持 thinking、agentic workflows |
-| **Llama 4 Maverick** | Meta | 10M | `约 $0.15 / $0.60` | 🦙 Meta 最新主力，原生多模态、MoE、超长上下文 |
-| **nemotron-3-super** | NVIDIA | 1M | `约 $0.10 / $0.50` | ⚙️ NVIDIA 新一代主力，agentic / coding / tool calling 强 |
-| **grok-code-fast** | xAI（X） | 256K | `约 $0.20 / $0.50` | 🛠️ xAI 官方 Code model，偏 agentic coding / pair programming |
-
-**🇨🇳 国产模型**
-
-| 模型 | 出品方 | 上下文 | API 价格（输入 / 输出） | 特色 |
-|------|--------|--------|:---:|------|
-| **Kimi K2.5** | 月之暗面 | 256K | `约 $0.45-$0.60 / $2.20-$3.00` | 🔥 当前最智能/最全能 Kimi 模型，原生多模态、thinking、多步工具使用 |
-| **GLM-5** | 智谱 AI | 200K | `约 $0.72 / $2.30` | 🏛️ 智谱新一代旗舰基座，面向 Agentic Engineering、复杂系统工程、长程 Agent |
-| **MiniMax-M2.7** | MiniMax | 200K | `约 $0.30 / $1.20` | 📏 当前最新 M 系旗舰，强调 real-world engineering / tool calling / search |
-| **DeepSeek-V3.2** | 深度求索 | 128K | `$0.28 / $0.42` | 💰 reasoning-first for agents，支持 Thinking in Tool-Use，开源性价比标杆 |
-| **Qwen3-Max** | 阿里云 | 256K | `约 $0.78-$1.00 / $3.00-$3.90` | 🌐 千问旗舰线，适合复杂多步骤任务，支持思考模式 + 内置工具 |
-
-> 📖 深度阅读： [主流 Coding 模型横评](./docs/topics/topic-model-comparison.md) · [模型与 Agent 评测体系](./docs/topics/topic-benchmarks.md)
->
-> ⚠️ **不要只看榜单**：公开排行榜很重要，但不等于长期真实体验。像 MiniMax 这类产品，榜单成绩很亮眼，并不自动代表你的工作流里就一定更省心；而且厂商普遍也会做 benchmark 定向优化。建议同时结合 `Google`、`Reddit`、`小红书`、`知乎`、`B 站` 上的真实反馈一起看。
-
----
-
-<a id="coding-agent-vs-general-agent"></a>
-
-## 🦞 赛博养虾 vs Agent编程
-
-最近 OpenClaw 🦞火得一塌糊涂——但它们和 Claude Code 这种 Coding Agent 目前是有一些差异的。
-
-| 维度 | 🔧 Coding Agent（如 Claude Code） | 🌐 通用 Agent（如 OpenClaw 🦞、Manus） |
-| :---: | --- | --- |
-| **🎯 定位** | 软件研发专用的协作工具 | 通用任务自动化助手 |
-| **💬 交互模式** | 会话级，用完即停 | 7×24 常驻或按需启动 |
-| **🔒 安全模型** | 最小权限 + 人工审批 | 需广泛系统权限 |
-| **📦 部署复杂度** | 一行命令安装 | 通常需要更多配置 |
-
-> 🎯 **核心结论**：你在 Coding Agent 中练就的任务拆解、工作流设计、验证方法，在通用 Agent 时代依然完全可迁移。
-
-> 深入了解 Agent 与 Claw 范式的架构差异见 → [附录：Agent 与 Claw 范式深度对比](./docs/topics/topic-agent-vs-claw.md)
-
----
-
-
-<a id="reader-guide"></a>
-
-## 🎯 谁适合读这套教程？
-
-本教程面向三类读者，各有推荐阅读路线：
-
-### 🗺️ 推荐阅读路线
-
-#### 👨‍💻 程序员 / 软件工程师
-Ch01 → Ch02 → Ch04 → Ch05-07
-→ Ch08 工程化工作流 → Ch09 驾驭 Agent → Part IV Skill/MCP 专题
-→ Part V 进阶实战
-
-#### 📊 产品经理 / 技术管理者
-Ch01 → Ch02（术语不熟时查「术语速查手册」专题）→ Ch04 → Ch12 技术简史与定位 → Ch10 设计模式
-→ Ch08 工程化工作流 → Ch11 质量保障与验收 → Part VI 趋势与展望
-
-#### 🌱 零基础 / 非开发者
-Ch01 → Ch02（建议同时打开 **术语速查手册** 专题）→ Ch04 → Ch05-07
-→ Ch08 工程化工作流 → Ch09 驾驭 Agent → Part V 进阶实战
-
----
-
-<div align="center">
-
-<p><strong>如果觉得有帮助，欢迎 Star 支持！</strong></p>
-
-
-</div>
+- 🔧 **工具主线**：本教程会同时覆盖 Claude Code 与 Codex，但重点不是导购，而是可迁移的方法论。
+- 🔄 **产品和模型都在快速变化**：涉及模型、价格、协议和产品功能时，请以官方说明为准。
+- 🧱 **先正文，后深度**：前两大 Part 优先帮助你建立可工作的心智模型和日常工作流，深度分析统一后置。
+- 🎯 **所有方法都以真实项目为参照**：重点是任务拆解、上下文管理、验证闭环、权限边界和协作方式，而不是漂亮但不可落地的口号。
