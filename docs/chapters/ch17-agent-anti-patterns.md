@@ -52,10 +52,10 @@ graph LR
     A --> D["恢复层
     #7 #8 #9"]
     
-    style A fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px
-    style B fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px
-    style C fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px
-    style D fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px
+    style A fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style B fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style C fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style D fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 ```
 
 ### #1 许愿式 Prompt
@@ -239,15 +239,15 @@ graph TD
     WARN2 --> ACTION
     WARN3 --> ACTION
 
-    style Start fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px
-    style S1 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px
-    style S2 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px
-    style S3 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px
-    style WARN1 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px
-    style WARN2 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px
-    style WARN3 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px
-    style OK fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px
-    style ACTION fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px
+    style Start fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style S1 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style S2 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style S3 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style WARN1 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style WARN2 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style WARN3 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style OK fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style ACTION fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 ```
 
 | 预警信号 | 具体表现 | 你应该做什么 |
@@ -320,16 +320,16 @@ graph TD
     
     R --> S["解法：\n用结构化流程\n对抗本能"]
 
-    style H1 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px
-    style H2 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px
-    style H3 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px
-    style H4 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px
-    style M1 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px
-    style M2 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px
-    style M3 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px
-    style M4 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px
-    style R fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px
-    style S fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px
+    style H1 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style H2 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style H3 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style H4 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style M1 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style M2 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style M3 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style M4 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style R fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style S fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 ```
 
 总结一下根本原因：
@@ -370,20 +370,20 @@ graph TD
     F3 --> RETRY
     F4 --> RETRY
 
-    style D1 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px
-    style D2 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px
-    style D3 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px
-    style D4 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px
-    style Q1 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px
-    style Q2 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px
-    style Q3 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px
-    style Q4 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px
-    style F1 fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px
-    style F2 fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px
-    style F3 fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px
-    style F4 fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px
-    style F5 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px
-    style RETRY fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px
+    style D1 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style D2 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style D3 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style D4 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style Q1 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style Q2 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style Q3 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style Q4 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style F1 fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style F2 fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style F3 fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style F4 fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style F5 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style RETRY fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 ```
 
 > 📌 **关键点**：80% 的 Agent 错误在 Step 1 和 Step 2 就能解决。如果你发现自己经常走到 Step 4，说明前面的流程需要加强。
@@ -468,14 +468,14 @@ graph LR
     P6 -->|否| P7["6. 回退代码\n7. 干净重启"]
     P7 --> P1
 
-    style P1 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px
-    style P2 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px
-    style P3 fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px
-    style P4 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px
-    style P5 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px
-    style P6 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px
-    style NEXT fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px
-    style P7 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px
+    style P1 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style P2 fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style P3 fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style P4 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style P5 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style P6 fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style NEXT fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    style P7 fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
 ```
 
 <details>
@@ -514,14 +514,14 @@ graph LR
 | 章节 | 关联 |
 |:---|:---|
 | [Ch07 · LLM → Agent](./ch07-llm-to-agent.md) | 理解 Agent 的本质，才能理解它为什么会犯这些错 |
-| [Ch16 · Agent 基本操作](./ch16-agent-basic-operations.md) | 正确的操作方法，本章反模式的「正面版」 |
 | [Ch18 · XDD 开发方法链](./ch18-xdd-method-chain.md) | 用结构化流程从源头预防本章列举的错误 |
+| [Ch20 · 质量保障与验收](./ch20-quality-assurance.md) | 把恢复动作接到交付链上 |
 | [Ch15 · Command、Hook 与 Plugin](./ch15-command-hook-plugin.md) | 通过工具配置减少人工犯错的机会 |
 
 ---
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch16 Agent 基本操作](./ch16-agent-basic-operations.md) | [➡️ 下一章：Ch18 XDD 开发方法链](./ch18-xdd-method-chain.md)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch15 Command、Hook 与 Plugin](./ch15-command-hook-plugin.md) | [➡️ 下一章：Ch18 XDD 开发方法链](./ch18-xdd-method-chain.md)
 
 </div>

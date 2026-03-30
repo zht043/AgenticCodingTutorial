@@ -11,22 +11,21 @@
   </a>
   <img src="https://img.shields.io/badge/Last%20Updated-2026.03-blue" alt="Last Updated 2026.03" />
   <img src="https://img.shields.io/badge/语言-中文-red" alt="Language: 中文" />
-  <img src="https://img.shields.io/badge/Status-Restructuring-orange" alt="Status: Restructuring" />
+  <img src=”https://img.shields.io/badge/Status-Active-brightgreen” alt=”Status: Active” />
 </p>
 
 <blockquote>
 
-🏗️ 重度实战踩坑：长期在真实项目里尝试多种 Coding Agent 与模型  
-🎯 面向新手转型：帮助你告别「古法写码」，建立 AI 时代的开发方式  
-📚 本轮重构：教程正在从“章节 + 专题”改造成连续编号的书式结构  
+🏗️ 重度实战踩坑：长期在真实项目里尝试多种 Coding Agent 与模型
+🎯 面向新手转型：帮助你告别「古法写码」，建立 AI 时代的开发方式
 
 </blockquote>
 
 <p>
-  <a href="./docs/chapters/ch01-quickstart.md">🚀 从第 1 章开始</a> ·
-  <a href="#tutorial-contents">📚 教程目录</a> ·
-  <a href="#reader-guide">🌱 新手路线</a> ·
-  <a href="#about-this-restructure">🧭 重构说明</a>
+  <a href=”./docs/chapters/ch01-quickstart.md”>🚀 从第 1 章开始</a> ·
+  <a href=”#tutorial-contents”>📚 教程目录</a> ·
+  <a href=”#reader-guide”>🌱 新手路线</a> ·
+  <a href=”#recommended-resources”>🔗 推荐资源</a>
 </p>
 
 </div>
@@ -115,18 +114,7 @@
 
 ---
 
-<a id="about-this-restructure"></a>
-
-## 🧭 本轮重构说明
-
-- 公开目录已经切到“快速开始 → 原理机制 → 正确使用姿势 → 深度分析 → 构建自己的 Agent”这条新主线。
-- 原先的“专题栏”已经取消；能并入 Part II 的内容会尽量并回正文，减少读者在章节和专题之间来回跳。
-- 已被主线吸收的旧 topic 会继续保存在 `docs/materials/`，作为未链接素材留档，不再作为公开入口。
-- `Part III` 现在开始承接“怎么把 Agent 用对”的内容；`Part V` 仍先保留规划中入口。
-
----
-
-<a id="reader-guide"></a>
+<a id=”reader-guide”></a>
 
 ## 🌱 新手路线
 
@@ -146,3 +134,35 @@
 - 🔄 **产品和模型都在快速变化**：涉及模型、价格、协议和产品功能时，请以官方说明为准。
 - 🧱 **先正文，后深度**：前两大 Part 优先帮助你建立可工作的心智模型和日常工作流，深度分析统一后置。
 - 🎯 **所有方法都以真实项目为参照**：重点是任务拆解、上下文管理、验证闭环、权限边界和协作方式，而不是漂亮但不可落地的口号。
+
+---
+
+## 💰 性价比中转 API 推荐
+
+如果你需要一个稳定、高性价比的 API 中转站来使用 Claude / GPT 等模型：
+
+> **[yunwu.ai](https://yunwu.ai/register?aff=GTlx)** — 支持主流模型，价格实惠，适合个人开发者和学习用途。
+
+---
+
+<a id="recommended-resources"></a>
+
+## 🔗 推荐资源
+
+### Skill / MCP 推荐
+
+| 项目 | 说明 |
+|---|---|
+| [Agent Skill Architect](https://github.com/zht043/agent-skill-architect) | 用 Agent 设计和生成 Skill 的高阶工作流，适合批量生产高质量 Skill |
+| [SSH Dev Suite](https://github.com/zht043/ssh-dev-suite) | 远程开发场景下的 Skill 套件，支持 SSH 隧道、远程文件编辑、端口转发等 |
+| [Ascend DrivingSDK Skills](https://github.com/zht043/ascend-drivingsdk-skills) | 华为昇腾自动驾驶 SDK 的 Agent Skill 套件 |
+| [PUA](https://github.com/tanweai/pua) | 压榨 Agent 输出质量的 Skill，自动循环审查和优化 |
+| [Web Access](https://github.com/eze-is/web-access) | 让 Agent 真正访问网页、抓取内容、操作浏览器的 Skill |
+| [Superpowers](https://github.com/anthropics/claude-code-plugins) | Claude Code 官方插件集，包含 brainstorming、TDD、debugging 等核心工作流 Skill |
+| [Skill Creator](https://github.com/anthropics/claude-code-plugins) | Claude Code 官方 Skill 创建器，快速生成符合规范的自定义 Skill |
+
+### 实用工具
+
+| 项目 | 说明 |
+|---|---|
+| [Claude Code History Viewer](https://github.com/jhlee0409/claude-code-history-viewer) | 可视化查看 Claude Code 的历史对话记录，支持搜索、过滤和导出 |
