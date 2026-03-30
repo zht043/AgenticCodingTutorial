@@ -437,8 +437,8 @@ flowchart LR
 > - 亲历了 brainstorming → plans → TDD 的完整流程
 
 > 📖 MCP、Skill、Plugin 的深度指南见 → Part IV 进阶专题：
-> - [Skill 系统专题](./ch14-skill.md)
-> - [MCP 协议专题](./ch13-mcp.md)
+> - [Skill 系统专题](./ch13-skill.md)
+> - [MCP 协议专题](./ch14-mcp.md)
 
 ---
 

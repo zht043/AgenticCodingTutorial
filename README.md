@@ -70,10 +70,13 @@
 | 10 | [📋 Planning](./docs/chapters/ch10-planning.md) | Spec、任务分解、停止条件、ReAct 与 Reflection 各自解决什么 | 🔄 |
 | 11 | [💾 Memory](./docs/chapters/ch11-memory-context-harness.md) | 短期记忆、长期记忆、RAG、状态管理和上下文衰减 | 🔄 |
 | 12 | [🛠️ Tools](./docs/chapters/ch12-tools.md) | Tool Use、Function Calling、CLI 与工具栈分层、能力边界 | 🔄 |
-| 13 | [🔌 MCP](./docs/chapters/ch13-mcp.md) | MCP 的原理、定位和一个最小示例 | 🔄 |
-| 14 | [📝 Skill](./docs/chapters/ch14-skill.md) | Skill 的方法论角色、边界与最小示例 | 🔄 |
-| 15 | [🪝 Hook](./docs/chapters/ch15-hook.md) | Hook 的事件时机、自动化插槽定位和典型场景 | 🔄 |
-| 16 | [🧰 Plugin](./docs/chapters/ch16-plugin.md) | Plugin 的打包层角色、组成方式与最小示例 | 🔄 |
+| 13 | [📝 Skill](./docs/chapters/ch13-skill.md) | Skill 的原理、触发机制、渐进加载、路由与开发 | 🔄 |
+| 13.a | [🦸 Skill 案例：Superpowers](./docs/chapters/ch13a-skill-superpowers.md) | Superpowers 的设计哲学、7 阶段工作流与核心 Skill 拆解 | 🔄 |
+| 13.b | [🔨 Skill 案例：Official Skill Creator](./docs/chapters/ch13b-skill-creator.md) | Anthropic 官方 Skill Creator 的原理与使用 | 🔄 |
+| 13.c | [🏗️ Skill 案例：Agent Skill Architect](./docs/chapters/ch13c-skill-architect.md) | 用 Agent 设计和生成 Skill 的高阶工作流 | 🔄 |
+| 13.d | [🖥️ Skill 案例：SSH Dev Suite](./docs/chapters/ch13d-skill-ssh-dev-suite.md) | 远程开发场景下的 Skill 实践 | 🔄 |
+| 14 | [🔌 MCP](./docs/chapters/ch14-mcp.md) | MCP 的原理、定位和一个最小示例 | 🔄 |
+| 15 | [⌨️🪝🧰 Command、Hook 与 Plugin](./docs/chapters/ch15-hook-plugin.md) | Command 手动入口、Hook 事件自动化、Plugin 打包分发的原理与开发 | 🔄 |
 
 ### Part III · ✅ Agent 的正确使用姿势
 

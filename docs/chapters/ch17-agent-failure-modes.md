@@ -167,7 +167,7 @@
 
 <div align="center">
 
-[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch16 Plugin](./ch16-plugin.md) | [➡️ 下一章：Ch18 Agent 设计模式](./ch18-agent-patterns.md)
+[📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch15 Command、Hook 与 Plugin](./ch15-hook-plugin.md) | [➡️ 下一章：Ch18 Agent 设计模式](./ch18-agent-patterns.md)
 
 </div>
 
