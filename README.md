@@ -53,11 +53,11 @@
 
 | # | 章节 | 你会学到 | 状态 |
 |---|---|---|---|
-| 1 | [🚀 快速开始](./docs/chapters/ch01-quickstart.md) | 先装什么、怎么跑通第一轮闭环、如何避免一上来就把环境搞复杂 | 🔄 |
-| 2 | [🎮 Agent 入门实战](./docs/chapters/ch02-agent-first-practice.md) | 用基础实验和真实仓库小任务，先建立对 Agent 的第一批信任 | 🔄 |
-| 3 | [⚙️ 配置使用第一个：MCP、Skill、Hook、Plugin、Command](./docs/chapters/ch03-first-extension-setup.md) | 先把规则、会话、扩展三层分清，再装第一批真正值得上的能力与手动入口 | 🔄 |
-| 4 | [🟠 Claude Code 实用技巧](./docs/chapters/ch04-claude-code-tips.md) | Claude Code 的最小工作流、权限模式、CLAUDE.md 和长期高 ROI 用法 | 🔄 |
-| 5 | [🟢 Codex 实用技巧](./docs/chapters/ch05-codex-tips.md) | Codex 的终端协作心智、AGENTS.md、隔离执行与审查感 | 🔄 |
+| 1 | [🚀 快速开始](./docs/chapters/ch01-quickstart.md) | 先装什么、怎么跑通第一轮闭环、如何避免一上来就把环境搞复杂 | ✅  |
+| 2 | [🎮 Agent 入门实战](./docs/chapters/ch02-agent-first-practice.md) | 用基础实验和真实仓库小任务，先建立对 Agent 的第一批信任 | ✅  |
+| 3 | [⚙️ 配置使用第一个：MCP、Skill、Hook、Plugin、Command](./docs/chapters/ch03-first-extension-setup.md) | 先把规则、会话、扩展三层分清，再装第一批真正值得上的能力与手动入口 | ✅  |
+| 4 | [🟠 Claude Code 实用技巧](./docs/chapters/ch04-claude-code-tips.md) | Claude Code 的最小工作流、权限模式、CLAUDE.md 和长期高 ROI 用法 | ✅  |
+| 5 | [🟢 Codex 实用技巧](./docs/chapters/ch05-codex-tips.md) | Codex 的终端协作心智、AGENTS.md、隔离执行与审查感 | ✅  |
 
 ### Part II · 🧠 解剖 Agent 的原理与机制
 
