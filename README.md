@@ -78,26 +78,26 @@
 | 14 | [🔌 MCP](./docs/chapters/ch14-mcp.md) | MCP 的原理、定位和一个最小示例 | 🔄 |
 | 15 | [⌨️🪝🧰 Command、Hook 与 Plugin](./docs/chapters/ch15-hook-plugin.md) | Command 手动入口、Hook 事件自动化、Plugin 打包分发的原理与开发 | 🔄 |
 
-### Part III · ✅ Agent 的正确使用姿势
+### Part III · 🎯 正确使用 Agent
 
 | # | 章节 | 你会学到 | 状态 |
 |---|---|---|---|
-| 17 | [🚨 Agent 错误用法（9 种失效模式）](./docs/chapters/ch17-agent-failure-modes.md) | 常见错误协作姿势、为什么会反复跑偏，以及第一恢复动作 | 🔄 |
-| 18 | [🧬 Agent 设计模式](./docs/chapters/ch18-agent-patterns.md) | 常见模式、何时拆角色、代码库分工与 Worktree 隔离 | 🔄 |
-| 19 | [🏗️ 工程化工作流](./docs/chapters/ch19-engineering-workflow.md) | 从 Spec 到 Merge 的工程化协作总装图，以及 Agent 在各环节的合适介入深度 | 🔄 |
-| 20 | [💰 Token 经济学](./docs/chapters/ch20-token-economics.md) | Token 如何同时影响成本、速度、上下文质量，以及该怎么节约 | 🔄 |
-| 21 | [✅ 质量保障与验收](./docs/chapters/ch21-quality-assurance-review-eval.md) | Verify / Review / Eval 的边界、最小交付链、验收与人工裁决 | 🔄 |
-| — | [🎬 复杂场景实战案例](./docs/topics/topic-advanced-cases.md) | 现有素材先继续挂着，后续再决定拆成正式章节还是并回 Part III 主线 | 📝 规划中 |
+| 17 | [🚨 Agent 错误用法](./docs/chapters/ch17-agent-anti-patterns.md) | 九种高频反模式、三个预警信号、四步诊断法和恢复动作清单 | 🔄 |
+| 18 | [🧭 XDD 开发方法链](./docs/chapters/ch18-xdd-method-chain.md) | PRD → Spec → Plan → Test 四层方法链，什么任务值得上全套，如何在 Claude Code / Codex 落地 | 🔄 |
+| 19 | [🧬 Agent 设计模式](./docs/chapters/ch19-agent-design-patterns.md) | 六大核心模式（Router / Evaluator-Optimizer / Planner-Worker / RAG / Writer-Reviewer / Worktree）、选型矩阵与组合策略 | 🔄 |
+| 20 | [✅ 质量保障与验收](./docs/chapters/ch20-quality-assurance.md) | Verify / Review / Eval 三层分工、Writer-Reviewer 双 Agent 审查、AI 幻觉防御与 Merge 清单 | 🔄 |
+| 21 | [💰 Token 经济学](./docs/chapters/ch21-token-economics.md) | Token 的三重身份（成本/延迟/质量）、长会话膨胀机制、六个省 Token 习惯 | 🔄 |
+| 22 | [🏗️ 复杂场景实战案例](./docs/chapters/ch22-complex-scenarios.md) | 端到端项目案例，把方法论串联成完整实战流程 | 📝 规划中 |
 
 ### Part IV · 🔬 深度洞察与分析篇
 
 | # | 章节 | 你会学到 | 状态 |
 |---|---|---|---|
-| 22 | [📜 技术简史、演进主线与时间线](./docs/chapters/ch22-history-evolution-timeline.md) | 从程序合成到 Agent OS 的历史主线，为什么今天会走到这一步 | 📝 整合中 |
-| 23 | [📊 模型、工具与评测怎么看](./docs/chapters/ch23-models-tools-benchmarks.md) | 模型榜单、Agent 工具、Benchmark 各自回答什么问题，怎么读而不被误导 | 📝 整合中 |
-| 24 | [📐 任务适配度、能力边界与成熟度](./docs/chapters/ch24-task-fit-boundaries-maturity.md) | 哪些任务值得大胆交给 Agent，哪些任务必须保留人工把关 | 📝 整合中 |
-| 25 | [🔒 安全、权限与信任边界](./docs/chapters/ch25-security-permissions-trust-boundaries.md) | 最小权限、沙箱、供应链风险、Prompt 注入与治理边界 | 📝 整合中 |
-| 26 | [🔬 Agent 内幕、范式对比与未来形态](./docs/chapters/ch26-internals-paradigms-futures.md) | Agent payload、Claw 范式、未来形态与仍未解决的问题 | 📝 整合中 |
+| 23 | [📜 技术简史、演进主线与时间线](./docs/chapters/ch23-history-evolution-timeline.md) | 从程序合成到 Agent OS 的历史主线，为什么今天会走到这一步 | 📝 整合中 |
+| 24 | [📊 模型、工具与评测怎么看](./docs/chapters/ch24-models-tools-benchmarks.md) | 模型榜单、Agent 工具、Benchmark 各自回答什么问题，怎么读而不被误导 | 📝 整合中 |
+| 25 | [📐 任务适配度、能力边界与成熟度](./docs/chapters/ch25-task-fit-boundaries-maturity.md) | 哪些任务值得大胆交给 Agent，哪些任务必须保留人工把关 | 📝 整合中 |
+| 26 | [🔒 安全、权限与信任边界](./docs/chapters/ch26-security-permissions-trust-boundaries.md) | 最小权限、沙箱、供应链风险、Prompt 注入与治理边界 | 📝 整合中 |
+| 27 | [🔬 Agent 内幕、范式对比与未来形态](./docs/chapters/ch27-internals-paradigms-futures.md) | Agent payload、Claw 范式、未来形态与仍未解决的问题 | 📝 整合中 |
 
 ### 📎 专题文章
 
