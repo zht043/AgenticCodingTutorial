@@ -65,6 +65,45 @@ flowchart LR
 - 甚至会给出很像样的方案
 - 但默认不会主动去接触真实环境、执行动作、再拿结果回来纠偏
 
+换句话说，**缸中大脑最大的问题，不是不会想，而是想完以后碰不到世界。**
+
+它可以：
+
+- 想象执行一条命令后"理论上"会发生什么
+- 猜测某个 API 大概会返回什么
+- 推演一段代码改完后"应该"能过测试
+
+但只要它没有真的去执行、真的去观察、真的去拿回反馈，它就仍然只能停留在"可能对"的状态里。
+
+> **普通 LLM 默认是在"回答"，不是在"执行"。**
+
+### 从控制论看：普通 LLM 更像开环，Agent 更像闭环
+
+如果借控制论的语言来看，这个差别会更清楚。
+
+普通 LLM 更像一个**开环系统**：你给输入，它给输出，这一轮就结束了。它当然可以把答案说得很漂亮，但它缺少一个最关键的东西：**根据环境反馈持续修正自己的能力**。
+
+```mermaid
+flowchart LR
+    classDef user fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef model fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef env fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef gap fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    U["输入目标"]:::user --> L["普通 LLM"]:::model --> O["输出答案"]:::env
+    O -.没有真实反馈回路.-> L
+    O --> G["说得通 不等于做得成"]:::gap
+```
+
+而 Agent 更像**闭环系统**——先决定动作、再作用到环境、再读取反馈、再调整下一步。这时候系统不再只是"生成一个看起来合理的答案"，而是在真实反馈中不断**收束解空间**。
+
+你可以把"收束解空间"理解成：
+
+- 没有反馈时，模型只能在很多"也许对"的路径里猜
+- 有了反馈后，错误路径会被排除，正确路径会越来越清晰
+
+这也是为什么控制论和反馈系统对理解 Agent 很有帮助。一个系统想在动态环境里稳定地完成目标，不能只会规划，还得能**根据误差和反馈不断修正**。
+
 ### 为什么它看起来很聪明，却经常在关键时刻掉链子
 
 大众读者最容易困惑的一点是：既然模型已经这么聪明，为什么还要搞 Agent 这套复杂结构？
@@ -183,19 +222,39 @@ flowchart LR
 
 > 🔁 **闭环里的推理引擎，而不是一次性回答器。**
 
-ReAct 是这一步里最值得记住的桥梁。它强调的不是"多想"，而是：
+ReAct 是这一步里最值得记住的桥梁。ReAct 这个名字本身就说明了重点：
 
-- 先判断下一步该做什么（Reason）
-- 真去执行一个动作（Act）
-- 再根据观察结果更新判断（Observe）
+- **Reason**：先想一想，现在最合理的动作是什么
+- **Act**：真的去做这个动作
+- **Observe**：看环境返回了什么结果
 
-也就是说，Agent 的关键跨越不是"脑内推演更长了"，而是：
+然后再进入下一轮。
 
-> 🛠️ **开始把推理、行动、观察和验证接成循环。**
+这件事看上去朴素，但它改变了系统的性质。因为模型不再只是靠脑内推演一路写到结尾，而是会让**推理**和**环境反馈**互相纠正。
+
+```mermaid
+flowchart LR
+    classDef reason fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef act fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef observe fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef update fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    R["Reason 先形成判断"]:::reason --> A["Act 真的去做"]:::act --> O["Observe 读回环境反馈"]:::observe --> U["更新判断与下一步"]:::update --> R
+```
+
+这就是 ReAct 真正厉害的地方：
+
+- 推理不再是终点，而是行动前的准备
+- 行动不再是盲做，而是为了拿回新信息
+- 观察不再是附属步骤，而是下一轮推理的输入
+
+> **ReAct 让模型不只是"会讲步骤"，而是开始"用步骤去试探现实"。**
 
 如果把这一节压成一句话，就是：
 
 > 🔁 **普通 LLM 停在"给答案"，Agent 进入了"边想边试边看"的闭环。**
+
+> **LLM 像缸中大脑，擅长脑内推演；Agent 则像接上了眼睛、手和反馈回路的大脑，能在真实环境里边做边收束。**
 
 ---
 
@@ -235,6 +294,52 @@ Agent 效果 ≈ Model × Context × Task Structure × Verification
 - 这一轮到底看到了什么
 - 任务有没有被拆成可执行步骤
 - 有没有把输出拉回现实做验证
+
+---
+
+## 4a. 一次真实请求的内部轨迹
+
+从用户视角看，你在终端里输入一句话，Agent 几秒后给你一大段回复，看起来像是一次性生成的；但实际上，**Agent 内部可能已经循环了十几轮**。
+
+比如你说：
+
+> "帮我找到项目里所有未使用的依赖并清理掉。"
+
+Agent 内部可能经历这样的循环：
+
+| 轮次 | Agent 在判断什么 | 使用工具 | 观察结果 |
+|:---:|---|---|---|
+| 1 | 先确认项目类型和包管理器 | `Read` / `Shell` | 发现是 Node.js 项目，用 npm |
+| 2 | 需要看哪些包被声明了 | `Read package.json` | 列出了当前 dependencies |
+| 3 | 需要在代码里搜索引用 | `Grep` / `SemanticSearch` | 初步发现几个包没有被调用 |
+| 4 | 还要排除配置文件里的间接使用 | `Grep` 配置目录 | 其中一个包其实在构建配置里用到了 |
+| 5 | 确认真正未使用的依赖后再删除 | `Shell npm uninstall ...` | 删除命令成功 |
+| 6 | 不能只删，还要验证是否没破坏项目 | `Shell npm test` | 测试通过 |
+| 7 | 任务完成，整理结果汇报用户 | — | 输出删除了什么、如何验证的 |
+
+> 💡 **关键认知**：你看到的是"一条完成回复"，Agent 内部经历的却是"多轮局部判断"。它不是一下子把整条链路都想完，而是在每一步里借新反馈不断收束。
+
+---
+
+## 4b. 自主性不是开关，而是一条光谱
+
+Planning 还直接决定了系统到底有多"自主"。
+
+```mermaid
+flowchart LR
+    classDef low fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef mid fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef high fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    A["预定义步骤 你指定每一步"]:::low --- B["半自主 Agent 自己推进 关键动作需确认"]:::mid --- C["高自主 长链路独立执行"]:::high
+```
+
+今天大多数主流 Coding Agent 都落在中间这段：
+
+- LLM 会自己做局部规划
+- 但危险操作、权限边界、最终验收仍然有人类在环里
+
+> 🎛️ **自主性不是二选一，而是按风险分级的光谱。越是高风险、不可逆、外部依赖强的动作，越要保留人类在环里。**
 
 ---
 

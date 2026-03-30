@@ -96,6 +96,14 @@
 | 25 | [🔒 安全、权限与信任边界](./docs/chapters/ch25-security-permissions-trust-boundaries.md) | 最小权限、沙箱、供应链风险、Prompt 注入与治理边界 | 📝 整合中 |
 | 26 | [🔬 Agent 内幕、范式对比与未来形态](./docs/chapters/ch26-internals-paradigms-futures.md) | Agent payload、Claw 范式、未来形态与仍未解决的问题 | 📝 整合中 |
 
+### 📎 专题文章
+
+| 专题 | 内容 | 关联章节 |
+|---|---|---|
+| [🔍 代码探索与验证驱动](./docs/topics/topic-explore-verify-workflow.md) | /init 教程、深度分析代码仓、验证驱动的 Bug 修复流程、前端验证技巧、完整工作流 | Part I / Part III |
+| [📋 规划优先与 Prompt 工程](./docs/topics/topic-plan-prompt-engineering.md) | 探索->规划->编码三步工作法、六种高效约束技巧、Method R 框架、代码修改规范模板 | Part III |
+| [🔬 Agent 与 LLM 交互的代码解剖](./docs/topics/topic-agent-llm-internals.md) | 用 Python 伪代码拆解 Payload 五层结构、Agentic Loop、自动纠错、安全编辑、上下文压缩和终止判断 | Part II / Ch26 |
+
 ### Part V · 🧬 从零构建你自己的 Agent
 
 | # | 章节 | 你会学到 | 状态 |

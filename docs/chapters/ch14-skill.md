@@ -10,6 +10,7 @@
 - [4. Skill 和 MCP / Command 的边界](#4-skill-和-mcp--command-的边界)
 - [5. 一个最小示例](#5-一个最小示例)
 - [6. 什么时候该写 Skill](#6-什么时候该写-skill)
+- [7. 三个平台的 Skill 机制对比](#7-三个平台的-skill-机制对比)
 
 ## 1. Skill 最本质的作用
 
@@ -90,12 +91,65 @@ description: 用固定清单审查代码改动
 - 规则还不稳定
 - 你现在连问题本身都还没想清楚
 
+---
+
+## 7. 三个平台的 Skill 机制对比
+
+Claude Code、Codex 和 OpenClaw 都有叫「Skill」的概念，但本质完全不同。
+
+### 核心差异
+
+| 维度 | Claude Code | Codex | OpenClaw |
+|---|---|---|---|
+| **形态** | 终端原生 AI 助手 | 编辑器增强 | Agent 调度平台 |
+| **Skill 本质** | 可调用能力单元 | 可复用 workflow | 教 Agent 用工具的调度层 |
+| **长期规则** | CLAUDE.md | AGENTS.md | workspace memory |
+| **发现路径** | enterprise → personal → project | CWD 向上扫描 .agents | workspace → .agents → local |
+| **加载机制** | 描述常驻，正文按需 | metadata 先，SKILL.md 后 | session 启动时快照 |
+| **触发方式** | /skill + 自动触发 | 显式 + description 隐式 | slash / model / tool dispatch |
+| **Subagent** | fork 隔离运行 | 专门化委派 | — |
+
+### 一句话区分
+
+- **Claude Code**：Skill = 方法论模块，教 Agent 怎么更稳地做事
+- **Codex**：Skill = 可复用工作流，按场景匹配自动加载
+- **OpenClaw**：Skill = 调度层，教 Agent 怎么用外部工具
+
+### 调用控制的差异
+
+Claude Code 的 Skill 有两个关键开关：
+- `disable-model-invocation: true` → 只允许手动 `/skill` 触发，禁止 Agent 自动调用
+- `user-invocable: false` → 菜单隐藏，但 Claude 自己仍可根据场景判断后调用
+
+这两个开关组合，可以精确控制 Skill 的触发行为。
+
+### Codex 的发现路径
+
+Codex 的 Skill 发现是沿目录树向上扫描的：
+
+```text
+CWD/.agents/skills → 父目录 → repo root/.agents → ~/.agents/skills → /etc/codex/skills
+```
+
+重名 Skill 可以并存，不会覆盖。
+
+### OpenClaw 的优先级梯子
+
+OpenClaw 的优先级从高到低是：
+
+```text
+workspace/skills → workspace/.agents/skills → ~/.agents/skills → ~/.openclaw/skills → bundled → extraDirs
+```
+
+> 了解这些差异的价值在于：当你在不同工具间迁移 Skill 时，不只是复制文件，还需要理解各平台的加载和触发逻辑。
+
 ## 📌 本章总结
 
 - Skill 是方法论载体，不是能力接口。
 - 它最适合沉淀流程、检查清单、调试套路和审查方法。
 - 项目事实、临时需求和外部连接能力，不该硬塞进 Skill。
-- 真正值得写成 Skill 的，通常都是“会重复出现，而且步骤相对稳定”的工作。
+- 真正值得写成 Skill 的，通常都是”会重复出现，而且步骤相对稳定”的工作。
+- 不同平台的 Skill 机制差异很大，迁移时要理解各自的加载和触发逻辑。
 
 ## 📚 继续阅读
 
