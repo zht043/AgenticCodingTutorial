@@ -11,13 +11,14 @@
   </a>
   <img src="https://img.shields.io/badge/Last%20Updated-2026.03-blue" alt="Last Updated 2026.03" />
   <img src="https://img.shields.io/badge/语言-中文-red" alt="Language: 中文" />
-  <img src=”https://img.shields.io/badge/Status-Active-brightgreen” alt=”Status: Active” />
+  <img src="https://img.shields.io/badge/Status-Active%20Development-orange" alt="Status: Active Development" />
 </p>
 
 <blockquote>
 
-🏗️ 重度实战踩坑：长期在真实项目里尝试多种 Coding Agent 与模型
-🎯 面向新手转型：帮助你告别「古法写码」，建立 AI 时代的开发方式
+🏗️ 重度实战踩坑：3 个月投入至少 2k RMB，做过大型项目分析与旧代码重构，深度尝试多种Agent和模型  
+🎯 面向新手转型：帮助你告别「古法写码」，建立 AI 时代的开发方式  
+⭐ 欢迎支持：教程制作不易，<span style="color: red;">**欢迎点个 Star**</span>  
 
 </blockquote>
 
@@ -62,31 +63,31 @@
 
 | # | 章节 | 你会学到 | 状态 |
 |---|---|---|---|
-| 6 | [📖 基础概念与术语](./docs/chapters/ch06-glossary.md) | Token、Prompt、Context、Session、KV Cache、MCP / Skill / Hook / Plugin / Command 等基础词汇随查随用 | 🔄 |
-| 7 | [🧠 从 LLM 到 Agent](./docs/chapters/ch07-llm-to-agent.md) | 开环与闭环、Augmented LLM、为什么 Agent 不是聊天框升级版 | 🔄 |
-| 8 | [🧩 Agent = Model + Harness = LLM + Planning + Memory + Tools](./docs/chapters/ch08-agent-formula.md) | 用一章建立 Agent 的总公式，把模型、规划、记忆、工具和控制面一次讲透 | 🔄 |
-| 9 | [🧠 LLM 推理基础](./docs/chapters/ch09-llm-reasoning-basics.md) | 概率性、采样、CoT、为什么“会想”不等于“可靠” | 🔄 |
-| 10 | [📋 Planning](./docs/chapters/ch10-planning.md) | Spec、任务分解、停止条件、ReAct 与 Reflection 各自解决什么 | 🔄 |
-| 11 | [💾 Memory](./docs/chapters/ch11-memory-context-harness.md) | 短期记忆、长期记忆、RAG、状态管理和上下文衰减 | 🔄 |
-| 12 | [🛠️ Tools](./docs/chapters/ch12-tools.md) | Tool Use、Function Calling、CLI 与工具栈分层、能力边界 | 🔄 |
-| 13 | [📝 Skill](./docs/chapters/ch13-skill.md) | Skill 的原理、触发机制、渐进加载、路由与开发 | 🔄 |
-| 13.a | [🦸 Skill 案例：Superpowers](./docs/chapters/ch13a-skill-superpowers.md) | Superpowers 的设计哲学、7 阶段工作流与核心 Skill 拆解 | 🔄 |
-| 13.b | [🔨 Skill 案例：Official Skill Creator](./docs/chapters/ch13b-skill-creator.md) | Anthropic 官方 Skill Creator 的原理与使用 | 🔄 |
-| 13.c | [🏗️ Skill 案例：Agent Skill Architect](./docs/chapters/ch13c-skill-architect.md) | 用 Agent 设计和生成 Skill 的高阶工作流 | 🔄 |
-| 13.d | [🖥️ Skill 案例：SSH Dev Suite](./docs/chapters/ch13d-skill-ssh-dev-suite.md) | 远程开发场景下的 Skill 实践 | 🔄 |
-| 14 | [🔌 MCP](./docs/chapters/ch14-mcp.md) | MCP 的原理、定位和一个最小示例 | 🔄 |
-| 15 | [⌨️🪝🧰 Command、Hook 与 Plugin](./docs/chapters/ch15-hook-plugin.md) | Command 手动入口、Hook 事件自动化、Plugin 打包分发的原理与开发 | 🔄 |
+| 6 | [📖 基础概念与术语](./docs/chapters/ch06-glossary.md) | Token、Prompt、Context、Session、KV Cache、MCP / Skill / Hook / Plugin / Command 等基础词汇随查随用 | ✅ |
+| 7 | [🧠 从 LLM 到 Agent](./docs/chapters/ch07-llm-to-agent.md) | 开环与闭环、Augmented LLM、为什么 Agent 不是聊天框升级版 | ✅ |
+| 8 | [🧩 Agent = Model + Harness = LLM + Planning + Memory + Tools](./docs/chapters/ch08-agent-formula.md) | 用一章建立 Agent 的总公式，把模型、规划、记忆、工具和控制面一次讲透 | ✅ |
+| 9 | [🧠 LLM 推理基础](./docs/chapters/ch09-llm-reasoning-basics.md) | 概率性、采样、CoT、为什么”会想”不等于”可靠” | ✅ |
+| 10 | [📋 Planning](./docs/chapters/ch10-planning.md) | Spec、任务分解、停止条件、ReAct 与 Reflection 各自解决什么 | ✅ |
+| 11 | [💾 Memory](./docs/chapters/ch11-memory-context-harness.md) | 短期记忆、长期记忆、RAG、状态管理和上下文衰减 | ✅ |
+| 12 | [🛠️ Tools](./docs/chapters/ch12-tools.md) | Tool Use、Function Calling、CLI 与工具栈分层、能力边界 | ✅ |
+| 13 | [📝 Skill](./docs/chapters/ch13-skill.md) | Skill 的原理、触发机制、渐进加载、路由与开发 | ✅ |
+| 13.a | [🦸 Skill 案例：Superpowers](./docs/chapters/ch13a-skill-superpowers.md) | Superpowers 的设计哲学、7 阶段工作流与核心 Skill 拆解 | ✅ |
+| 13.b | [🔨 Skill 案例：Official Skill Creator](./docs/chapters/ch13b-skill-creator.md) | Anthropic 官方 Skill Creator 的原理与使用 | ✅ |
+| 13.c | [🏗️ Skill 案例：Agent Skill Architect](./docs/chapters/ch13c-skill-architect.md) | 用 Agent 设计和生成 Skill 的高阶工作流 | ✅ |
+| 13.d | [🖥️ Skill 案例：SSH Dev Suite](./docs/chapters/ch13d-skill-ssh-dev-suite.md) | 远程开发场景下的 Skill 实践 | ✅ |
+| 14 | [🔌 MCP](./docs/chapters/ch14-mcp.md) | MCP 的原理、定位和一个最小示例 | ✅ |
+| 15 | [⌨️🪝🧰 Command、Hook 与 Plugin](./docs/chapters/ch15-hook-plugin.md) | Command 手动入口、Hook 事件自动化、Plugin 打包分发的原理与开发 | ✅ |
 
 ### Part III · 🎯 正确使用 Agent
 
 | # | 章节 | 你会学到 | 状态 |
 |---|---|---|---|
-| 17 | [🚨 Agent 错误用法](./docs/chapters/ch17-agent-anti-patterns.md) | 九种高频反模式、三个预警信号、四步诊断法和恢复动作清单 | 🔄 |
-| 18 | [🧭 XDD 开发方法链](./docs/chapters/ch18-xdd-method-chain.md) | PRD → Spec → Plan → Test 四层方法链，什么任务值得上全套，如何在 Claude Code / Codex 落地 | 🔄 |
-| 19 | [🧬 Agent 设计模式](./docs/chapters/ch19-agent-design-patterns.md) | 六大核心模式（Router / Evaluator-Optimizer / Planner-Worker / RAG / Writer-Reviewer / Worktree）、选型矩阵与组合策略 | 🔄 |
-| 20 | [✅ 质量保障与验收](./docs/chapters/ch20-quality-assurance.md) | Verify / Review / Eval 三层分工、Writer-Reviewer 双 Agent 审查、AI 幻觉防御与 Merge 清单 | 🔄 |
-| 21 | [💰 Token 经济学](./docs/chapters/ch21-token-economics.md) | Token 的三重身份（成本/延迟/质量）、长会话膨胀机制、六个省 Token 习惯 | 🔄 |
-| 22 | [🏗️ 复杂场景实战案例](./docs/chapters/ch22-complex-scenarios.md) | 端到端项目案例，把方法论串联成完整实战流程 | 📝 规划中 |
+| 17 | [🚨 Agent 错误用法](./docs/chapters/ch17-agent-anti-patterns.md) | 九种高频反模式、三个预警信号、四步诊断法和恢复动作清单 | ✅ |
+| 18 | [🧭 XDD 开发方法链](./docs/chapters/ch18-xdd-method-chain.md) | PRD → Spec → Plan → Test 四层方法链，什么任务值得上全套，如何在 Claude Code / Codex 落地 | ✅ |
+| 19 | [🧬 Agent 设计模式](./docs/chapters/ch19-agent-design-patterns.md) | 六大核心模式（Router / Evaluator-Optimizer / Planner-Worker / RAG / Writer-Reviewer / Worktree）、选型矩阵与组合策略 | ✅ |
+| 20 | [✅ 质量保障与验收](./docs/chapters/ch20-quality-assurance.md) | Verify / Review / Eval 三层分工、Writer-Reviewer 双 Agent 审查、AI 幻觉防御与 Merge 清单 | ✅ |
+| 21 | [💰 Token 经济学](./docs/chapters/ch21-token-economics.md) | Token 的三重身份（成本/延迟/质量）、长会话膨胀机制、六个省 Token 习惯 | ✅ |
+| 22 | [🏗️ 复杂场景实战案例](./docs/chapters/ch22-complex-scenarios.md) | 端到端项目案例，把方法论串���成完整实战流程 | 📝 规划中 |
 
 ### Part IV · 🔬 深度洞察与分析篇
 
