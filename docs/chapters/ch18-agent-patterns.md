@@ -115,12 +115,8 @@
 
 ---
 
-## 📎 保留原文与延伸材料
-
-设计模式这章需要承接旧教程里的模式章、多 Agent 专题和大型项目策略。下面先原文保留，后面再细化成更清晰的 pattern map。
-
 <details>
-<summary>📎 保留原文：原 Chapter 10：Agent 设计模式与代码库策略</summary>
+<summary><span style="color: #e67e22; font-weight: bold;">🏗️ 进阶：六大 Agent 设计模式详解与实战案例</span></summary>
 
 # Chapter 10 · 🧬 Agent 设计模式与代码库策略
 
@@ -695,6 +691,94 @@ flowchart TB
 
 > **🎯 本章核心认知**：Agent 设计模式是 Harness Engineering 的核心工具箱。掌握了这些模式，你不再是"调 Prompt 的人"，而是"设计 Agent 系统的架构师"。
 
+
+---
+
+<a id="ch2-sec-8"></a>
+## 8. Multi-Agent：为什么单 Agent 不总够用
+
+### 8.1 为什么会走向 Multi-Agent
+
+多 Agent 不是为了“显得更高级”，而是为了解决单 Agent 经常同时遇到的三个瓶颈：
+
+- 一个上下文里塞太多角色，容易冲突和污染
+- 一个 Agent 同时做规划、检索、编码、验证，容易顾此失彼
+- 有些任务天然可以并行，单 Agent 会被串行执行拖慢
+
+```mermaid
+flowchart LR
+    classDef single fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef multi fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    A["🎯 一个大任务"] --> B["单 Agent<br/>一个上下文里兼任所有角色"]:::single
+    A --> C["多 Agent<br/>按角色拆分上下文和责任"]:::multi
+```
+
+### 8.2 常见模式总览与最常见拓扑
+
+先把最常见的模式记成一张总表：
+
+| 模式 | 一句话定义 | 主要解决什么问题 |
+| --- | --- | --- |
+| `Planner-Worker` | 规划和执行分离 | 复杂任务拆分与顺序控制 |
+| `Writer-Reviewer` | 生成和审查分离 | 降低确认偏误，补风险视角 |
+| `Evaluator-Optimizer` | 先评估再优化 | 让系统靠证据迭代收敛 |
+| `Router` | 把任务分流给更合适的代理 | 多领域、多能力入口 |
+| `RAG-Augmented` | 先检索，再生成或执行 | 上下文不足、资料分散 |
+| `Worktree Isolation` | 让不同任务在隔离环境执行 | 降低并发修改冲突 |
+
+最常见的一种拓扑，仍然是 `Supervisor + Specialists`：
+
+```mermaid
+flowchart TB
+    classDef lead fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef worker fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef result fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    U["👤 用户目标"] --> S["🎛️ 调度 Agent<br/>拆任务 / 分派 / 汇总"]:::lead
+    S --> R["🔎 研究 Agent"]:::worker
+    S --> C["💻 编码 Agent"]:::worker
+    S --> T["🧪 测试 Agent"]:::worker
+    R --> O["📤 子结果"]:::result
+    C --> O
+    T --> O
+    O --> S
+    S --> F["✅ 最终结果"]:::result
+```
+
+### 8.3 初始化与编排：难点不在“多开几个 Agent”
+
+真正难的不是“启动多个 Agent”，而是它们如何协作。
+
+一个 Multi-Agent 系统如果想跑稳，至少要回答四个问题：
+
+1. 谁来拆任务
+2. 每个 Agent 看到哪些上下文
+3. 中间结果怎么回传和合并
+4. 什么时候停止，谁负责最终验收
+
+📌 **补充：几类常见框架各在强调什么？**
+
+| 框架 | 更强调什么 | 你可以怎么理解 |
+| --- | --- | --- |
+| `CAMEL` | 角色扮演式对话协作 | 让不同角色在对话中逐步完成任务 |
+| `AutoGen` | 多 Agent 对话 + 工具调用 | 强调会话式编排和工具集成 |
+| `MetaGPT` | 类软件公司的角色流水线 | 把产品、架构、编码、测试做成分工流程 |
+| `Generative Agents` | 记忆、检索、反思与行动的角色社会 | 更偏持续角色与长期状态 |
+
+### 8.4 什么时候不该上 Multi-Agent
+
+Multi-Agent 很强，但绝对不是默认答案。
+
+| 场景 | 为什么先别上 |
+| --- | --- |
+| 任务很短、边界很清晰 | 单 Agent 就能完成，额外协调只会增加开销 |
+| 单 Agent 流程都还没跑稳 | 多 Agent 会把问题放大，而不是自动修复 |
+| 子任务强耦合、频繁共享同一上下文 | 拆开后同步成本可能比收益更高 |
+| 验收责任必须高度集中 | 多角色分工会让“到底谁说了算”变模糊 |
+
+---
+
 ---
 
 <div align="center">
@@ -706,7 +790,7 @@ flowchart TB
 </details>
 
 <details>
-<summary>📎 保留原文：原专题：多 Agent 协作</summary>
+<summary><span style="color: #e67e22; font-weight: bold;">🔀 进阶：多 Agent 协作模式详解</span></summary>
 
 ---
 > 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#tutorial-contents)
@@ -1048,7 +1132,7 @@ flowchart TB
 </details>
 
 <details>
-<summary>📎 保留原文：原专题：大型项目策略</summary>
+<summary><span style="color: #e67e22; font-weight: bold;">📐 进阶：大型项目 Agent 策略</span></summary>
 
 ---
 > 📚 **Part IV · 进阶专题** | [← 返回专题目录](../../README.md#tutorial-contents)

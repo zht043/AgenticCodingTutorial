@@ -132,20 +132,3 @@ Hook 的价值很直接，但边界也必须说清：
 [📚 返回目录](../../README.md#tutorial-contents) | [⬅️ 上一章：Ch14 Skill](./ch14-skill.md) | [➡️ 下一章：Ch16 Plugin](./ch16-plugin.md)
 
 </div>
-
-## 📎 保留原文与延伸材料
-
-Hook 目前还没有一篇完全对位的旧主章，这里先把现有能直接承接的原始说明保留下来，后续再继续增量吸收。
-
-<details>
-<summary>📎 保留原文：安全章节中关于 Hook 的边界说明</summary>
-
-Hooks 允许在生命周期事件执行 shell 命令；托管策略配置的 hooks 不能被用户设置的 `disableAllHooks` 禁用；hooks 在启动时快照，会话中途的外部修改会触发警告并需审查。
-
-缓解措施：
-
-1. 对 hooks 采用托管策略与变更审计
-2. 对高风险动作保留人工确认
-3. 把 Hook 设计成可审计的短动作，而不是隐藏业务逻辑
-
-</details>

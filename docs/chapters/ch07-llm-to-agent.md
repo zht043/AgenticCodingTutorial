@@ -1,6 +1,6 @@
 # Chapter 7 · 🧠 从 LLM 到 Agent
 
-> 目标：把“模型很聪明”这件事和“Agent 能持续干活”这件事分开理解。读完这一章，你应该知道为什么普通 LLM 不等于 Agent，为什么 Agent 需要闭环，以及 `Model + Harness` 这层压缩视角为什么比只看模型更有用。
+> 目标：把"模型很聪明"这件事和"Agent 能持续干活"这件事分开理解。读完这一章，你应该知道为什么普通 LLM 不等于 Agent，为什么 Agent 需要闭环，以及 `Model + Harness` 这层压缩视角为什么比只看模型更有用。
 
 ## 📑 目录
 
@@ -29,6 +29,23 @@
 
 ## 1. 普通 LLM 更像开环系统
 
+如果要给普通 LLM 找一个最有画面感的比喻：
+
+> 🧠 **它像一个被放在培养缸里的大脑。**
+
+这个大脑非常会思考，也非常会语言表达。你问它"如果你是程序员，你会怎么修这个 bug"，它可以把步骤讲得头头是道，甚至听起来比很多真人都更像那么回事。
+
+但问题在于，它首先是一个**脱离真实环境的大脑**。它擅长的是脑内推演，而不是和外部世界持续交互。
+
+```mermaid
+flowchart LR
+    classDef input fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef model fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef output fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    A["👤 你的问题"]:::input --> B["🧠 LLM<br/>理解并续写"]:::model --> C["💬 一次回答"]:::output
+```
+
 普通 LLM 最擅长的是：
 
 - 理解输入
@@ -41,14 +58,55 @@
 输入 -> 生成回答 -> 结束
 ```
 
-所以它很像一个开环系统：
+所以它很像一个**开环系统**：
 
 - 会分析
 - 会解释
 - 甚至会给出很像样的方案
 - 但默认不会主动去接触真实环境、执行动作、再拿结果回来纠偏
 
-这就是为什么“会回答”不等于“会做事”。
+### 为什么它看起来很聪明，却经常在关键时刻掉链子
+
+大众读者最容易困惑的一点是：既然模型已经这么聪明，为什么还要搞 Agent 这套复杂结构？
+
+因为只靠"输入一次，回答一次"，很多任务根本做不完。
+
+```mermaid
+flowchart TB
+    classDef user fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef model fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef limit fill:#f7c6c7,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    U["👤 用户目标"]:::user --> L["🧠 普通 LLM"]:::model
+    L --> A["📰 不知道最新信息"]:::limit
+    L --> B["🛠️ 不会真的跑命令、改文件、点按钮"]:::limit
+    L --> C["🧵 长任务里容易忘前面发生了什么"]:::limit
+```
+
+比如你说：
+
+- "帮我总结这个仓库最近 5 次提交的变化"
+- "把这个 bug 修掉，并且补上测试"
+- "查一下现在的汇率，再帮我比较两个付款方案"
+
+这些任务都不只是"想一想"，还需要：
+
+- 去拿外部信息
+- 去操作真实环境
+- 记住前面做过什么
+- 根据结果决定下一步
+
+这里最容易误导新手的两个现象是：
+
+| 现象 | 它真正说明什么 |
+| --- | --- |
+| 🧵 长对话里"说记住了"，后面却答不出来 | 它没有稳定持久记忆系统，只能依赖当前上下文窗口 |
+| ➗ 简单计算或简单推理也可能答错，而且答得很自信 | 语言流畅不等于每一步中间推理都可靠 |
+
+这两个现象后面还会再出现，但它们本质上分别属于：
+
+- `Memory / Context` 问题
+- `Verification` 问题
 
 ---
 
@@ -67,11 +125,32 @@ LLM -> Augmented LLM -> Agent
 - 给模型加上状态回写
 - 但还没有把整条任务闭环做完整
 
-这层很重要，因为很多产品看起来已经“会调工具”，但本质上仍然更像：
+```mermaid
+flowchart LR
+    classDef user fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef model fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef ext fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef out fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    U["👤 用户问题"]:::user --> M["🧠 LLM"]:::model
+    M --- T["🔧 工具"]:::ext
+    M --- R["💾 记忆 / 检索"]:::ext
+    M --> O["💬 更可靠的回答"]:::out
+```
+
+这层很重要，因为很多产品看起来已经"会调工具"，但本质上仍然更像：
 
 > 🧩 **带外设的模型，而不是会持续推进任务的工作系统。**
 
-理解这一层以后，后面你就不容易把“会搜一下、会调一下工具”误认成“已经是成熟 Agent”。
+你可以把三者粗略区分成这样：
+
+| 形态 | 核心特征 | 常见短板 |
+| --- | --- | --- |
+| 裸 LLM | 单次生成 | 看不到执行结果，缺少状态和验证 |
+| Augmented LLM | 有工具和上下文增强 | 能力增强了，但未必有稳定控制面 |
+| Agent | 有目标推进闭环 | 复杂度上升，需要更强的 Harness |
+
+理解这一层以后，后面你就不容易把"会搜一下、会调一下工具"误认成"已经是成熟 Agent"。
 
 ---
 
@@ -81,6 +160,16 @@ Agent 最关键的变化，不是说得更多，而是进入了这条闭环：
 
 ```text
 Observe -> Plan -> Act -> Verify -> Continue
+```
+
+```mermaid
+flowchart LR
+    classDef goal fill:#d8eefb,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef agent fill:#b7e3a1,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef env fill:#ffe3a3,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+    classDef obs fill:#e8d6ff,stroke:#2d2d2d,stroke-width:2px,color:#2d2d2d
+
+    G["🎯 目标"]:::goal --> A["🤖 Agent"]:::agent --> E["🌍 真实环境"]:::env --> O["👀 反馈 / 结果 / 错误"]:::obs --> A
 ```
 
 也就是说，它不再只靠脑内推演，而是：
@@ -94,17 +183,19 @@ Observe -> Plan -> Act -> Verify -> Continue
 
 > 🔁 **闭环里的推理引擎，而不是一次性回答器。**
 
----
+ReAct 是这一步里最值得记住的桥梁。它强调的不是"多想"，而是：
 
-ReAct 是这一步里最值得记住的桥梁。它强调的不是“多想”，而是：
+- 先判断下一步该做什么（Reason）
+- 真去执行一个动作（Act）
+- 再根据观察结果更新判断（Observe）
 
-- 先判断下一步该做什么
-- 真去执行一个动作
-- 再根据观察结果更新判断
-
-也就是说，Agent 的关键跨越不是“脑内推演更长了”，而是：
+也就是说，Agent 的关键跨越不是"脑内推演更长了"，而是：
 
 > 🛠️ **开始把推理、行动、观察和验证接成循环。**
+
+如果把这一节压成一句话，就是：
+
+> 🔁 **普通 LLM 停在"给答案"，Agent 进入了"边想边试边看"的闭环。**
 
 ---
 
@@ -133,8 +224,6 @@ Agent = Model + Harness
 
 这条压缩视角很重要，因为工程里大量问题都不在模型本体，而在模型外侧的系统层。
 
----
-
 如果你只想记一个更实用的工程判断，可以记这条：
 
 ```text
@@ -159,7 +248,7 @@ Agent 效果 ≈ Model × Context × Task Structure × Verification
 | Context | 这一轮模型实际看到了什么 |
 | Harness | 整个系统如何组织行动、验证和恢复 |
 
-所以很多所谓“Prompt 问题”，其实是：
+所以很多所谓"Prompt 问题"，其实是：
 
 - Context 装配问题
 - Harness 设计问题
@@ -181,24 +270,22 @@ Agent 效果 ≈ Model × Context × Task Structure × Verification
 也不等于。更常见的真实情况是 runtime 在维护更大的 session state，并在每一轮重新组装 context。这个边界会在 [Ch11 · Memory、Context 与 Harness](./ch11-memory-context-harness.md) 里展开。
 
 **Q：为什么后面会反复讲 Planning、Memory、Tools 和 Harness？**  
-因为 Agent 不是单一能力，而是一个系统。你看到的“稳不稳”，最后通常都是这些部件一起决定的。
+因为 Agent 不是单一能力，而是一个系统。你看到的"稳不稳"，最后通常都是这些部件一起决定的。
 
 ---
 
 ## 📌 本章总结
 
 - LLM 默认更像开环系统，擅长回答，不天然擅长持续执行。
-- Agent 的本质不是“更会说”，而是进入了反馈闭环；`ReAct` 之所以关键，就是因为它把推理、行动和观察接上了。
-- `Augmented LLM` 是一层常见中间态，它解释了为什么“会调工具”还不等于“完整 Agent”。
+- Agent 的本质不是"更会说"，而是进入了反馈闭环；`ReAct` 之所以关键，就是因为它把推理、行动和观察接上了。
+- `Augmented LLM` 是一层常见中间态，它解释了为什么"会调工具"还不等于"完整 Agent"。
 - 四件套视角有助于理解组成，`Model + Harness` 视角更有利于工程诊断。
 - `Prompt / Context / Harness` 分层，是后续方法论章节的共同前提。
 
 ## 📚 继续阅读
 
 - 想把 Agent 的四件套一次看全：继续看 [Ch08 · Agent = Model + Harness = LLM + Planning + Memory + Tools](./ch08-agent-formula.md)
-- 想理解“看起来会推理”和“真正可靠”之间的差距：继续看 [Ch09 · LLM 推理基础](./ch09-llm-reasoning-basics.md)
-
----
+- 想理解"看起来会推理"和"真正可靠"之间的差距：继续看 [Ch09 · LLM 推理基础](./ch09-llm-reasoning-basics.md)
 
 <div align="center">
 
